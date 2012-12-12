@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="DXQAccount" representedClassName="DXQAccount" parentEntity="Users" syncable="YES">
+        <attribute name="dxq_AccountName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_AddDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dxq_Password" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Users" representedClassName="Users" isAbstract="YES" syncable="YES">
+        <attribute name="dxq_AccountId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_AdvancePayment" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_Answer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Birthday" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dxq_Blood" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_City" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Coins" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_Email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Height" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Icq" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_IdentityNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_IdentityType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Introducer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Introduction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_IsOnline" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_IsOpenPosition" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_LastLog" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_Level" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_LogTimes" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_MemberName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Msn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_NewsSetting" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_PhotoUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_PostalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Qq" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Question" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Remarks" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_SearchSize" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_SellPassword" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_Sex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_Status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="dxq_Telephone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_VisitCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DXQAccount" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Users" positionX="160" positionY="192" width="128" height="600"/>
+    </elements>
+</model>

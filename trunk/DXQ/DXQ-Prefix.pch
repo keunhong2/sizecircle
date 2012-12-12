@@ -1,0 +1,25 @@
+//
+// Prefix header for all source files of the 'DXQ' target in the 'DXQ' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import <QuartzCore/QuartzCore.h>
+    #import "BaseViewController.h"
+    #import "SettingManager.h"
+    #import "Definitions.h"
+    #import "ProgressHUD.h"
+    #import "AppDelegate.h"
+    #import "JSON.h"
+    #import "Tool.h"
+    #import "GPS.h"
+    #import "DXQCoreDataManager.h"
+#endif
