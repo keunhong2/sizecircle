@@ -155,6 +155,7 @@
 
 -(void)remindAction:(UIButton *)sender
 {
+    self.noticeBadgeValue=0;
     [self didSelectControl:@"NoticeViewController"];
 }
 
