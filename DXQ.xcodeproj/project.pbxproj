@@ -71,6 +71,8 @@
 		185BEFF1163559E400DF3E70 /* BaseScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF0163559E400DF3E70 /* BaseScreenViewController.m */; };
 		185BEFF416355E3100DF3E70 /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF316355E3000DF3E70 /* ScreenViewController.m */; };
 		185BEFF71635653500DF3E70 /* ScreenSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF61635653500DF3E70 /* ScreenSelectCell.m */; };
+		185C58DD1678B2F500A6BFAF /* UerLoadNoticeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58DC1678B2F500A6BFAF /* UerLoadNoticeList.m */; };
+		185C58E11678CC3C00A6BFAF /* NoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58E01678CC3C00A6BFAF /* NoticeCell.m */; };
 		187446341626FE52009F6214 /* ForgorPswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874462E1626FE52009F6214 /* ForgorPswViewController.m */; };
 		187446351626FE52009F6214 /* RegisterPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446311626FE52009F6214 /* RegisterPhotoViewController.m */; };
 		187446361626FE52009F6214 /* GenderSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446321626FE52009F6214 /* GenderSelectView.m */; };
@@ -888,6 +890,10 @@
 		185BEFF316355E3000DF3E70 /* ScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenViewController.m; sourceTree = "<group>"; };
 		185BEFF51635653400DF3E70 /* ScreenSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenSelectCell.h; sourceTree = "<group>"; };
 		185BEFF61635653500DF3E70 /* ScreenSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenSelectCell.m; sourceTree = "<group>"; };
+		185C58DB1678B2F500A6BFAF /* UerLoadNoticeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UerLoadNoticeList.h; sourceTree = "<group>"; };
+		185C58DC1678B2F500A6BFAF /* UerLoadNoticeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UerLoadNoticeList.m; sourceTree = "<group>"; };
+		185C58DF1678CC3C00A6BFAF /* NoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeCell.h; sourceTree = "<group>"; };
+		185C58E01678CC3C00A6BFAF /* NoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeCell.m; sourceTree = "<group>"; };
 		1874462E1626FE52009F6214 /* ForgorPswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgorPswViewController.m; sourceTree = "<group>"; };
 		1874462F1626FE52009F6214 /* ForgorPswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgorPswViewController.h; sourceTree = "<group>"; };
 		187446301626FE52009F6214 /* RegisterPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterPhotoViewController.h; sourceTree = "<group>"; };
@@ -1930,6 +1936,8 @@
 				18063C2E167780C700210719 /* NoticeViewController.m */,
 				18063C3016778EC600210719 /* DXQNoticeCenter.h */,
 				18063C3116778EC600210719 /* DXQNoticeCenter.m */,
+				185C58DF1678CC3C00A6BFAF /* NoticeCell.h */,
+				185C58E01678CC3C00A6BFAF /* NoticeCell.m */,
 			);
 			path = Notice;
 			sourceTree = "<group>";
@@ -3382,6 +3390,8 @@
 				F70D59E416524D7F00FCB4AB /* UserCreatePhotoRequest.m */,
 				F70D59E616525C8D00FCB4AB /* UserChangeFaceRequest.h */,
 				F70D59E716525C8E00FCB4AB /* UserChangeFaceRequest.m */,
+				185C58DB1678B2F500A6BFAF /* UerLoadNoticeList.h */,
+				185C58DC1678B2F500A6BFAF /* UerLoadNoticeList.m */,
 			);
 			name = SignInAndSignUp;
 			sourceTree = "<group>";
@@ -4422,6 +4432,8 @@
 				18063C2B1677748F00210719 /* ShareManageViewController.m in Sources */,
 				18063C2F167780C700210719 /* NoticeViewController.m in Sources */,
 				18063C3216778EC600210719 /* DXQNoticeCenter.m in Sources */,
+				185C58DD1678B2F500A6BFAF /* UerLoadNoticeList.m in Sources */,
+				185C58E11678CC3C00A6BFAF /* NoticeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
