@@ -17,17 +17,20 @@
 #import "UserDetailInfoVC.h"
 #import "DXQAccount.h"
 #import "BeautyContestViewController.h"
+#import "BadgeView.h"
+#import "ChatMessageCenter.h"
 
 @interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *dataSourceArray;
-    NumberView *numberView;
+    BadgeView *numberView;
 }
 
 @property(nonatomic,retain)NSArray *dataSourceArray;
-@property(nonatomic,strong) UITableView *tableView;
+@property(nonatomic,strong)UITableView *tableView;
 
 @end
+
 
 @implementation LeftViewController
 @synthesize tableView=_tableView;
@@ -41,7 +44,11 @@
         dataSourceArray = [[NSArray alloc]initWithArray:[[SettingManager sharedSettingManager] getLeftControlMenu]];
         //注册一个通知在切换用户的时候刷新左边菜单
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:NOTIFICATIONCENTER_MENU_LEFTCONTROL_REFRESH object:nil];
-        _noticeBadgeValue=10;
+        //注册获取通知后刷新通知的提示数目 add note by Huang Xiu Yong
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getNotice:) name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
+        _noticeBadgeValue=0;
+        _chatMsgValue=0;
+        [[ChatMessageCenter shareMessageCenter]addObserverForChatMessageNumberChange:self];
     }
     return self;
 }
@@ -49,6 +56,8 @@
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATIONCENTER_MENU_LEFTCONTROL_REFRESH object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
+    [[ChatMessageCenter shareMessageCenter]removeObserverForChatMessageNumberChange:self];
     [_tableView release];_tableView = nil;
     [_dataSourceArray release];_dataSourceArray = nil;
     [numberView release];
@@ -106,7 +115,7 @@
     [tooBar addSubview:settingBtn];
     
     if (!numberView) {
-        numberView=[[NumberView alloc]initWithFrame:CGRectMake(35.f, 0.f, 0.f, 0.f)];
+        numberView=[[BadgeView alloc]initWithFrame:CGRectMake(35.f, 0.f, 0.f, 0.f)];
         numberView.userInteractionEnabled=NO;
         if (_noticeBadgeValue==0) {
             numberView.hidden=YES;
@@ -248,10 +257,10 @@
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"CellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    LeftMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if(cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[LeftMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(8,8, 30, 30)];
@@ -306,6 +315,10 @@
     }
     cell.textLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     cell.textLabel.textColor = [UIColor colorWithString:@"#605D58"];
+    if (indexPath.section==1&&indexPath.row==1) {
+        cell.badgeNumber=_chatMsgValue;
+    }else
+        cell.badgeNumber=0;
     return cell;
 }
 
@@ -385,6 +398,18 @@
     numberView.number=noticeBadgeValue;
 }
 
+-(void)setChatMsgValue:(NSInteger)chatMsgValue{
+
+    if (chatMsgValue<=0) {
+        chatMsgValue=0;
+    }
+    if (chatMsgValue==_chatMsgValue) {
+        return;
+    }
+    _chatMsgValue=chatMsgValue;
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 -(void)addNoticeBadgeNumber:(NSInteger)addNumber{
 
     self.noticeBadgeValue=self.noticeBadgeValue+addNumber;
@@ -395,4 +420,56 @@
     self.noticeBadgeValue=self.noticeBadgeValue-removeNumber;
 }
 
+-(void)getNotice:(NSNotification *)not{
+
+    [self addNoticeBadgeNumber:1];
+}
+
+-(void)chatMsgCountChangeNumber:(NSInteger)number{
+
+    self.chatMsgValue=number;
+}
+
+@end
+
+@interface LeftMenuCell (){
+
+    BadgeView *badgeView;
+}
+
+@end
+@implementation LeftMenuCell
+
+-(void)dealloc{
+
+    [badgeView release];
+    [super dealloc];
+}
+
+-(void)setBadgeNumber:(NSInteger)badgeNumber{
+
+    if (badgeNumber<=0) {
+        badgeNumber=0;
+    }
+    
+    if (badgeNumber==_badgeNumber) {
+        return;
+    }
+
+    _badgeNumber=badgeNumber;
+    
+    if (badgeNumber==0) {
+        [badgeView removeFromSuperview];
+        [badgeView release];
+        badgeView=nil;
+    }else
+    {
+        if (!badgeView) {
+            badgeView=[[BadgeView alloc]initWithFrame:CGRectZero];
+            [self.contentView addSubview:badgeView];
+        }
+        badgeView.number=badgeNumber;
+        badgeView.frame=CGRectMake(self.contentView.frame.size.width-150.f, self.contentView.frame.size.height/2-badgeView.frame.size.height/2, badgeView.frame.size.width, badgeView.frame.size.height);
+    }
+}
 @end

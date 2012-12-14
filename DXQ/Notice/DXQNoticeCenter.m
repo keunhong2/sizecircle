@@ -26,11 +26,18 @@ static DXQNoticeCenter *noticeCenter=nil;
     return noticeCenter;
 }
 
+-(void)dealloc{
+
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
+    [super dealloc];
+}
+
 -(id)init{
 
     self=[super init];
     if (self) {
         
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getNotice:) name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
     }
     return self;
 }
@@ -57,4 +64,11 @@ static DXQNoticeCenter *noticeCenter=nil;
     }
 }
 
+-(void)getNotice:(NSNotification *)not{
+
+    id notice=[not object];
+    if (notice) {
+        [self addNoticeByArray:[NSArray arrayWithObject:notice]];
+    }
+}
 @end

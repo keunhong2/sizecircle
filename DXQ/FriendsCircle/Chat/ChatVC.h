@@ -12,4 +12,6 @@
 
 - (id)initWithInfo:(NSDictionary *)info;
 
+-(void)getChatMessage:(NSDictionary *)receiveDict;
+
 @end

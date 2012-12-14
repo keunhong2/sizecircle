@@ -16,6 +16,7 @@
 #import "SDWebImageManager.h"
 #import "SDImageCache.h"
 #import "DXQWebSocket.h"
+#import "ChatMessageCenter.h"
 
 @interface ChatVC ()<UIBubbleTableViewDataSource,UITextFieldDelegate>
 {
@@ -69,7 +70,7 @@
     [_messageTextField release];_messageTextField = nil;
     
     [_chatTableView release];_chatTableView = nil;
-    
+    [[ChatMessageCenter shareMessageCenter]removeChatViewController:self];
     [super dealloc];
 }
 
@@ -91,6 +92,7 @@
     self = [super init];
     if (self)
     {
+        [[ChatMessageCenter shareMessageCenter]addChatViewController:self chatName:[info objectForKey:@"AccountId"]];
         _chatUserInfo = [[NSDictionary alloc]initWithDictionary:info];
         
         //最近会话的人
@@ -269,6 +271,7 @@
 -(void)receivedMessage:(NSNotification *)info
 {
     HYLog(@"info-->%@",info);
+    return;
     NSMutableDictionary *receiveDict = [NSMutableDictionary dictionaryWithDictionary:[(NSNotification*)info userInfo]];
 
     if ([[receiveDict objectForKey:@"AccountFrom"] isEqualToString:[_chatUserInfo objectForKey:@"AccountId"]])
@@ -281,6 +284,14 @@
     }
 }
 
+-(void)getChatMessage:(NSDictionary *)receiveDict{
+    
+    long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
+    NSBubbleData *heyBubble = [NSBubbleData dataWithText:[receiveDict objectForKey:@"Content"] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
+    heyBubble.avatar = chatUserAvatar;
+    [_bubbleData addObject:heyBubble];
+    [_chatTableView reloadData];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField              // called when 'return' key pressed. return NO to ignore.
 {

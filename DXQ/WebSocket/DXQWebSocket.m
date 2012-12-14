@@ -6,6 +6,7 @@
 //
 
 #import "DXQWebSocket.h"
+#import "ChatMessageCenter.h"
 
 @implementation DXQWebSocket
 @synthesize isSignIn;
@@ -113,6 +114,8 @@ static DXQWebSocket *shareWS = nil;
     NSDictionary *receiveDict = [[Tool TrimJsonChar:message] JSONValue];
     if (receiveDict && [[receiveDict objectForKey:@"a"] isEqualToString:@"UserChatWithFriend"])
     {
+        [[ChatMessageCenter shareMessageCenter]postNewChatMessage:[receiveDict objectForKey:@"o"]];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATIONCENTER_RECEIVED_MESSAGES object:nil userInfo:[receiveDict objectForKey:@"o"]];
     }
     else  if(receiveDict &&[[receiveDict objectForKey:@"a"] isEqualToString:@"UserLogIn"]) //登陆返回
@@ -126,6 +129,9 @@ static DXQWebSocket *shareWS = nil;
         {
             [[AppDelegate sharedAppDelegate]signInRequestDidFinishedWithErrorMessage:errorCodeString];
         }
+    }else if (receiveDict &&[[receiveDict objectForKey:@"a"] isEqualToString:@"SystemPushNotice"])//系统通知
+    {
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATIONCENTER_RECEIED_NOTICE object:[receiveDict objectForKey:@"0"]];
     }
 }
 

@@ -28,7 +28,7 @@
         _dateLabel.font=[UIFont systemFontOfSize:15.f];
         _dateLabel.autoresizingMask=UIViewAutoresizingFlexibleLeftMargin;
         [self.contentView addSubview:_dateLabel];
-        
+        self.productImageView.frame=CGRectMake(self.productImageView.frame.origin.x-5.f, self.productImageView.frame.origin.y, self.productImageView.frame.size.width+5.f, self.productImageView.frame.size.height);
         self.productNameLabel.frame=CGRectMake(self.productNameLabel.frame.origin.x, self.productNameLabel.frame.origin.y, self.productNameLabel.frame.size.width-50.f, self.productNameLabel.frame.size.height);
     }
     return self;

@@ -11,6 +11,7 @@
 @interface LeftViewController : BaseViewController
 
 @property (nonatomic)NSInteger noticeBadgeValue;
+@property (nonatomic)NSInteger chatMsgValue;
 
 -(void)addNoticeBadgeNumber:(NSInteger)addNumber;
 
@@ -19,5 +20,12 @@
 //
 
 -(void)reloadData;
+
+@end
+
+
+@interface LeftMenuCell  : UITableViewCell
+
+@property (nonatomic)NSInteger badgeNumber;
 
 @end
