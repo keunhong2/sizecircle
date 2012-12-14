@@ -33,6 +33,7 @@
     [_noticeArray release];
     [loadMoreView release];
     [nodataImageView release];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
     [super dealloc];
 }
 
@@ -42,6 +43,7 @@
     if (self) {
         self.title=AppLocalizedString(@"通知中心");
         self.noticeArray=[[DXQNoticeCenter defaultNoticeCenter]allNotice];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getNotice:) name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
     }
     return self;
 }
@@ -230,6 +232,20 @@
         
         loadMoreView.state=LoadMoreStateNormal;
         [self.tableView refreshFinished];
+    }
+}
+
+-(void)getNotice:(NSNotification *)not{
+
+    id notice=[not object];
+    if(notice)
+    {
+        NSMutableArray *array=[NSMutableArray arrayWithObject:notice];
+        if(_noticeArray)
+        {
+            [array addObjectsFromArray:_noticeArray];
+        }
+        self.noticeArray=array;
     }
 }
 @end

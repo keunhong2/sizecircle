@@ -382,7 +382,7 @@
         _coordinate.latitude=80;
         _coordinate.longitude=100;
         _orderType=OrderTypeReleaseDate;
-        _isAscendingOrder=YES;
+        _isAscendingOrder=NO;
         _page=1;
         _count=20;
         _isValid=YES;
