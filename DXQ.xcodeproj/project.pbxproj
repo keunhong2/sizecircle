@@ -73,6 +73,10 @@
 		185BEFF71635653500DF3E70 /* ScreenSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF61635653500DF3E70 /* ScreenSelectCell.m */; };
 		185C58DD1678B2F500A6BFAF /* UerLoadNoticeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58DC1678B2F500A6BFAF /* UerLoadNoticeList.m */; };
 		185C58E11678CC3C00A6BFAF /* NoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58E01678CC3C00A6BFAF /* NoticeCell.m */; };
+		185C58E4167A151800A6BFAF /* ChatMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58E3167A151800A6BFAF /* ChatMessageCenter.m */; };
+		185C58E7167A24D500A6BFAF /* BadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58E6167A24D500A6BFAF /* BadgeView.m */; };
+		185C58EE167A297D00A6BFAF /* LeftSideBadgeValueBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 185C58EC167A297D00A6BFAF /* LeftSideBadgeValueBG.png */; };
+		185C58EF167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185C58ED167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png */; };
 		187446341626FE52009F6214 /* ForgorPswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874462E1626FE52009F6214 /* ForgorPswViewController.m */; };
 		187446351626FE52009F6214 /* RegisterPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446311626FE52009F6214 /* RegisterPhotoViewController.m */; };
 		187446361626FE52009F6214 /* GenderSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446321626FE52009F6214 /* GenderSelectView.m */; };
@@ -894,6 +898,12 @@
 		185C58DC1678B2F500A6BFAF /* UerLoadNoticeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UerLoadNoticeList.m; sourceTree = "<group>"; };
 		185C58DF1678CC3C00A6BFAF /* NoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeCell.h; sourceTree = "<group>"; };
 		185C58E01678CC3C00A6BFAF /* NoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeCell.m; sourceTree = "<group>"; };
+		185C58E2167A151800A6BFAF /* ChatMessageCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageCenter.h; sourceTree = "<group>"; };
+		185C58E3167A151800A6BFAF /* ChatMessageCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageCenter.m; sourceTree = "<group>"; };
+		185C58E5167A24D500A6BFAF /* BadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeView.h; sourceTree = "<group>"; };
+		185C58E6167A24D500A6BFAF /* BadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeView.m; sourceTree = "<group>"; };
+		185C58EC167A297D00A6BFAF /* LeftSideBadgeValueBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeftSideBadgeValueBG.png; sourceTree = "<group>"; };
+		185C58ED167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LeftSideBadgeValueBG@2x.png"; sourceTree = "<group>"; };
 		1874462E1626FE52009F6214 /* ForgorPswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgorPswViewController.m; sourceTree = "<group>"; };
 		1874462F1626FE52009F6214 /* ForgorPswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgorPswViewController.h; sourceTree = "<group>"; };
 		187446301626FE52009F6214 /* RegisterPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterPhotoViewController.h; sourceTree = "<group>"; };
@@ -2218,6 +2228,8 @@
 		F71C79A2166A79AB007F3EC9 /* IMAGES */ = {
 			isa = PBXGroup;
 			children = (
+				185C58EC167A297D00A6BFAF /* LeftSideBadgeValueBG.png */,
+				185C58ED167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png */,
 				F71C79A3166A79AC007F3EC9 /* blueArrow.png */,
 				F71C79A4166A79AC007F3EC9 /* blueArrow@2x.png */,
 				F71C79A5166A79AC007F3EC9 /* btn_sx.png */,
@@ -2582,6 +2594,8 @@
 				F71E62F7162D0ED600B6C040 /* HandSocketOperation.m */,
 				F71E62F8162D0ED600B6C040 /* DXQWebSocket.h */,
 				F71E62F9162D0ED600B6C040 /* DXQWebSocket.m */,
+				185C58E2167A151800A6BFAF /* ChatMessageCenter.h */,
+				185C58E3167A151800A6BFAF /* ChatMessageCenter.m */,
 			);
 			name = WebSocket;
 			path = DXQ/WebSocket;
@@ -3459,6 +3473,8 @@
 				F7F610B716288CDD00D1CBD1 /* RightViewController.m */,
 				1822A5B81629423E00051F9F /* PPRevealSideViewController.h */,
 				1822A5B91629423E00051F9F /* PPRevealSideViewController.m */,
+				185C58E5167A24D500A6BFAF /* BadgeView.h */,
+				185C58E6167A24D500A6BFAF /* BadgeView.m */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -4145,6 +4161,8 @@
 				F76B64AE1676C28C00B65A53 /* separatorLine@2x.png in Resources */,
 				F76B64AF1676C28C00B65A53 /* test.png in Resources */,
 				F76B64B01676C28C00B65A53 /* test@2x.png in Resources */,
+				185C58EE167A297D00A6BFAF /* LeftSideBadgeValueBG.png in Resources */,
+				185C58EF167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4434,6 +4452,8 @@
 				18063C3216778EC600210719 /* DXQNoticeCenter.m in Sources */,
 				185C58DD1678B2F500A6BFAF /* UerLoadNoticeList.m in Sources */,
 				185C58E11678CC3C00A6BFAF /* NoticeCell.m in Sources */,
+				185C58E4167A151800A6BFAF /* ChatMessageCenter.m in Sources */,
+				185C58E7167A24D500A6BFAF /* BadgeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
