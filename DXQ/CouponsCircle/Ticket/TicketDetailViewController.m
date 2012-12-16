@@ -39,6 +39,7 @@
     TicketInfoHeaderView *header=[[TicketInfoHeaderView alloc]initWithFrame:self.memberInfoView.frame];
     [header.actionView.praiseBtn addTarget:self action:@selector(admireRequest) forControlEvents:UIControlEventTouchUpInside];
     [[header.actionView follwerBtn]addTarget:self action:@selector(relationRequest) forControlEvents:UIControlEventTouchUpInside];
+    [header.actionView.shareBtn addTarget:self action:@selector(shareBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:header];
     
     self.memberInfoView=header;
