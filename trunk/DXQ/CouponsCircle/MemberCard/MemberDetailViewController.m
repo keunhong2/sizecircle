@@ -13,13 +13,21 @@
 #import "BaseAnnotation.h"
 #import "OrderRequest.h"
 #import "BuyViewController.h"
+#import "SinaWeiBoShare.h"
+#import "TecentWeiBoShare.h"
 
-@interface MemberDetailViewController ()<MemberDetailViewDelegate,UIAlertViewDelegate,RelationMakeRequestDelegate,BusessRequestDelegate,UITextFieldDelegate>{
+@interface MemberDetailViewController ()<MemberDetailViewDelegate,UIAlertViewDelegate,RelationMakeRequestDelegate,BusessRequestDelegate,UITextFieldDelegate,UIActionSheetDelegate>{
 
     NSTimer *countDownTimer;
     NSTimeInterval allCount;
     OrderRequest *orderRequest;
     UIButton *buyBtn;
+    
+    //to shear
+    SinaWeiBoShare *sinaShare;
+    TecentWeiBoShare *tcShare;
+    
+    
 }
 
 -(void)startCountDownWithTime:(NSTimeInterval)secound;
@@ -45,6 +53,9 @@
     [_businessInfoView release];
     [_infoDic release];
     [_simpleInfoDic release];
+    
+    sinaShare.delegate=nil;
+    tcShare.delegate=nil;
     [super dealloc];
 }
 
@@ -120,6 +131,7 @@
     UIButton *btn=[[headerInfoView actionView]praiseBtn];
     [btn addTarget:self action:@selector(admireRequest) forControlEvents:UIControlEventTouchUpInside];
     [[headerInfoView.actionView follwerBtn]addTarget:self action:@selector(relationRequest) forControlEvents:UIControlEventTouchUpInside];
+    [headerInfoView.actionView.shareBtn addTarget:self action:@selector(shareBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     self.memberInfoView=headerInfoView;
     [headerInfoView release];
     
@@ -322,6 +334,15 @@
         [[self.view viewWithTag:20] removeFromSuperview];
     }
 }
+
+-(void)shareBtnAction:(UIButton *)btn{
+    
+    UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:AppLocalizedString(@"分享") delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:AppLocalizedString(@"新浪微博"),AppLocalizedString(@"腾讯微博"), nil];
+    actionSheet.tag=2;
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
 #pragma mark -UITableViewDataSource
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -644,5 +665,39 @@
     [[ProgressHUD sharedProgressHUD]showInView:self.view];
     [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"关注成功")];
     [[ProgressHUD sharedProgressHUD]done:YES];
+}
+
+#pragma mark -Share
+
+
+#pragma mark -share
+
+-(NSString *)shareText{
+    
+    NSString *title=[_infoDic objectForKey:@"ProductTitle"];
+//    NSString *begainDate=[Tool convertTimestampToNSDate:[[_infoDic objectForKey:@"StartDate"] integerValue]];
+    return [NSString stringWithFormat:@"%@ %@ %@",title,[_infoDic objectForKey:@"Summary"],HomeWebSite];
+}
+
+-(void)shareResult:(BOOL)succes{
+    
+    [[ProgressHUD sharedProgressHUD]showInView:self.view];
+    NSString *text=succes==YES?AppLocalizedString(@"分享成功"):AppLocalizedString(@"分享失败");
+    [[ProgressHUD sharedProgressHUD]setText:text];
+    [[ProgressHUD sharedProgressHUD]done:succes];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+    if (actionSheet.tag==2) {
+        if (buttonIndex==0) {
+            sinaShare=[SinaWeiBoShare sharedSinaWeiBo];
+            [sinaShare postTextMessage:[self shareText]];
+        }else if (buttonIndex==1)
+        {
+            tcShare=[TecentWeiBoShare sharedTecentWeiBoShare];
+            [tcShare postMessage:[self shareText]];
+        }
+    }
 }
 @end
