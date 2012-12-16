@@ -50,6 +50,12 @@
 				<key>title</key>
 				<string>大小圈相亲</string>
 			</dict>
+			<dict>
+				<key>image</key>
+				<string>left_pyq_icon1</string>
+				<key>title</key>
+				<string>最近联系人</string>
+			</dict>
 		</array>
 	</dict>
 	<dict>

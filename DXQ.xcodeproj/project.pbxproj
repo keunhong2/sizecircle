@@ -77,6 +77,7 @@
 		185C58E7167A24D500A6BFAF /* BadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58E6167A24D500A6BFAF /* BadgeView.m */; };
 		185C58EE167A297D00A6BFAF /* LeftSideBadgeValueBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 185C58EC167A297D00A6BFAF /* LeftSideBadgeValueBG.png */; };
 		185C58EF167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185C58ED167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png */; };
+		185C58F6167DFB0900A6BFAF /* ChatUserManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185C58F5167DFB0900A6BFAF /* ChatUserManageViewController.m */; };
 		187446341626FE52009F6214 /* ForgorPswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874462E1626FE52009F6214 /* ForgorPswViewController.m */; };
 		187446351626FE52009F6214 /* RegisterPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446311626FE52009F6214 /* RegisterPhotoViewController.m */; };
 		187446361626FE52009F6214 /* GenderSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446321626FE52009F6214 /* GenderSelectView.m */; };
@@ -904,6 +905,8 @@
 		185C58E6167A24D500A6BFAF /* BadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeView.m; sourceTree = "<group>"; };
 		185C58EC167A297D00A6BFAF /* LeftSideBadgeValueBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeftSideBadgeValueBG.png; sourceTree = "<group>"; };
 		185C58ED167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LeftSideBadgeValueBG@2x.png"; sourceTree = "<group>"; };
+		185C58F4167DFB0900A6BFAF /* ChatUserManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUserManageViewController.h; sourceTree = "<group>"; };
+		185C58F5167DFB0900A6BFAF /* ChatUserManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatUserManageViewController.m; sourceTree = "<group>"; };
 		1874462E1626FE52009F6214 /* ForgorPswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgorPswViewController.m; sourceTree = "<group>"; };
 		1874462F1626FE52009F6214 /* ForgorPswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgorPswViewController.h; sourceTree = "<group>"; };
 		187446301626FE52009F6214 /* RegisterPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterPhotoViewController.h; sourceTree = "<group>"; };
@@ -3543,6 +3546,8 @@
 				F7FEA62416369E810086409A /* ChatBottomToolBar.m */,
 				F7FEA62516369E810086409A /* ChatVC.h */,
 				F7FEA62616369E810086409A /* ChatVC.m */,
+				185C58F4167DFB0900A6BFAF /* ChatUserManageViewController.h */,
+				185C58F5167DFB0900A6BFAF /* ChatUserManageViewController.m */,
 				F7FEA62716369E810086409A /* UIBubbleTableView */,
 			);
 			path = Chat;
@@ -4454,6 +4459,7 @@
 				185C58E11678CC3C00A6BFAF /* NoticeCell.m in Sources */,
 				185C58E4167A151800A6BFAF /* ChatMessageCenter.m in Sources */,
 				185C58E7167A24D500A6BFAF /* BadgeView.m in Sources */,
+				185C58F6167DFB0900A6BFAF /* ChatUserManageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -315,7 +315,7 @@
     }
     cell.textLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     cell.textLabel.textColor = [UIColor colorWithString:@"#605D58"];
-    if (indexPath.section==1&&indexPath.row==1) {
+    if (indexPath.section==1&&indexPath.row==3) {
         cell.badgeNumber=_chatMsgValue;
     }else
         cell.badgeNumber=0;
@@ -407,7 +407,7 @@
         return;
     }
     _chatMsgValue=chatMsgValue;
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:3]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)addNoticeBadgeNumber:(NSInteger)addNumber{
