@@ -407,7 +407,7 @@
         return;
     }
     _chatMsgValue=chatMsgValue;
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:3]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)addNoticeBadgeNumber:(NSInteger)addNumber{

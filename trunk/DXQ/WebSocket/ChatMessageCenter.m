@@ -76,7 +76,7 @@ static ChatMessageCenter *msgCenter=nil;
     NSMutableArray *tempArray=[NSMutableArray array];
     for (int i=0; i<chatMsgArray.count; i++) {
         NSDictionary *dic=[chatMsgArray objectAtIndex:i];
-        if ([[dic objectForKey:@"AccountTo"] isEqualToString:chatName]) {
+        if ([[dic objectForKey:@"AccountFrom"] isEqualToString:chatName]) {
             [tempArray addObject:dic];
         }
     }
