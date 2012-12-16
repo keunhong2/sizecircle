@@ -50,6 +50,10 @@ static ChatMessageCenter *msgCenter=nil;
 -(void)postNewChatMessage:(id)msg{
 
     if ([[(NSDictionary *)msg allKeys]containsObject:@"AccountTo"]) {
+        if ([[msg objectForKey:@"AccountFrom"] isEqualToString:[[SettingManager sharedSettingManager]loggedInAccount]]) {
+            //chat msg is send success
+            return;
+        }
         BOOL isPost=NO;
         NSString *toUser=[msg objectForKey:@"AccountFrom"];
         for (ChatObserveObject *obj in chatObserArray) {
