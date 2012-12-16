@@ -233,6 +233,15 @@
     [super viewDidLoad];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+
+    [super viewDidAppear:animated];
+    NSArray *chatMsg=[[ChatMessageCenter shareMessageCenter]getMsgWithChatName:[_chatUserInfo objectForKey:@"AccountId"]];
+    for (int i=0; i<chatMsg.count; i++) {
+        [self getChatMessage:[chatMsg objectAtIndex:i]];
+    }
+}
+
 -(void)sendMessage:(id)sender
 {
     if ([_chatToolBar.messageTextField.text length] > 0)
