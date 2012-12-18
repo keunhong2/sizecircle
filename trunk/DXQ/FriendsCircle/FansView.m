@@ -42,6 +42,7 @@
         UIImage *starimg = [UIImage imageNamed:@"pyq_fans.png"];
         _starImageView = [[UIImageView alloc]initWithFrame:CGRectMake(8,bgimg.size.height/2-starimg.size.height/2, starimg.size.width, starimg.size.height)];
         [_starImageView setImage:starimg];
+        [_starImageView setTag:1];
         [_starImageView setUserInteractionEnabled:YES];
         [self addSubview:_starImageView];
 
@@ -56,6 +57,7 @@
         [_fansCountLbl setBackgroundColor:[UIColor clearColor]];
         [_fansCountLbl setFont:[UIFont systemFontOfSize:12.0]];
         [_fansCountLbl setUserInteractionEnabled:YES];
+        [_fansCountLbl setTag:2];
         _fansCountLbl.text=[NSString stringWithFormat:@"粉丝:%d",_fansCount];
         [self addSubview:_fansCountLbl];
 
@@ -88,6 +90,8 @@
     if (fansCount==_fansCount) {
         return;
     }
+    _fansCount = fansCount;
+    
     _fansCountLbl.text=[NSString stringWithFormat:@"粉丝:%d",fansCount];
 }
 

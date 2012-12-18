@@ -159,6 +159,18 @@ static DXQCoreDataEntityBuilder *dXQCoreDataEntityBuilder = nil;
             user.dxq_IsFriend = (NSString*)dxq_IsFriend;
         }
         
+        NSObject* dxq_IsLinkme = [dictionary objectForKey:@"IsLinkme"];
+        if (dxq_IsLinkme && [dxq_IsLinkme isKindOfClass:[NSString class]])
+        {
+            user.dxq_IsLinkme = (NSString*)dxq_IsLinkme;
+        }
+        
+        NSObject* dxq_IsMylink = [dictionary objectForKey:@"IsMylink"];
+        if (dxq_IsMylink && [dxq_IsMylink isKindOfClass:[NSString class]])
+        {
+            user.dxq_IsMylink = (NSString*)dxq_IsMylink;
+        }
+        
         NSObject* dxq_IsBlackList = [dictionary objectForKey:@"IsBlackList"];
         if (dxq_IsBlackList && [dxq_IsBlackList isKindOfClass:[NSString class]])
         {
@@ -336,15 +348,15 @@ static DXQCoreDataEntityBuilder *dXQCoreDataEntityBuilder = nil;
         }
         
         NSObject* dxq_LinkmeCount = [dictionary objectForKey:@"LinkmeCount"];
-        if (dxq_LinkmeCount && [dxq_LinkmeCount isKindOfClass:[NSString class]])
+        if (dxq_LinkmeCount && [dxq_LinkmeCount isKindOfClass:[NSNumber class]])
         {
-            user.dxq_LinkmeCount = (NSString*)dxq_LinkmeCount;
+            user.dxq_LinkmeCount = [(NSNumber *)dxq_LinkmeCount stringValue];
         }
   
         NSObject* dxq_MylinkCount = [dictionary objectForKey:@"MylinkCount"];
-        if (dxq_MylinkCount && [dxq_MylinkCount isKindOfClass:[NSString class]])
+        if (dxq_MylinkCount && [dxq_MylinkCount isKindOfClass:[NSNumber class]])
         {
-            user.dxq_MylinkCount = (NSString*)dxq_MylinkCount;
+            user.dxq_MylinkCount = [(NSNumber*)dxq_MylinkCount stringValue];
         }
         
         

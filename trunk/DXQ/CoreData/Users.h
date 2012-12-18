@@ -26,6 +26,8 @@
 @property (nonatomic, retain) NSString * dxq_Introduction;
 @property (nonatomic, retain) NSString * dxq_IsOnline;
 @property (nonatomic, retain) NSString * dxq_IsFriend;
+@property (nonatomic, retain) NSString * dxq_IsLinkme;
+@property (nonatomic, retain) NSString * dxq_IsMylink;
 @property (nonatomic, retain) NSString * dxq_IsBlackList;
 @property (nonatomic, retain) NSNumber * dxq_IsOpenPosition;
 @property (nonatomic, retain) NSDate * dxq_LastLog;
