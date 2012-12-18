@@ -67,6 +67,8 @@
 @dynamic dxq_ReceivedGifts;
 @dynamic dxq_LastestAddress;
 @dynamic dxq_chatHistoryIndex;
+@dynamic dxq_IsLinkme;
+@dynamic dxq_IsMylink;
 
 //-(BOOL)isEqual:(id)object{
 //

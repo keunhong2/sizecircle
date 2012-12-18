@@ -206,7 +206,7 @@
     
     FansView *fansView = [[FansView alloc]initWithFrame:CGRectMake(228, 100, 0.0, 0.0) target:self action:@selector(tapFanView:)];
     fansView.isFans=NO;
-    fansView.fansCount=100;
+    fansView.tag = 999;
     fansView.hidden = YES;
     [_scrollView addSubview:fansView];
     self.fansView=fansView;
@@ -362,6 +362,12 @@
        UILabel *friendLbl = (UILabel*)[[toolBar viewWithTag:4] viewWithTag:1];
        friendLbl.text = (currentUser && [currentUser.dxq_IsFriend intValue] == 0)?AppLocalizedString(@"加好友"):AppLocalizedString(@"删除好友");
     }
+    
+    FansView *fansView = (FansView *)[_scrollView viewWithTag:999];
+    [fansView setFansCount:[currentUser.dxq_LinkmeCount intValue]];
+    
+    [fansView setIsFans:[currentUser.dxq_IsMylink boolValue]];
+
     self.fansView.hidden = NO;
     _bottomToolBar.hidden = NO;
     
@@ -640,7 +646,23 @@
 
 -(void)tapFanView:(UITapGestureRecognizer *)tap
 {
-//    [self funsIsAddOrRemove:![self.fansView isFans] fromUser:@"hlf" toUser:@"test"];
+    if (tap.view.tag == 1)
+    {
+        if ([[_userinfo objectForKey:@"IsMylink"] intValue] == 0)
+        {
+            [self handleCreateUserRelationWithType:RelationTypeFans];
+        }
+        else
+        {
+            [self handleRemoveUserRelationWithType:RelationTypeFans];
+        }
+    }
+    else  if (tap.view.tag == 2)
+    {        
+        FansListVC *vc =  [[FansListVC alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc release];
+    }    
 }
 
 -(void)showUIActionSheet:(NSInteger)tag
@@ -916,6 +938,21 @@
         DXQAccount *user = [[DXQCoreDataManager sharedCoreDataManager]getAccountByAccountID:[_userinfo objectForKey:@"AccountId"]];
         user.dxq_IsBlackList = success;
         [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
+    }
+    else if (relationType == RelationTypeFans)
+    {
+        [_userinfo setObject:success forKey:@"IsMylink"];
+        DXQAccount *user = [[DXQCoreDataManager sharedCoreDataManager]getAccountByAccountID:[_userinfo objectForKey:@"AccountId"]];
+        NSInteger fans = [user.dxq_LinkmeCount intValue];
+        if ([success intValue]==0)
+            fans --;
+        else
+            fans ++;
+        if (fans<0)fans = 0;
+        user.dxq_LinkmeCount = [NSString stringWithFormat:@"%d",fans];
+        user.dxq_IsMylink = success;
+        [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
+        [self refreshUI];
     }
 }
 
