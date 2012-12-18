@@ -266,7 +266,7 @@
     //websocket终端后重连
     [[SettingManager sharedSettingManager]setTempAccountID:accountID];
     
-    [[SettingManager sharedSettingManager]setTempAccountPassword:[Tool ConMD5:accountPwd]];
+    [[SettingManager sharedSettingManager]setTempAccountPassword:accountPwd];
     
     //保存用户登陆信息到数据库
     if (dict && [dict isKindOfClass:[NSDictionary class]])

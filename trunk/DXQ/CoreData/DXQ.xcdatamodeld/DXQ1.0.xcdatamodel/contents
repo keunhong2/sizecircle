@@ -25,6 +25,7 @@
         <attribute name="dxq_Answer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dxq_Birthday" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dxq_Blood" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dxq_chatHistoryIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="dxq_City" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dxq_Coins" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="dxq_Email" optional="YES" attributeType="String" syncable="YES"/>
@@ -75,8 +76,8 @@
         <attribute name="dxq_WeiDu" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DXQAccount" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Users" positionX="160" positionY="192" width="128" height="870"/>
-        <element name="ChatHistory" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="ChatHistory" positionX="-3170" positionY="12" width="128" height="195"/>
+        <element name="DXQAccount" positionX="-3170" positionY="12" width="128" height="90"/>
+        <element name="Users" positionX="-3170" positionY="12" width="128" height="885"/>
     </elements>
 </model>

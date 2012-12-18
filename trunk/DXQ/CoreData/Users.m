@@ -66,5 +66,18 @@
 @dynamic dxq_WeiDu;
 @dynamic dxq_ReceivedGifts;
 @dynamic dxq_LastestAddress;
+@dynamic dxq_chatHistoryIndex;
+
+//-(BOOL)isEqual:(id)object{
+//
+//    if ([super isEqual:object]) {
+//        return YES;
+//    }
+//    
+//    if ([self.dxq_AccountId isEqualToString:[(Users *)object dxq_AccountId]]) {
+//        return YES;
+//    }else
+//        return NO;
+//}
 
 @end
