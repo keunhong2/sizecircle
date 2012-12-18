@@ -270,10 +270,7 @@
 {
     //链接成功了给服务器发送cpc接口的数据
     NSDictionary *pDict = [NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom",[_chatUserInfo objectForKey:@"AccountId"],@"AccountTo",content,@"Content", nil];
-    NSString *pJson = [pDict JSONRepresentation];
-    NSString *mes = [NSString stringWithFormat:@"a=UserChatWithFriend&p=%@",pJson];
-    HYLog(@"Socket 发送数据:%@",mes);
-    [[DXQWebSocket sharedWebSocket]sendMessage:mes];
+    [[ChatMessageCenter shareMessageCenter]sendMsg:pDict target:self];
     _chatToolBar.messageTextField.text = @"";
 }
 
@@ -318,7 +315,12 @@
 - (void)didSelectEmojiImage:(UIImage *)image EmojiString:(NSString*)emoji
 {
     HYLog(@"%@",emoji);
-    _chatToolBar.messageTextField.text = [NSString stringWithFormat:@"%@%@",_chatToolBar.messageTextField.text ,emoji];
+    NSString *msgText=nil;
+    if (_chatToolBar.messageTextField.text) {
+        msgText=_chatToolBar.messageTextField.text;
+    }else
+        msgText=@"";
+    _chatToolBar.messageTextField.text = [NSString stringWithFormat:@"%@%@",msgText,emoji];
 }
 
 #pragma mark - UIBubbleTableViewDataSource implementation

@@ -244,7 +244,7 @@
     NSString *price=[_infoDic objectForKey:@"MarketPrice"];
     NSString *discount=[_infoDic objectForKey:@"Discount"];
     float theDiscount=[discount floatValue]/10.f;
-    NSString *nowPrice=[NSString stringWithFormat:@"%0.f",([price floatValue])*(1.f-theDiscount)];
+    NSString *nowPrice=[NSString stringWithFormat:@"%0.2f",([price floatValue]-[[_infoDic objectForKey:@"MemberPrice"] floatValue])];
     tempDetail.firstLineText=[NSString stringWithFormat:@"市场价 ¥%@ , 折扣: %@折 , 节省:¥%@",price,discount,nowPrice,nil];
     tempDetail.secoundLineText=[NSString stringWithFormat:@"已有%@人购买",[_infoDic objectForKey:@"BuyerCount"]];
 }
@@ -627,6 +627,9 @@
         [[ProgressHUD sharedProgressHUD]showInView:self.view];
         [[ProgressHUD sharedProgressHUD]setText:msg];
         [[ProgressHUD sharedProgressHUD]done:NO];
+    }
+    if (request==detailRequest) {
+        buyBtn.enabled=NO;
     }
 }
 

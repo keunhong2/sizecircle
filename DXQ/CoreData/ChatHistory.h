@@ -23,4 +23,13 @@
 @property (nonatomic, retain) NSString * dxq_Picture;
 @property (nonatomic, retain) NSString * dxq_WeiDu;
 
+-(NSDictionary *)chatDictionary;
+
+@end
+
+
+@interface NSDictionary (ChatHistoty)
+
+-(ChatHistory *)chatHistory;
+
 @end

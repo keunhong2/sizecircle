@@ -65,6 +65,8 @@
 		182C0BC21625CD8B0075367C /* UserRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC11625CD8B0075367C /* UserRegisterVC.m */; };
 		182C0BC51625D02F0075367C /* UITextField+InputTextFiled.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC41625D02E0075367C /* UITextField+InputTextFiled.m */; };
 		182C0BC81625D8F60075367C /* UserInforViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC71625D8F50075367C /* UserInforViewController.m */; };
+		1830FAC31680AD690001593A /* UserLoadUnReceivedChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */; };
+		1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC61680B2BB0001593A /* ChatUserManager.m */; };
 		184E41F1162D89D000D6C908 /* CounponsAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E41EF162D89D000D6C908 /* CounponsAboutCell.m */; };
 		184E420D162D972200D6C908 /* CouponsBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E420C162D972200D6C908 /* CouponsBottomBar.m */; };
 		184E4210162DA5F300D6C908 /* ThumbImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E420F162DA5F300D6C908 /* ThumbImageCell.m */; };
@@ -883,6 +885,10 @@
 		182C0BC41625D02E0075367C /* UITextField+InputTextFiled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+InputTextFiled.m"; sourceTree = "<group>"; };
 		182C0BC61625D8F50075367C /* UserInforViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInforViewController.h; sourceTree = "<group>"; };
 		182C0BC71625D8F50075367C /* UserInforViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInforViewController.m; sourceTree = "<group>"; };
+		1830FAC11680AD690001593A /* UserLoadUnReceivedChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadUnReceivedChat.h; sourceTree = "<group>"; };
+		1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadUnReceivedChat.m; sourceTree = "<group>"; };
+		1830FAC51680B2BB0001593A /* ChatUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUserManager.h; sourceTree = "<group>"; };
+		1830FAC61680B2BB0001593A /* ChatUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatUserManager.m; sourceTree = "<group>"; };
 		184E41EF162D89D000D6C908 /* CounponsAboutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CounponsAboutCell.m; sourceTree = "<group>"; };
 		184E41F0162D89D000D6C908 /* CounponsAboutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CounponsAboutCell.h; sourceTree = "<group>"; };
 		184E420B162D972200D6C908 /* CouponsBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponsBottomBar.h; sourceTree = "<group>"; };
@@ -2019,6 +2025,8 @@
 				18063C1A167628E100210719 /* UserUpdateNewsSetting.m */,
 				18063C1D16762E2900210719 /* UserSetAlertDay.h */,
 				18063C1E16762E2900210719 /* UserSetAlertDay.m */,
+				1830FAC11680AD690001593A /* UserLoadUnReceivedChat.h */,
+				1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -2599,6 +2607,8 @@
 				F71E62F9162D0ED600B6C040 /* DXQWebSocket.m */,
 				185C58E2167A151800A6BFAF /* ChatMessageCenter.h */,
 				185C58E3167A151800A6BFAF /* ChatMessageCenter.m */,
+				1830FAC51680B2BB0001593A /* ChatUserManager.h */,
+				1830FAC61680B2BB0001593A /* ChatUserManager.m */,
 			);
 			name = WebSocket;
 			path = DXQ/WebSocket;
@@ -4460,6 +4470,8 @@
 				185C58E4167A151800A6BFAF /* ChatMessageCenter.m in Sources */,
 				185C58E7167A24D500A6BFAF /* BadgeView.m in Sources */,
 				185C58F6167DFB0900A6BFAF /* ChatUserManageViewController.m in Sources */,
+				1830FAC31680AD690001593A /* UserLoadUnReceivedChat.m in Sources */,
+				1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

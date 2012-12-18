@@ -7,15 +7,23 @@
 //
 
 #import "ChatMessageCenter.h"
+#import "DXQWebSocket.h"
+#import "UserLoadUnReceivedChat.h"
 
-@interface ChatMessageCenter (){
+@interface ChatMessageCenter ()<BusessRequestDelegate>{
 
     NSMutableArray *chatObserArray;
     NSMutableArray *chatMsgArray;
     NSMutableArray *chatMsgNumObserArray;
+    NSMutableArray *sendAndNotReceviecArray;
+    UserLoadUnReceivedChat *getUnReadMsgRequest;
 }
 
 @end
+
+NSString *const DXQChatMessageWillGetUnReadMessageNotification=@"DXQChatMessageWillGetUnReadMessageNotification";
+NSString *const DXQChatMessageDidGetUnReadMessageNotification=@"DXQChatMessageDidGetUnReadMessageNotification";
+
 @implementation ChatMessageCenter
 
 static ChatMessageCenter *msgCenter=nil;
@@ -35,6 +43,7 @@ static ChatMessageCenter *msgCenter=nil;
         chatObserArray=[NSMutableArray new];
         chatMsgArray=[NSMutableArray new];
         chatMsgNumObserArray=[NSMutableArray new];
+        sendAndNotReceviecArray=[NSMutableArray new];
     }
     return self;
 }
@@ -44,6 +53,7 @@ static ChatMessageCenter *msgCenter=nil;
     [chatMsgArray release];
     [chatObserArray release];
     [chatMsgNumObserArray release];
+    [sendAndNotReceviecArray release];
     [super dealloc];
 }
 
@@ -52,6 +62,7 @@ static ChatMessageCenter *msgCenter=nil;
     if ([[(NSDictionary *)msg allKeys]containsObject:@"AccountTo"]) {
         if ([[msg objectForKey:@"AccountFrom"] isEqualToString:[[SettingManager sharedSettingManager]loggedInAccount]]) {
             //chat msg is send success
+            [self chatMsgIsSend:msg];
             return;
         }
         BOOL isPost=NO;
@@ -68,6 +79,29 @@ static ChatMessageCenter *msgCenter=nil;
                 [object.observer chatMsgCountChangeNumber:chatMsgArray.count];
             }
         }
+    }
+}
+
+
+-(void)postNewChatMessageArray:(NSArray *)msgArray
+{
+    NSInteger number=0;
+    for (NSDictionary *msg in msgArray) {
+        BOOL isPost=NO;
+        NSString *toUser=[msg objectForKey:@"AccountFrom"];
+        for (ChatObserveObject *obj in chatObserArray) {
+            if ([obj.chatName isEqualToString:toUser]) {
+                [obj.controller getChatMessage:msg];
+                isPost=YES;
+            }
+        }
+        if (!isPost) {
+            [chatMsgArray addObject:msg];
+            number++;
+        }
+    }
+    for (ChatMessageNumberChangeObject *object in chatMsgNumObserArray) {
+        [object.observer chatMsgCountChangeNumber:number];
     }
 }
 
@@ -126,6 +160,113 @@ static ChatMessageCenter *msgCenter=nil;
 
     ChatMessageNumberChangeObject *object=[[ChatMessageNumberChangeObject alloc]initWithObserver:observer];
     [chatMsgNumObserArray removeObject:object];
+}
+
+//for send msg
+
+-(void)sendMsg:(NSDictionary *)msgDic target:(id)target{
+
+    
+    ChatHistory *chat=[msgDic chatHistory];
+    [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
+    
+    if(![[DXQWebSocket sharedWebSocket]isOpen])
+    {
+        if (target&&[target respondsToSelector:@selector(chatMessage:sendFailedWithError:)]) {
+            NSError *error=[NSError errorWithDomain:@"Chat Message" code:100 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Socket is not connection", nil]];
+            [target chatMessage:msgDic sendFailedWithError:error];
+        }
+        return;
+    }
+    
+    SendMessageEntity *send=[[SendMessageEntity alloc]init];
+    send.chatMsg=chat;
+    send.target=target;
+    [sendAndNotReceviecArray addObject:send];
+    NSString *pJson = [msgDic JSONRepresentation];
+    NSString *mes = [NSString stringWithFormat:@"a=UserChatWithFriend&p=%@",pJson];
+    HYLog(@"Socket 发送数据:%@",mes);
+    [[DXQWebSocket sharedWebSocket]sendMessage:mes];
+    [self performSelector:@selector(msgTimeOut:) withObject:send afterDelay:5.f];
+    [send release];
+}
+
+-(void)removeMsgTarget:(id)target
+{
+    for (SendMessageEntity *entity in sendAndNotReceviecArray) {
+        if (entity.target==target) {
+            entity.target=nil;
+        }
+    }
+}
+
+-(void)msgTimeOut:(SendMessageEntity *)entity{
+    
+    if (entity.target&&[entity.target respondsToSelector:@selector(chatMessage:sendFailedWithError:)]) {
+        NSError *error=[NSError errorWithDomain:@"Chat Message" code:101 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Send message time out", nil]];
+        [entity.target chatMessage:[entity.chatMsg chatDictionary] sendFailedWithError:error];
+    }
+    [sendAndNotReceviecArray removeObject:entity];
+}
+
+-(void)chatMsgIsSend:(NSDictionary *)dic
+{
+    for (int i=0; i<sendAndNotReceviecArray.count; i++) {
+        SendMessageEntity *chat=[sendAndNotReceviecArray objectAtIndex:i];
+        if ([chat.chatMsg.dxq_Content isEqualToString:[dic objectForKey:@"Content"]]&&
+            [chat.chatMsg.dxq_AccountFrom isEqualToString:[dic objectForKey:@"AccountFrom"]]&&
+            [chat.chatMsg.dxq_AccountTo isEqualToString:[dic objectForKey:@"AccountTo"]]) {
+            chat.chatMsg.dxq_IsReceived=@"1";
+            [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
+            if (chat.target&&[chat.target respondsToSelector:@selector(chatMessageDidSend:)]) {
+                [chat.target chatMessageDidSend:dic];
+            }
+            [sendAndNotReceviecArray removeObject:chat];
+            return;
+        }
+    }
+}
+
+//for un read msg
+
+-(void)getUnReadMessage{
+
+    [self cancelGetUnReadMessage];
+    NSDictionary *pager=[NSDictionary dictionaryWithObjectsAndKeys:
+                         @"1",@"PageIndex",
+                         @"9999",@"ReturnCount", nil];
+    NSString *accountID=[[SettingManager sharedSettingManager]loggedInAccount];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:accountID,@"AccountId",pager,@"Pager", nil];
+    getUnReadMsgRequest=[[UserLoadUnReceivedChat alloc]initWithRequestWithDic:dic];
+    getUnReadMsgRequest.delegate=self;
+    [[NSNotificationCenter defaultCenter]postNotificationName:DXQChatMessageWillGetUnReadMessageNotification object:dic];
+    [getUnReadMsgRequest startAsynchronous];
+}
+
+-(void)cancelGetUnReadMessage{
+
+    if (getUnReadMsgRequest) {
+        [getUnReadMsgRequest cancel];
+        [getUnReadMsgRequest release];
+        getUnReadMsgRequest=nil;
+    }
+}
+
+#pragma mark-RequestDelegate
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFailedWithErrorMsg:(NSString *)msg{
+
+    if (request==getUnReadMsgRequest) {
+        [self getUnReadMessage];
+    }
+}
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
+
+    if (request==getUnReadMsgRequest) {
+        [self postNewChatMessageArray:data];
+        [[NSNotificationCenter defaultCenter]postNotificationName:DXQChatMessageDidGetUnReadMessageNotification object:data];
+    }
 }
 @end
 
@@ -206,4 +347,28 @@ static ChatMessageCenter *msgCenter=nil;
 
     return [NSString stringWithFormat:@"<%@ %p : Observer:%@>",self.class,self,_observer];
 }
+@end
+
+@implementation SendMessageEntity
+
+@synthesize chatMsg;
+@synthesize target;
+
+-(id)init{
+
+    self=[super init];
+    if (self) {
+        chatMsg=nil;
+        target=nil;
+    }
+    return self;
+}
+
+-(void)dealloc{
+
+    [chatMsg release];
+    target=nil;
+    [super dealloc];
+}
+
 @end

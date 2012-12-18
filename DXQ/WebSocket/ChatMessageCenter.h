@@ -7,12 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ChatHistory.h"
+
+
+extern NSString *const DXQChatMessageWillGetUnReadMessageNotification;
+extern NSString *const DXQChatMessageDidGetUnReadMessageNotification;
+
+@protocol ChatMessageDelegate <NSObject>
+
+@optional
+
+-(void)chatMessage:(NSDictionary *)msgDic sendFailedWithError:(NSError *)error;
+
+-(void)chatMessageDidSend:(NSDictionary *)msgDic;
+
+@end
 
 @interface ChatMessageCenter : NSObject
 
 +(ChatMessageCenter *)shareMessageCenter;
 
 -(void)postNewChatMessage:(id)msg;
+
+-(void)postNewChatMessageArray:(NSArray *)msgArray;
 
 -(NSArray *)getMsgWithChatName:(NSString *)chatName;
 
@@ -25,6 +42,20 @@
 -(void)addObserverForChatMessageNumberChange:(id)observer;
 
 -(void)removeObserverForChatMessageNumberChange:(id)observer;
+
+
+//for send msg
+
+-(void)sendMsg:(NSDictionary *)msgDic target:(id)target;
+
+-(void)removeMsgTarget:(id)target;
+
+
+//for un read msg
+
+-(void)getUnReadMessage;
+
+-(void)cancelGetUnReadMessage;
 
 @end
 
@@ -45,7 +76,13 @@
 
 @end
 
+@interface SendMessageEntity : NSObject
 
+@property (nonatomic,retain)ChatHistory *chatMsg;
+@property (nonatomic,assign)id target;
+
+@end
+//for ChatVC get message
 @interface UIViewController (ChatViewController)
 
 -(void)getChatMessage:(NSDictionary *)msgDic;

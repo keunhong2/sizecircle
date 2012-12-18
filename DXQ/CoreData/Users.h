@@ -65,6 +65,8 @@
 @property (nonatomic, retain) NSString * dxq_WeiDu;
 @property (nonatomic, retain) NSString * dxq_ReceivedGifts;
 @property (nonatomic, retain) NSString * dxq_LastestAddress;
+@property (nonatomic, retain) NSNumber *dxq_chatHistoryIndex;
+
 @end
 
 
