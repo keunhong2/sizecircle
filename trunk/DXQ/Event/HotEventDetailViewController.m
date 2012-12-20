@@ -279,6 +279,8 @@
         [favorRequest release];
         favorRequest=nil;
     }
+    [[ProgressHUD sharedProgressHUD]showInView:self.view];
+    [[ProgressHUD sharedProgressHUD]setText:nil];
     NSString *accountID=[[SettingManager sharedSettingManager]loggedInAccount];
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:accountID,@"AccountId",[_simpleDic objectForKey:@"ProductCode"],@"ProductCode", nil];
     favorRequest=[[UserSetFavoriteProduct alloc]initWithRequestWithDic:dic];
@@ -323,13 +325,11 @@
         _shareBtn.enabled=YES;
         _interBtn.enabled=YES;
     }else if ([request isEqual:favorRequest]){
-        
         _interBtn.enabled=NO;
         [[ProgressHUD sharedProgressHUD]showInView:self.view];
         [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"感兴趣成功")];
         [[ProgressHUD sharedProgressHUD]done:YES];
     }else if ([request isEqual:joinRequest]){
-        
         [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"参加成功")];
         [[ProgressHUD sharedProgressHUD]done:YES];
     }

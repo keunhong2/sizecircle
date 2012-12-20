@@ -9,16 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "Users.h"
 
+extern NSString *const DXQChatUserInfomationLoad;
+
 @interface ChatUserManager : NSObject
 
 +(ChatUserManager *)shareChatUserManager;
+
+-(NSArray *)allChatUser;
 
 -(void)chatWithUserID:(NSString *)userID;
 -(void)chatWithUserDic:(NSDictionary *)dic;
 -(void)chatWithUser:(Users *)user;
 
--(void)removeChatUserByDic:(NSDictionary *)dic;
--(void)removeChatUser:(Users *)user;
+-(BOOL)removeChatUserByDic:(NSDictionary *)dic;
+-(BOOL)removeChatUser:(Users *)user;
 
 -(NSInteger)getMsgNumberByUser:(Users *)user;
 -(NSInteger)getMsgNumberByUserID:(NSString *)userId;
