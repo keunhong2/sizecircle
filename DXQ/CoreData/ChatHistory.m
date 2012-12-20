@@ -21,20 +21,20 @@
 @dynamic dxq_OpTime;
 @dynamic dxq_Picture;
 @dynamic dxq_WeiDu;
-
--(BOOL)isEqual:(id)object{
-
-    if ([super isEqual:object]) {
-        return YES;
-    }
-    ChatHistory *othor=(ChatHistory *)object;
-    if ([self.dxq_AccountFrom isEqualToString:othor.dxq_AccountFrom]&&
-        [self.dxq_AccountTo isEqualToString:othor.dxq_AccountTo]&&
-        [self.dxq_Id isEqualToNumber:othor.dxq_Id]) {
-        return YES;
-    }else
-        return NO;
-}
+//
+//-(BOOL)isEqual:(id)object{
+//
+//    if ([super isEqual:object]) {
+//        return YES;
+//    }
+//    ChatHistory *othor=(ChatHistory *)object;
+//    if ([self.dxq_AccountFrom isEqualToString:othor.dxq_AccountFrom]&&
+//        [self.dxq_AccountTo isEqualToString:othor.dxq_AccountTo]&&
+//        [self.dxq_Id isEqualToNumber:othor.dxq_Id]) {
+//        return YES;
+//    }else
+//        return NO;
+//}
 
 -(NSDictionary *)chatDictionary{
 
@@ -81,31 +81,44 @@
     ChatHistory *chat=[NSEntityDescription insertNewObjectForEntityForName:@"ChatHistory" inManagedObjectContext:contenxt];
     if ([keys containsObject:@"AccountFrom"]) {
         chat.dxq_AccountFrom=[self objectForKey:@"AccountFrom"];
-    }
+    }else
+        chat.dxq_AccountFrom=@"";
+    
     if ([keys containsObject:@"AccountTo"]) {
         chat.dxq_AccountTo=[self objectForKey:@"AccountTo"];
-    }
+    }else
+        chat.dxq_AccountTo=@"";
+    
     if ([keys containsObject:@"Content"]) {
         chat.dxq_Content=[self objectForKey:@"Content"];
-    }
+    }else
+        chat.dxq_Content=@"";
+    
     if ([keys containsObject:@"Picture"]) {
         chat.dxq_Picture=[self objectForKey:@"Picture"];
-    }
+    }else
+        chat.dxq_Picture=@"";
+    
     if ([keys containsObject:@"Face"]) {
         chat.dxq_Face=[self objectForKey:@"Face"];
-    }
+    }else
+        chat.dxq_Face=@"";
+    
     if ([keys containsObject:@"JingDu"]) {
         chat.dxq_JingDu=[self objectForKey:@"JingDu"];
     }else
         chat.dxq_JingDu=@"0";
+    
     if ([keys containsObject:@"WeiDu"]) {
         chat.dxq_WeiDu=[self objectForKey:@"WeiDu"];
     }else
         chat.dxq_WeiDu=@"0";
+    
     if ([keys containsObject:@"IsReceived"]) {
         chat.dxq_IsReceived=[self objectForKey:@"IsReceived"];
     }else
         chat.dxq_IsReceived=@"0";
+    
     if ([keys containsObject:@"OpTime"]) {
         chat.dxq_OpTime=[NSDate dateWithTimeIntervalSince1970:[[self objectForKey:@"OpTime"] integerValue]];
     }else

@@ -11,5 +11,6 @@
 @interface ChatUserManageViewController : BaseNavigationItemViewController
 
 @property (nonatomic,retain)UITableView *tableView;
+@property (nonatomic,retain)NSArray *userArray;
 
 @end

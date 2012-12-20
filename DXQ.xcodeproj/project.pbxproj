@@ -67,6 +67,8 @@
 		182C0BC81625D8F60075367C /* UserInforViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC71625D8F50075367C /* UserInforViewController.m */; };
 		1830FAC31680AD690001593A /* UserLoadUnReceivedChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */; };
 		1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC61680B2BB0001593A /* ChatUserManager.m */; };
+		1830FACA168366BA0001593A /* ChatManageUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC9168366BA0001593A /* ChatManageUserCell.m */; };
+		1830FACD16836CF00001593A /* UserLoadPersonalPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FACC16836CF00001593A /* UserLoadPersonalPage.m */; };
 		184E41F1162D89D000D6C908 /* CounponsAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E41EF162D89D000D6C908 /* CounponsAboutCell.m */; };
 		184E420D162D972200D6C908 /* CouponsBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E420C162D972200D6C908 /* CouponsBottomBar.m */; };
 		184E4210162DA5F300D6C908 /* ThumbImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E420F162DA5F300D6C908 /* ThumbImageCell.m */; };
@@ -889,6 +891,10 @@
 		1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadUnReceivedChat.m; sourceTree = "<group>"; };
 		1830FAC51680B2BB0001593A /* ChatUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUserManager.h; sourceTree = "<group>"; };
 		1830FAC61680B2BB0001593A /* ChatUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatUserManager.m; sourceTree = "<group>"; };
+		1830FAC8168366BA0001593A /* ChatManageUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManageUserCell.h; sourceTree = "<group>"; };
+		1830FAC9168366BA0001593A /* ChatManageUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatManageUserCell.m; sourceTree = "<group>"; };
+		1830FACB16836CF00001593A /* UserLoadPersonalPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadPersonalPage.h; sourceTree = "<group>"; };
+		1830FACC16836CF00001593A /* UserLoadPersonalPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadPersonalPage.m; sourceTree = "<group>"; };
 		184E41EF162D89D000D6C908 /* CounponsAboutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CounponsAboutCell.m; sourceTree = "<group>"; };
 		184E41F0162D89D000D6C908 /* CounponsAboutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CounponsAboutCell.h; sourceTree = "<group>"; };
 		184E420B162D972200D6C908 /* CouponsBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponsBottomBar.h; sourceTree = "<group>"; };
@@ -3152,6 +3158,8 @@
 				F7F6EE14165D1B0800D0ACFD /* UpdateAccountInfoRequest.m */,
 				18E87725166776B100284333 /* UserLoadFriendList.h */,
 				18E87726166776B200284333 /* UserLoadFriendList.m */,
+				1830FACB16836CF00001593A /* UserLoadPersonalPage.h */,
+				1830FACC16836CF00001593A /* UserLoadPersonalPage.m */,
 			);
 			path = FriendsCircleRequest;
 			sourceTree = "<group>";
@@ -3558,6 +3566,8 @@
 				F7FEA62616369E810086409A /* ChatVC.m */,
 				185C58F4167DFB0900A6BFAF /* ChatUserManageViewController.h */,
 				185C58F5167DFB0900A6BFAF /* ChatUserManageViewController.m */,
+				1830FAC8168366BA0001593A /* ChatManageUserCell.h */,
+				1830FAC9168366BA0001593A /* ChatManageUserCell.m */,
 				F7FEA62716369E810086409A /* UIBubbleTableView */,
 			);
 			path = Chat;
@@ -4472,6 +4482,8 @@
 				185C58F6167DFB0900A6BFAF /* ChatUserManageViewController.m in Sources */,
 				1830FAC31680AD690001593A /* UserLoadUnReceivedChat.m in Sources */,
 				1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */,
+				1830FACA168366BA0001593A /* ChatManageUserCell.m in Sources */,
+				1830FACD16836CF00001593A /* UserLoadPersonalPage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

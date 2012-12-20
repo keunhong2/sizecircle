@@ -24,4 +24,6 @@
 
 -(NSDictionary *)DXQAccountToNSDictionary:(DXQAccount *)account;
 
+//set user info
+- (void)assignToUser:(Users*)user dictionary:(NSDictionary*)dictionary saveUpdateDate:(BOOL)isUpdate;
 @end
