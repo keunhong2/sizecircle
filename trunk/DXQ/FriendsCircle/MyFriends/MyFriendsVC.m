@@ -160,7 +160,7 @@
 {
     NSMutableDictionary *parametersDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:nil, nil];
     [parametersDic setObject:@"0" forKey:@"FriendType"];
-    [parametersDic setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"PageIndex",@"20",@"ReturnCount", nil] forKey:@"Pager"];
+    [parametersDic setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"PageIndex",@"200",@"ReturnCount", nil] forKey:@"Pager"];
     [parametersDic setObject:[[SettingManager sharedSettingManager]loggedInAccount] forKey:@"AccountId"];
     isUserLoadFriendListRequesting = YES;
     userLoadFriendListRequest = [[UserLoadFriendListRequest alloc]initWithRequestWithDic:parametersDic ];

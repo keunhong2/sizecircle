@@ -659,7 +659,7 @@
     }
     else  if (tap.view.tag == 2)
     {        
-        FansListVC *vc =  [[FansListVC alloc]init];
+        FansListVC *vc =  [[FansListVC alloc]initWithAccountID:[_userinfo objectForKey:@"AccountId"]];
         [self.navigationController pushViewController:vc animated:YES];
         [vc release];
     }    
