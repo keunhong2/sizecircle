@@ -19,8 +19,9 @@
 #import "BeautyContestViewController.h"
 #import "BadgeView.h"
 #import "ChatMessageCenter.h"
+#import "ImageFilterVC.h"
 
-@interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UniversalViewControlDelegate>
 {
     NSArray *dataSourceArray;
     BadgeView *numberView;
@@ -88,6 +89,7 @@
     UIButton *takephotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [takephotoBtn setImage:takephotoImage forState:UIControlStateNormal];
     [takephotoBtn setShowsTouchWhenHighlighted:YES];
+    [takephotoBtn addTarget:self action:@selector(takePicture:) forControlEvents:UIControlEventTouchUpInside];
     [takephotoBtn setFrame:CGRectMake(180.0,navImage.size.height/2-takephotoImage.size.height/2,takephotoImage.size.width,takephotoImage.size.height)];
     [topNav addSubview:takephotoBtn];
     
@@ -156,6 +158,68 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
+
+-(void)takePicture:(UIButton *)btn
+{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+	{
+		UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+		picker.delegate = self;
+		picker.allowsEditing = YES;
+		picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+		[self presentModalViewController:picker animated:YES];
+		[picker release];
+	}
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"设备不支持拍照" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+    }
+}
+
+#pragma mark UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    NSAssert(image != nil, @"Can't get the image!");
+	if (image)
+	{
+        [self performSelector:@selector(showImageFilter:) withObject:image afterDelay:0.5];
+    }
+	[picker dismissModalViewControllerAnimated:YES];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissModalViewControllerAnimated:YES];
+}
+
+-(void)showImageFilter:(UIImage *)image
+{
+    ImageFilterVC *vc = [[ImageFilterVC alloc]initWithImage:image type:@"2"];
+    CustonNavigationController *nav = [[CustonNavigationController alloc]initWithRootViewController:vc];
+    vc.vDelegate = self;
+    [[AppDelegate sharedAppDelegate].menuController presentModalViewController:nav animated:YES];
+    [vc release];
+    [nav release];
+}
+
+#pragma mark
+#pragma UniversalViewControlDelegate Methord
+-(void)didCancelViewViewController
+{
+    [[AppDelegate sharedAppDelegate].menuController  dismissModalViewControllerAnimated:YES];
+}
+
+-(void)didFinishedAction:(UIViewController *)viewController
+{
+    if ([viewController isKindOfClass:[ImageFilterVC class]])
+    {
+        [self didCancelViewViewController];
+    }
+}
+
 
 -(void)viewDidAppear:(BOOL)animated
 {    

@@ -11,7 +11,10 @@
 #import "LeftViewController.h"
 #import "DXQCoreDataManager.h"
 #import "DXQCoreDataEntityBuilder.h"
+
 #import "CouponsCircleVC.h"
+#import "TicketViewController.h"
+
 #import "CustonNavigationController.h"
 #import "PPRevealSideViewController.h"
 #import "DXQWebSocket.h"
@@ -51,7 +54,7 @@
     [[DXQCoreDataManager sharedCoreDataManager] setDXQManageObjectContext:[self managedObjectContext]];
     
     //menu
-    CouponsCircleVC *viewController = [[CouponsCircleVC alloc]init];
+    TicketViewController *viewController = [[TicketViewController alloc]init];
     self.navViewController = [[CustonNavigationController alloc] initWithRootViewController:viewController];
  
     PPRevealSideViewController *rootController=[[PPRevealSideViewController alloc]initWithRootViewController:self.navViewController];

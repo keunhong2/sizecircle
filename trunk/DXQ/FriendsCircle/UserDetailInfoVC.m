@@ -749,6 +749,10 @@
 //送礼
 -(void)sendGifts
 {
+    if ([[_userinfo objectForKey:@"IsBlackList"] intValue] == 1)
+    {
+       return [Tool showAlertWithTitle:AppLocalizedString(@"该用户在黑名单,无法给Ta送礼") msg:nil];
+    }
     SendGiftsVC *vc=[[SendGiftsVC alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
@@ -757,6 +761,10 @@
 //聊天
 -(void)startChat:(UIButton *)sender
 {
+    if ([[_userinfo objectForKey:@"IsBlackList"] intValue] == 1)
+    {
+        return [Tool showAlertWithTitle:AppLocalizedString(@"该用户在黑名单,无法给Ta发信息") msg:nil];
+    }
     ChatVC *vc=[[ChatVC alloc]initWithInfo:_userinfo];
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
@@ -765,6 +773,10 @@
 //打招呼
 -(void)sendAloha
 {
+    if ([[_userinfo objectForKey:@"IsBlackList"] intValue] == 1)
+    {
+        return [Tool showAlertWithTitle:AppLocalizedString(@"该用户在黑名单,不能和Ta打招呼") msg:nil];
+    }
     if (isRequesting)return;
     isRequesting = YES;
     [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"正在处理...")];
@@ -798,6 +810,10 @@
 //加好友
 -(void)addNewFriend
 {
+    if ([[_userinfo objectForKey:@"IsBlackList"] intValue] == 1)
+    {
+        return [Tool showAlertWithTitle:AppLocalizedString(@"该用户在黑名单,请先删除黑名单再添加Ta为好友") msg:nil];
+    }
     if ([[_userinfo objectForKey:@"IsFriend"] intValue] == 0)
     {
         [self handleCreateUserRelationWithType:RelationTypeHiddenFriend];
