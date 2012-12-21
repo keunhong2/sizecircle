@@ -280,7 +280,7 @@
     BuyViewController *buyViewController=[[BuyViewController alloc]init];
     buyViewController.productDic=_infoDic;
     
-    if (/*[[_infoDic objectForKey:@"Discount"] integerValue]==0||*/[[_infoDic objectForKey:@"MarketPrice"] floatValue]==0||[[_infoDic objectForKey:@"MarketPrice"] integerValue]==0) {
+    if (/*[[_infoDic objectForKey:@"Discount"] integerValue]==0||*/[[_infoDic objectForKey:@"MemberPrice"] floatValue]==0) {
         buyViewController.canEditeBuyNumber=NO;
     }
     [self.navigationController pushViewController:buyViewController animated:YES];

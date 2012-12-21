@@ -146,7 +146,12 @@
     {
         _userInfo = [[NSMutableDictionary alloc]initWithDictionary:info
                      ];
-        NSDictionary *item = [_userInfo objectForKey:@"uploadphotourl"];
+        NSDictionary *item ;
+        if ([_userInfo.allKeys containsObject:@"uploadphotourl"]) {
+            
+            item= [_userInfo objectForKey:@"uploadphotourl"];
+        }else
+            item=_userInfo;
         photoid = [item objectForKey:@"Id"];
         photoDes = [item objectForKey:@"FileDesc"];
         
