@@ -83,7 +83,7 @@
     //年龄
 //    NSNumber *age = [_userinfoDict objectForKey:@"Age"];
     NSNumber *age = user.dxq_Age;
-    if (age&&[age isKindOfClass:[NSNumber class]])
+    if (age&&[age isKindOfClass:[NSNumber class]] &&[age intValue]>0)
     {
         NSString *ageString = [age stringValue];
         NSDictionary *item =     [NSDictionary dictionaryWithObjectsAndKeys:
@@ -100,7 +100,7 @@
     //月薪
 //    NSNumber *salary = [_userinfoDict objectForKey:@"Salary"];
     NSString *salary = user.dxq_Salary;
-    if (salary&&[salary isKindOfClass:[NSString class]]&&[salary length]>0)
+    if (salary&&[salary isKindOfClass:[NSString class]]&&[salary length]>0 && [salary intValue]>0)
     {
         NSString *salaryString = salary;
         NSDictionary *item =     [NSDictionary dictionaryWithObjectsAndKeys:
@@ -117,7 +117,7 @@
     //身高
 //    NSNumber *height = [_userinfoDict objectForKey:@"Height"];
     NSString *height = user.dxq_Height;
-    if (height&&[height isKindOfClass:[NSString class]]&&[height length]>0)
+    if (height&&[height isKindOfClass:[NSString class]]&&[height length]>0 && [height intValue]>0)
     {
         
         NSString *heightString = height;
