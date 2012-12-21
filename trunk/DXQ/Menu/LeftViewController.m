@@ -193,6 +193,7 @@
             break;
         case 1:
             [self didSelectControl:@"MyFriendsVC"];
+            [self setChatMsgValue:0];
             break;
         case 2:
             [self didSelectControl:@"DXQDatingVC"];
@@ -407,7 +408,7 @@
         return;
     }
     _chatMsgValue=chatMsgValue;
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)addNoticeBadgeNumber:(NSInteger)addNumber{

@@ -20,6 +20,7 @@
 #import "PhotoDetailVC.h"
 #import "SinaWeiBoShare.h"
 #import "TecentWeiBoShare.h"
+#import "BuyViewController.h"
 
 @interface HotEventDetailViewController ()<BusessRequestDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UniversalViewControlDelegate,ImageContentDelegate>{
     
@@ -407,6 +408,16 @@
 
 -(void)joinBntAction:(UIButton *)btn{
     
+    BuyViewController *buyViewController=[[BuyViewController alloc]init];
+    buyViewController.productDic=_detailDic;
+    
+    if (/*[[_infoDic objectForKey:@"Discount"] integerValue]==0||*/[[_detailDic objectForKey:@"MemberPrice"] floatValue]==0) {
+        buyViewController.canEditeBuyNumber=NO;
+    }
+    [self.navigationController pushViewController:buyViewController animated:YES];
+    [buyViewController release];
+    return;
+
     [self joinRequest];
 }
 
@@ -429,14 +440,14 @@
         [self addImage];
     }else
     {
-        PhotoDetailViewController *detail=[[PhotoDetailViewController alloc]init];
-        detail.imgInfoDic=[imageContentView.imageArray objectAtIndex:index];
-        [self.navigationController pushViewController:detail animated:YES];
-        [detail release];
+//        PhotoDetailViewController *detail=[[PhotoDetailViewController alloc]init];
+//        detail.imgInfoDic=[imageContentView.imageArray objectAtIndex:index];
+//        [self.navigationController pushViewController:detail animated:YES];
+//        [detail release];
         
-//        PhotoDetailVC *photo=[[PhotoDetailVC alloc]initWithUserInfo:[imageContentView.imageArray objectAtIndex:index]];
-//        [self.navigationController pushViewController:photo animated:YES];
-//        [photo release];
+        PhotoDetailVC *photo=[[PhotoDetailVC alloc]initWithUserInfo:[imageContentView.imageArray objectAtIndex:index]];
+        [self.navigationController pushViewController:photo animated:YES];
+        [photo release];
     }
 }
 #pragma mark -UIActionSheetDelegate

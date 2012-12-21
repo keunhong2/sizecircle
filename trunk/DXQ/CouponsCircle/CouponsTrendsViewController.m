@@ -255,13 +255,13 @@
     }
     NSArray *array=[_photoListArray subarrayWithRange:NSMakeRange(location, length)];
     NSDictionary *dic=[array objectAtIndex:imageView.tag-1];
-    PhotoDetailViewController *photo=[[PhotoDetailViewController alloc]initWithImageInfoDic:dic];
-    [self.navigationController pushViewController:photo animated:YES];
-    [photo release];
-    
-//    PhotoDetailVC *photo=[[PhotoDetailVC alloc]initWithUserInfo:dic];
+//    PhotoDetailViewController *photo=[[PhotoDetailViewController alloc]initWithImageInfoDic:dic];
 //    [self.navigationController pushViewController:photo animated:YES];
 //    [photo release];
+    
+    PhotoDetailVC *photo=[[PhotoDetailVC alloc]initWithUserInfo:dic];
+    [self.navigationController pushViewController:photo animated:YES];
+    [photo release];
 }
 #pragma mark -Request
 
