@@ -13,6 +13,10 @@
 #import "UIScrollView+AH3DPullRefresh.h"
 #import "NoticeCell.h"
 #import "UIImageView+WebCache.h"
+#import "UserDetailInfoVC.h"
+#import "ChatVC.h"
+#import "OrderDetailViewController.h"
+#import "HotEventDetailViewController.h"
 
 @interface NoticeViewController ()<UITableViewDataSource,UITableViewDelegate,BusessRequestDelegate>{
 
@@ -21,6 +25,7 @@
     UIImageView *nodataImageView;
     BOOL isRefrush;
 }
+@property (nonatomic,retain)NSDictionary *currentEditDic;
 
 @end
 
@@ -33,6 +38,7 @@
     [_noticeArray release];
     [loadMoreView release];
     [nodataImageView release];
+    [_currentEditDic release];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
     [super dealloc];
 }
@@ -144,6 +150,9 @@
     } failure:nil];
     cell.productNameLabel.text=[dic objectForKey:@"Title"];
     cell.exdateLabel.text=[dic objectForKey:@"Content"];
+    if (cell.productNameLabel.text.length==0) {
+        cell.productNameLabel.text=[dic objectForKey:@"MemberAccount"];
+    }
     NSDate *date=[NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"OpTime"] floatValue]];
     NSInteger time=-[date timeIntervalSinceNow];
     if (time<60) {
@@ -163,6 +172,97 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary *dic=[self.noticeArray objectAtIndex:indexPath.row];
+    NSString *contentCode=[dic objectForKey:@"ContentCode"];
+    NSInteger number=[contentCode integerValue];
+    switch (number) {
+        case 1:
+            [self goPresentPageByDic:dic];
+            break;
+        case 2:case 4:case 6:case 9:
+            [self goUserDetailPageByDic:dic];
+            break;
+        case 3:
+            [self goChatPageByDic:dic];
+        case 5:
+            [self addFriendMsgByDic:dic];
+            break;
+        case 8:
+            [self joinEventByDic:dic];
+            break;
+        case 10:
+            [self goEventPageByDic:dic];
+            break;
+        case 11:
+            [self goOrderPageByDic:dic];
+            break;
+        default:
+            break;
+    }
+}
+
+
+#pragma mark -Action
+
+-(void)goPresentPageByDic:(NSDictionary *)dic{}
+
+
+-(void)goUserDetailPageByDic:(NSDictionary *)dic{
+
+    NSMutableDictionary *tempDic=[NSMutableDictionary dictionaryWithDictionary:dic];
+    [tempDic setObject:[dic objectForKey:@"AccountFrom"] forKey:@"AccountId"];
+    UserDetailInfoVC *vc=[[UserDetailInfoVC alloc]initwithUserInfo:tempDic];
+    [self.navigationController pushViewController:vc animated:YES];
+    [vc release];
+}
+
+-(void)goChatPageByDic:(NSDictionary *)dic{
+
+    NSMutableDictionary *tempDic=[NSMutableDictionary dictionaryWithDictionary:dic];
+    [tempDic setObject:[dic objectForKey:@"AccountFrom"] forKey:@"AccountId"];
+    [tempDic setObject:[dic objectForKey:@"AccountFromPhotoUrl"] forKey:@"PhotoUrl"];
+    [tempDic setObject:[dic objectForKey:@"MemberAccount"] forKey:@"MemberName"];
+    ChatVC *vc=[[ChatVC alloc]initWithInfo:tempDic];
+    [self.navigationController pushViewController:vc animated:YES];
+    [vc release];
+}
+
+-(void)addFriendMsgByDic:(NSDictionary *)dic{
+
+    [self showActionSheetByTitle:@"好友请求" withDic:dic];
+}
+
+-(void)joinEventByDic:(NSDictionary *)dic{
+
+    [self showActionSheetByTitle:@"活动邀请" withDic:dic];
+}
+
+-(void)showActionSheetByTitle:(NSString *)title withDic:(NSDictionary *)dic{
+
+    UIActionSheet *sheet=[[UIActionSheet alloc]initWithTitle:title delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"同意" otherButtonTitles:@"不同意", nil];
+    sheet.tag=1;
+    [sheet showInView:self.view];
+    [sheet release];
+    self.currentEditDic=dic;
+}
+
+-(void)goOrderPageByDic:(NSDictionary *)dic{
+
+    OrderDetailViewController *order=[[OrderDetailViewController alloc]init];
+    [self.navigationController pushViewController:order animated:YES];
+    [order release];
+}
+
+-(void)goEventPageByDic:(NSDictionary *)dic{
+
+    HotEventDetailViewController *detail=[[HotEventDetailViewController alloc]init];
+    [self.navigationController pushViewController:detail animated:YES];
+    detail.simpleDic=dic;
+    [detail release];
+}
 #pragma mark -Request
 
 -(void)cancelAllRequest{

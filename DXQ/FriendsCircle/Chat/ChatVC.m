@@ -240,6 +240,9 @@
     for (int i=0; i<chatMsg.count; i++) {
         [self getChatMessage:[chatMsg objectAtIndex:i]];
     }
+    
+    NSLog(@"self view %@",self.view);
+    NSLog(@"window %@",[[[UIApplication sharedApplication]keyWindow]subviews]);
 }
 
 -(void)sendMessage:(id)sender
