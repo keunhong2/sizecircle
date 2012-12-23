@@ -68,7 +68,7 @@
 //    RightViewController *rightController = [[RightViewController alloc] init];
 //    [rootController preloadViewController:rightController forSide:PPRevealSideDirectionRight];
 //    [rightController release];
-    self.window = [[[TestWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = self.menuController;
     [self.window makeKeyAndVisible];
@@ -236,17 +236,6 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
-@end
-
-
-@implementation TestWindow
-
--(void)addSubview:(UIView *)view{
-
-    [super addSubview:view];
-    NSLog(@"sssss");
 }
 
 @end
