@@ -48,3 +48,7 @@
 - (void)signInRequestDidFinishedWithErrorMessage:(NSString *)errorMsg;
 
 @end
+
+@interface TestWindow : UIWindow
+
+@end
