@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18028C06168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18028C05168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.m */; };
+		18028C09168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.m in Sources */ = {isa = PBXBuildFile; fileRef = 18028C08168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.m */; };
+		18028C0C168B4402000EA0AF /* ChangePswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18028C0B168B4402000EA0AF /* ChangePswViewController.m */; };
 		1802DC5416512A1B00E7DFC7 /* BaseAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1802DC5316512A1B00E7DFC7 /* BaseAnnotation.m */; };
 		1802DC5B16512B0800E7DFC7 /* CalloutMapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1802DC5A16512B0800E7DFC7 /* CalloutMapAnnotationView.m */; };
 		1802DC6216512B0800E7DFC7 /* AnnotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1802DC6016512B0800E7DFC7 /* AnnotationViewController.m */; };
@@ -86,6 +89,9 @@
 		187446351626FE52009F6214 /* RegisterPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446311626FE52009F6214 /* RegisterPhotoViewController.m */; };
 		187446361626FE52009F6214 /* GenderSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446321626FE52009F6214 /* GenderSelectView.m */; };
 		187F6D30163FE6390064EBC2 /* ForgotPswRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F6D2E163FE6390064EBC2 /* ForgotPswRequest.m */; };
+		18808AE21689E76E001D4B71 /* pic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 18808AE01689E76E001D4B71 /* pic_default.png */; };
+		18808AE31689E76E001D4B71 /* pic_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18808AE11689E76E001D4B71 /* pic_default@2x.png */; };
+		18808AE71689EAB2001D4B71 /* GetPhoneCheckCodeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18808AE61689EAB2001D4B71 /* GetPhoneCheckCodeRequest.m */; };
 		18A8A3A81633B5E500167D57 /* MemberDetailBusinessInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A8A3A71633B5E500167D57 /* MemberDetailBusinessInfoView.m */; };
 		18ACD22616344921004A426B /* TicketInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22516344921004A426B /* TicketInfoHeaderView.m */; };
 		18ACD22E163452F9004A426B /* TuanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22D163452F9004A426B /* TuanDetailViewController.m */; };
@@ -776,6 +782,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18028C04168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForPswGetPhoneNumberViewController.h; sourceTree = "<group>"; };
+		18028C05168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForPswGetPhoneNumberViewController.m; sourceTree = "<group>"; };
+		18028C07168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPhoneCheckCodeForFindPsw.h; sourceTree = "<group>"; };
+		18028C08168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPhoneCheckCodeForFindPsw.m; sourceTree = "<group>"; };
+		18028C0A168B4402000EA0AF /* ChangePswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePswViewController.h; sourceTree = "<group>"; };
+		18028C0B168B4402000EA0AF /* ChangePswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePswViewController.m; sourceTree = "<group>"; };
 		1802DC5216512A1B00E7DFC7 /* BaseAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAnnotation.h; sourceTree = "<group>"; };
 		1802DC5316512A1B00E7DFC7 /* BaseAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseAnnotation.m; sourceTree = "<group>"; };
 		1802DC5916512B0800E7DFC7 /* CalloutMapAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutMapAnnotationView.h; sourceTree = "<group>"; };
@@ -927,6 +939,10 @@
 		187446331626FE52009F6214 /* GenderSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenderSelectView.h; sourceTree = "<group>"; };
 		187F6D2E163FE6390064EBC2 /* ForgotPswRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPswRequest.m; sourceTree = "<group>"; };
 		187F6D2F163FE6390064EBC2 /* ForgotPswRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPswRequest.h; sourceTree = "<group>"; };
+		18808AE01689E76E001D4B71 /* pic_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_default.png; sourceTree = "<group>"; };
+		18808AE11689E76E001D4B71 /* pic_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_default@2x.png"; sourceTree = "<group>"; };
+		18808AE51689EAB2001D4B71 /* GetPhoneCheckCodeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPhoneCheckCodeRequest.h; sourceTree = "<group>"; };
+		18808AE61689EAB2001D4B71 /* GetPhoneCheckCodeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPhoneCheckCodeRequest.m; sourceTree = "<group>"; };
 		18A8A3A61633B5E500167D57 /* MemberDetailBusinessInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberDetailBusinessInfoView.h; sourceTree = "<group>"; };
 		18A8A3A71633B5E500167D57 /* MemberDetailBusinessInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberDetailBusinessInfoView.m; sourceTree = "<group>"; };
 		18ACD22416344921004A426B /* TicketInfoHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicketInfoHeaderView.h; sourceTree = "<group>"; };
@@ -2277,6 +2293,8 @@
 		F71C79B1166A79AC007F3EC9 /* 共用图片 */ = {
 			isa = PBXGroup;
 			children = (
+				18808AE01689E76E001D4B71 /* pic_default.png */,
+				18808AE11689E76E001D4B71 /* pic_default@2x.png */,
 				F71C79B2166A79AC007F3EC9 /* bg_gray.jpg */,
 				F71C79B3166A79AC007F3EC9 /* bg_gray@2x.jpg */,
 				F71C79B4166A79AC007F3EC9 /* btn_back_activity.png */,
@@ -2976,6 +2994,10 @@
 				182C0BBC1625BCA50075367C /* UnderLineButton.m */,
 				1874462F1626FE52009F6214 /* ForgorPswViewController.h */,
 				1874462E1626FE52009F6214 /* ForgorPswViewController.m */,
+				18028C04168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.h */,
+				18028C05168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.m */,
+				18028C0A168B4402000EA0AF /* ChangePswViewController.h */,
+				18028C0B168B4402000EA0AF /* ChangePswViewController.m */,
 				F79EBFB5166390A700F2C3BB /* UploadPhoto.h */,
 				F79EBFB6166390A800F2C3BB /* UploadPhoto.m */,
 				187446301626FE52009F6214 /* RegisterPhotoViewController.h */,
@@ -3427,6 +3449,10 @@
 				F70D59E716525C8E00FCB4AB /* UserChangeFaceRequest.m */,
 				185C58DB1678B2F500A6BFAF /* UerLoadNoticeList.h */,
 				185C58DC1678B2F500A6BFAF /* UerLoadNoticeList.m */,
+				18808AE51689EAB2001D4B71 /* GetPhoneCheckCodeRequest.h */,
+				18808AE61689EAB2001D4B71 /* GetPhoneCheckCodeRequest.m */,
+				18028C07168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.h */,
+				18028C08168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.m */,
 			);
 			name = SignInAndSignUp;
 			sourceTree = "<group>";
@@ -4188,6 +4214,8 @@
 				F76B64B01676C28C00B65A53 /* test@2x.png in Resources */,
 				185C58EE167A297D00A6BFAF /* LeftSideBadgeValueBG.png in Resources */,
 				185C58EF167A297D00A6BFAF /* LeftSideBadgeValueBG@2x.png in Resources */,
+				18808AE21689E76E001D4B71 /* pic_default.png in Resources */,
+				18808AE31689E76E001D4B71 /* pic_default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4484,6 +4512,10 @@
 				1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */,
 				1830FACA168366BA0001593A /* ChatManageUserCell.m in Sources */,
 				1830FACD16836CF00001593A /* UserLoadPersonalPage.m in Sources */,
+				18808AE71689EAB2001D4B71 /* GetPhoneCheckCodeRequest.m in Sources */,
+				18028C06168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.m in Sources */,
+				18028C09168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.m in Sources */,
+				18028C0C168B4402000EA0AF /* ChangePswViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

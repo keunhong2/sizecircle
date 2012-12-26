@@ -181,7 +181,7 @@ static ChatMessageCenter *msgCenter=nil;
     
     SendMessageEntity *send=[[SendMessageEntity alloc]init];
     send.chatMsg=chat;
-    send.target=target;
+    send.target=nil;
     [sendAndNotReceviecArray addObject:send];
     NSString *pJson = [msgDic JSONRepresentation];
     NSString *mes = [NSString stringWithFormat:@"a=UserChatWithFriend&p=%@",pJson];
