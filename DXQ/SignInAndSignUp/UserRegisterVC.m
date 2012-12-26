@@ -19,6 +19,7 @@
 #import "GPS.h"
 #import "DXQWebSocket.h"
 #import "CheckAccountExisted.h"
+#import "GetPhoneCheckCodeRequest.h"
 
 @interface UserRegisterVC ()<BusessRequestDelegate>{
 
@@ -26,6 +27,7 @@
     UITextField *maleTextField;
     UITableView *inputTableView;
     CheckAccountExisted *checkAccount;
+    GetPhoneCheckCodeRequest *phoneRequest;
 }
 
 
@@ -72,10 +74,10 @@
     //下一步
     
     UIImage *nextImg = [UIImage imageNamed:@"signup_btn"];
-    CGRect nextBtnRect = CGRectMake(CGRectGetMidX(rect)-nextImg.size.width/2,250.f-90.f, nextImg.size.width,nextImg.size.height);
+    CGRect nextBtnRect = CGRectMake(CGRectGetMidX(rect)-nextImg.size.width/2,90.f, nextImg.size.width,nextImg.size.height);
     UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [nextBtn setBackgroundImage:nextImg forState:UIControlStateNormal];
-    [nextBtn setTitle:AppLocalizedString(@"注册") forState:UIControlStateNormal];
+    [nextBtn setTitle:AppLocalizedString(@"下一步") forState:UIControlStateNormal];
     [nextBtn addTarget:self action:@selector(goNext) forControlEvents:UIControlEventTouchUpInside];
     [nextBtn setFrame:nextBtnRect];
     [self.view addSubview:nextBtn];
@@ -85,7 +87,7 @@
 {
     [super viewDidLoad];
 
-    [self setNavgationTitle:AppLocalizedString(@"注册") backItemTitle:AppLocalizedString(@"登陆")];
+    [self setNavgationTitle:AppLocalizedString(@"验证手机") backItemTitle:AppLocalizedString(@"登陆")];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -109,6 +111,9 @@
     [_maleAndNameDic release];
     [checkAccount cancel];
     [checkAccount release];checkAccount=nil;
+    [phoneRequest cancel];
+    [phoneRequest release];
+    phoneRequest=nil;
     [super dealloc];
 }
 
@@ -135,11 +140,14 @@
     NSString *rePsw=_rePswTextFiled.text;
     
     if (acctoun.length==0) {
-        [Tool showAlertWithTitle:AppLocalizedString(@"提示") msg:AppLocalizedString(@"帐号不能为空")];
+        [Tool showAlertWithTitle:AppLocalizedString(@"提示") msg:AppLocalizedString(@"手机不能为空")];
         [_accountTextField becomeFirstResponder];
         return;
     }
     
+    [_accountTextField resignFirstResponder];
+    [self requestPhoneCheckCodeByPhoneNumber:_accountTextField.text];
+    return;
 //    NSString *name=_trueNameTextField.text;
 //    if (name.length==0) {
 //        [Tool showAlertWithTitle:AppLocalizedString(@"提示") msg:AppLocalizedString(@"真实姓名不能为空")];
@@ -213,6 +221,22 @@
     [userInfo release];*/
 }
 
+
+-(void)requestPhoneCheckCodeByPhoneNumber:(NSString *)phone
+{
+    if (phoneRequest) {
+        [phoneRequest cancel];
+        [phoneRequest release];
+        phoneRequest=nil;
+    }
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:phone,@"Phone", nil];
+    phoneRequest=[[GetPhoneCheckCodeRequest alloc]initWithRequestWithDic:dic];
+    phoneRequest.delegate=self;
+    [[ProgressHUD sharedProgressHUD]showInView:[[UIApplication sharedApplication]keyWindow]];
+    [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"正在获取验证码...")];
+    [phoneRequest startAsynchronous];
+}
+
 #pragma mark -SigupRequestDelegate
 - (void)signUpRequestDidFinishedWithParamters:(NSDictionary *)dict
 {    
@@ -266,37 +290,41 @@
 
 -(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
 
-    if ([data integerValue]!=0) {
-        [[ProgressHUD sharedProgressHUD]showInView:self.view];
-        [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"帐号已被注册")];
-        [[ProgressHUD sharedProgressHUD]done:NO];
-        return;
-    }
+//    if ([data integerValue]!=0) {
+//        [[ProgressHUD sharedProgressHUD]showInView:self.view];
+//        [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"帐号已被注册")];
+//        [[ProgressHUD sharedProgressHUD]done:NO];
+//        return;
+//    }
     [[ProgressHUD sharedProgressHUD]done:YES];
-    NSString *acctoun=_accountTextField.text;
-    NSString *psw=_pswTextFiled.text;
-    NSString *lat = [[GPS gpsManager]getLocation:GPSLocationLatitude];
-    NSString *lon = [[GPS gpsManager]getLocation:GPSLocationLongitude];
-    NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:
-                              acctoun,@"AccountId",
-                              [Tool ConMD5:psw],@"Password",
-                              acctoun,@"Email",
-                              //                       name,@"MemberName",
-                              //                       male,@"Sex",
-                              lat,@"WeiDu",
-                              lon,@"JingDu",
-                              nil];
+    
+    
+//    NSString *acctoun=_accountTextField.text;
+//    NSString *psw=_pswTextFiled.text;
+//    NSString *lat = [[GPS gpsManager]getLocation:GPSLocationLatitude];
+//    NSString *lon = [[GPS gpsManager]getLocation:GPSLocationLongitude];
+//    NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:
+//                              acctoun,@"AccountId",
+//                              [Tool ConMD5:psw],@"Password",
+//                              acctoun,@"Email",
+//                              //                       name,@"MemberName",
+//                              //                       male,@"Sex",
+//                              lat,@"WeiDu",
+//                              lon,@"JingDu",
+//                              nil];
     UserInforViewController *userInfo=[[UserInforViewController alloc]init];
-    userInfo.accountAndPsdInfoDic=dic;
+//    userInfo.accountAndPsdInfoDic=dic;
+    userInfo.phoneNumber=_accountTextField.text;
     [self.navigationController pushViewController:userInfo animated:YES];
     [userInfo release];
 }
+
 
 #pragma mark -UITableViewDataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 3;
+    return 1;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -315,10 +343,11 @@
     switch (indexPath.row) {
         case 0:
         {
-            text=AppLocalizedString(@"手机或邮箱");
+            text=AppLocalizedString(@"手机");
             if (!_accountTextField) {
                 _accountTextField=[self inputTextFieldWithFrame:CGRectMake(110.f, orgin_y, 180.f, 31.f)];
                 _accountTextField.tag=indexPath.row;
+                _accountTextField.keyboardType=UIKeyboardTypeNumberPad;
             }
             [cell.contentView addSubview:_accountTextField];
         }
@@ -426,10 +455,10 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
 
-    if ([textField isEqual:_pswTextFiled]||[textField isEqual:_rePswTextFiled])
+    if ([textField isEqual:_pswTextFiled]||[textField isEqual:_rePswTextFiled]||[textField isEqual:_accountTextField])
     {
         if (string.length!=0) {
-            if (textField.text.length+string.length>6) {
+            if (textField!=_accountTextField&&textField.text.length+string.length>6) {
                 return NO;
             }
             NSString *match=@"^[0-9]*$";

@@ -13,7 +13,7 @@
 #import "ProgressHUD.h"
 #import "UITextField+InputTextFiled.h"
 #import "UserRegisterVC.h"
-#import "ForgorPswViewController.h"
+#import "ForPswGetPhoneNumberViewController.h"
 #import "SignInRequest.h"
 #import "NSString+MD5Addition.h"
 #import "GPS.h"
@@ -287,7 +287,7 @@
 
 -(void)forgotPsw
 {
-    ForgorPswViewController *forgot=[[ForgorPswViewController alloc]init];
+    ForPswGetPhoneNumberViewController *forgot=[[ForPswGetPhoneNumberViewController alloc]init];
     [self.navigationController pushViewController:forgot animated:YES];
     [forgot release];
 }

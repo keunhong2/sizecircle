@@ -187,6 +187,7 @@
             break;
         case 3:
             [self goChatPageByDic:dic];
+            break;
         case 5:
             [self addFriendMsgByDic:dic];
             break;

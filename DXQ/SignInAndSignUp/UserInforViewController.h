@@ -15,4 +15,10 @@
 @property (nonatomic)BOOL male;
 @property (nonatomic,retain)NSMutableDictionary *accountAndPsdInfoDic;
 
+
+@property (nonatomic,retain)NSString *phoneNumber;
+@property (nonatomic,retain)UITextField *authCodeTextField;
+@property (nonatomic,retain)UITextField *pswTextField;
+@property (nonatomic,retain)UITextField *rePswTextField;
+
 @end

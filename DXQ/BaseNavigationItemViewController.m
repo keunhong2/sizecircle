@@ -19,12 +19,16 @@
 
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *img=[UIImage imageNamed:@"btn_back_default"];
-    [btn setBackgroundImage:img forState:UIControlStateNormal];
-    [btn sizeToFit];
+    [btn setBackgroundImage:[img stretchableImageWithLeftCapWidth:img.size.width/2 topCapHeight:img.size.height/2] forState:UIControlStateNormal];
     [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:14.f]];
     [btn setTitleEdgeInsets:UIEdgeInsetsMake(0.f, 5.f, 0.f, 0.f)];
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:title forState:UIControlStateNormal];
+    CGSize size=[title sizeWithFont:btn.titleLabel.font constrainedToSize:CGSizeMake(CGFLOAT_MAX, 31.f) lineBreakMode:UILineBreakModeWordWrap];
+    if (size.width>img.size.width) {
+        btn.frame=CGRectMake(btn.frame.origin.x, btn.frame.origin.y, size.width+20.f, img.size.height);
+    }else
+        [btn sizeToFit];
     UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:btn];
     return [item autorelease];
 }
