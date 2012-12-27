@@ -84,7 +84,7 @@
     
     self.chatTableView = nil;
  
-    [super dealloc];
+    [super viewDidUnload];
 }
 
 - (id)initWithInfo:(NSDictionary *)info

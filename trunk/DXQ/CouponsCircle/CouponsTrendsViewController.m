@@ -121,6 +121,7 @@
 -(void)viewDidUnload{
     
     [super viewDidUnload];
+    self.tableView=nil;
     [loadMoreView release];
     loadMoreView=nil;
 }
@@ -268,7 +269,6 @@
 -(void)cancelAllRequest{
     [[ProgressHUD sharedProgressHUD]hide];
     [self.tableView refreshFinished];
-    [self.tableView loadMoreFinished];
     
     if (detailRequest) {
         [detailRequest cancel];

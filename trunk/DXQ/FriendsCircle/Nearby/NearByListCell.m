@@ -7,6 +7,7 @@
 //
 
 #import "NearByListCell.h"
+#import "BadgeView.h"
 
 @implementation NearByListCell
 @synthesize avatarImg; 
@@ -94,6 +95,15 @@
     }
 }
 
+-(void)layoutSubviews{
+
+    [super layoutSubviews];
+    [self reloadBadgeView];
+}
+-(void)reloadBadgeView
+{
+    badgeView.frame=CGRectMake(self.contentView.frame.size.width-badgeView.frame.size.width-10.f, self.contentView.frame.size.height/2-badgeView.frame.size.height/2, badgeView.frame.size.width, badgeView.frame.size.height);
+}
 - (void)dealloc
 {
     [avatarImg release];
@@ -102,7 +112,31 @@
     [ageLbl release];
 	[distanceLbl release];
 	[statusLbl release];
+    [badgeView release];
     [super dealloc];
 }
 
+-(void)setBadgeNumber:(NSInteger)badgeNumber{
+
+    if (badgeNumber<=0) {
+        badgeNumber=0;
+    }
+    if (badgeNumber==_badgeNumber) {
+        return;
+    }
+    _badgeNumber=badgeNumber;
+    if (badgeNumber==0) {
+        [badgeView release];
+        [badgeView removeFromSuperview];
+        badgeView=nil;
+    }else
+    {
+        if (!badgeView) {
+            badgeView=[[BadgeView alloc]initWithFrame:CGRectZero];
+            [self.contentView addSubview:badgeView];
+        }
+        badgeView.number=badgeNumber;
+        [self reloadBadgeView];
+    }
+}
 @end

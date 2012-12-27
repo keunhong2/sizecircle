@@ -10,6 +10,6 @@
 
 @interface ChatManageUserCell : NearByListCell
 
-@property (nonatomic)NSInteger badgeNumber;
+//@property (nonatomic)NSInteger badgeNumber;
 
 @end

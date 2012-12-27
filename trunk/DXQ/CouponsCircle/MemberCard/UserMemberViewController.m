@@ -130,7 +130,7 @@
     [loadMoreView release];
     loadMoreView=nil;
     
-    [super dealloc];
+    [super viewDidUnload];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

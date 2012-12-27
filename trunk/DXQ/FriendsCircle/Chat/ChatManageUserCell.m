@@ -11,7 +11,7 @@
 
 @interface ChatManageUserCell ()
 {
-    BadgeView *badgeView;
+//    BadgeView *badgeView;
 }
 
 @end
@@ -19,34 +19,34 @@
 
 -(void)dealloc{
 
-    [badgeView release];
+//    [badgeView release];
     [super dealloc];
 }
 
--(void)setBadgeNumber:(NSInteger)badgeNumber{
-
-    if (badgeNumber<0) {
-        badgeNumber=0;
-    }
-    
-    if (badgeNumber==_badgeNumber) {
-        return;
-    }
-    _badgeNumber=badgeNumber;
-    if (badgeNumber==0) {
-        [badgeView removeFromSuperview];
-        [badgeView release];
-        badgeView=nil;
-    }else
-    {
-        if (!badgeView) {
-            badgeView=[[BadgeView alloc]initWithFrame:CGRectZero];
-            badgeView.autoresizingMask=UIViewAutoresizingFlexibleLeftMargin;
-            [self.contentView addSubview:badgeView];
-        }
-        badgeView.number=badgeNumber;
-        badgeView.frame=CGRectMake(self.contentView.frame.size.width-5.f-badgeView.frame.size.width, self.contentView.frame.size.height/2-badgeView.frame.size.height/2, badgeView.frame.size.width, badgeView.frame.size.height);
-    }
-}
+//-(void)setBadgeNumber:(NSInteger)badgeNumber{
+//
+//    if (badgeNumber<0) {
+//        badgeNumber=0;
+//    }
+//    
+//    if (badgeNumber==_badgeNumber) {
+//        return;
+//    }
+//    _badgeNumber=badgeNumber;
+//    if (badgeNumber==0) {
+//        [badgeView removeFromSuperview];
+//        [badgeView release];
+//        badgeView=nil;
+//    }else
+//    {
+//        if (!badgeView) {
+//            badgeView=[[BadgeView alloc]initWithFrame:CGRectZero];
+//            badgeView.autoresizingMask=UIViewAutoresizingFlexibleLeftMargin;
+//            [self.contentView addSubview:badgeView];
+//        }
+//        badgeView.number=badgeNumber;
+//        badgeView.frame=CGRectMake(self.contentView.frame.size.width-5.f-badgeView.frame.size.width, self.contentView.frame.size.height/2-badgeView.frame.size.height/2, badgeView.frame.size.width, badgeView.frame.size.height);
+//    }
+//}
 
 @end

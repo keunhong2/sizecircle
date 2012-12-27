@@ -23,6 +23,7 @@
 
 NSString *const DXQChatMessageWillGetUnReadMessageNotification=@"DXQChatMessageWillGetUnReadMessageNotification";
 NSString *const DXQChatMessageDidGetUnReadMessageNotification=@"DXQChatMessageDidGetUnReadMessageNotification";
+NSString *const DXQChatMessageGetNewMessage=@"DXQChatMessageGetNewMessage";
 
 @implementation ChatMessageCenter
 
@@ -79,6 +80,7 @@ static ChatMessageCenter *msgCenter=nil;
                 [object.observer chatMsgCountChangeNumber:chatMsgArray.count];
             }
         }
+        [[NSNotificationCenter defaultCenter]postNotificationName:DXQChatMessageGetNewMessage object:msg];
     }
 }
 
@@ -116,6 +118,18 @@ static ChatMessageCenter *msgCenter=nil;
     }
     [chatMsgArray removeObjectsInArray:tempArray];
     return tempArray;
+}
+
+-(NSInteger)getMsgNumberWithChatName:(NSString *)chatName{
+
+    NSInteger number=0;
+    for (int i=0; i<chatMsgArray.count; i++) {
+        NSDictionary *dic=[chatMsgArray objectAtIndex:i];
+        if ([[dic objectForKey:@"AccountFrom"] isEqualToString:chatName]) {
+            number++;
+        }
+    }
+    return number;
 }
 
 -(void)addChatViewController:(UIViewController *)controller chatName:(NSString *)chatName{

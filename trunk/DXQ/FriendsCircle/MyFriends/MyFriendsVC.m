@@ -14,6 +14,7 @@
 #import "UIScrollView+AH3DPullRefresh.h"
 #import "UserDetailInfoVC.h"
 #import "ChatVC.h"
+#import "ChatMessageCenter.h"
 
 @interface MyFriendsVC ()<FriendsCircleRequestDelegate>
 {
@@ -44,6 +45,7 @@
 
 -(void)dealloc
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:DXQChatMessageGetNewMessage object:nil];
     [_historyTableView release];_historyTableView = nil;
     
     [_friendsTableView release];_friendsTableView = nil;
@@ -85,11 +87,10 @@
         _addressBookTableViewDataSource = [[AddressBookTableViewDataSource alloc]initWithViewControl:self];
         
         _showType = 0;
-        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadChatMsgData) name:DXQChatMessageGetNewMessage object:nil];
     }
     return self;
 }
-
 
 -(void)loadView
 {
@@ -120,6 +121,11 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)reloadChatMsgData{
+
+    [self.historyTableView reloadData];
+}
+
 -(void)showRightButton:(BOOL)isshow title:(NSString *)title
 {
     if (isshow)
@@ -139,6 +145,12 @@
     {
         self.navigationItem.rightBarButtonItem = nil;
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.historyTableView reloadData];
 }
 
 -(void)viewWillDisappear:(BOOL)animated

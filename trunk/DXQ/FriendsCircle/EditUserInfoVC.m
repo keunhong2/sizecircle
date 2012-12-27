@@ -65,7 +65,7 @@
     
     self.pTableView = nil;
     
-    [super dealloc];
+    [super viewDidUnload];
 }
 
 

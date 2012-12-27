@@ -30,10 +30,10 @@
     for (UIButton *btn in segment.subviews) {
         if ([btn isKindOfClass:[UIButton class]]) {
             if (btn.tag==1) {
-                [btn setTitle:AppLocalizedString(@"未处理订单") forState:UIControlStateNormal];
+                [btn setTitle:AppLocalizedString(@"未付款订单") forState:UIControlStateNormal];
             }else if (btn.tag==2)
             {
-                [btn setTitle:AppLocalizedString(@"已处理订单") forState:UIControlStateNormal];
+                [btn setTitle:AppLocalizedString(@"已付款订单") forState:UIControlStateNormal];
             }
         }
     }
@@ -50,8 +50,8 @@
                        pager,@"Pager",
                        accountID,@"AccountId",
                        @"-1",@"ProductType",
-                       @"1",@"IsPayed",
-                       isUsed,@"IsUsed", nil];
+                       isUsed,@"IsPayed",
+                       @"-1",@"IsUsed", nil];
     return dic;
 }
 

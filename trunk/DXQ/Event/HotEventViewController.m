@@ -259,7 +259,26 @@
     NSString *endDate=[Tool convertTimestampToNSDate:[[dic objectForKey:@"EndDate"] integerValue]dateStyle:@"YYYY-MM-dd"];
     cell.eventDateLabel.text=[NSString stringWithFormat:@"%@-%@",startDate,endDate];
     cell.eventLocationLabel.text=[dic objectForKey:@"Address"];
-    cell.eventTypeLabel.text=[dic objectForKey:@"Classify"];
+    NSInteger classTag=[[dic objectForKey:@"Classify"] integerValue];
+    NSString *classText=nil;
+    switch (classTag) {
+        case 1:
+            classText=@"美食";
+            break;
+        case 2:
+            classText=@"健康";
+            break;
+        case 3:
+            classText=@"休闲";
+            break;
+        case 4:
+            classText=@"娱乐";
+            break;
+        default:
+            classText=nil;
+            break;
+    }
+    cell.eventTypeLabel.text=classText;
     NSString *url=[[dic objectForKey:@"PhotoUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [cell.evengImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil success:^(UIImage *image ,BOOL isCache){
         [Tool setImageView:cell.evengImageView toImage:image];

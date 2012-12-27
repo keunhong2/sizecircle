@@ -10,6 +10,7 @@
 #import "FriendsListCell.h"
 #import "UIButton+WebCache.h"
 #import "MyFriendsVC.h"
+#import "ChatMessageCenter.h"
 
 @interface HistoryTableViewDataSource()
 {
@@ -89,6 +90,7 @@
         statusString = [Tool decodeBase64:statusString];
     }
     cell.statusLbl.text = statusString;
+    cell.badgeNumber=[[ChatMessageCenter shareMessageCenter]getMsgNumberWithChatName:[item objectForKey:@"AccountId"]];
     return cell;
 }
 

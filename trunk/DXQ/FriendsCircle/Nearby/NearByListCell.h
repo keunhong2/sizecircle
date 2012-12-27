@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class BadgeView;
+
 @interface NearByListCell : UITableViewCell
 {
 	UIButton *avatarImg;
@@ -18,6 +20,8 @@
 	UILabel *distanceLbl;
     
     UILabel *statusLbl;
+    
+    BadgeView *badgeView;
 }
 @property (nonatomic,retain)UIButton *avatarImg;
 @property (nonatomic,retain)UILabel *usernameLbl;
@@ -25,4 +29,6 @@
 @property (nonatomic,retain)UILabel *ageLbl;
 @property (nonatomic,retain)UILabel *distanceLbl;
 @property (nonatomic,retain)UILabel *statusLbl;
+@property (nonatomic)NSInteger badgeNumber;
+
 @end

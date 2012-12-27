@@ -8,7 +8,10 @@
 
 #import "VerifyOrderViewController.h"
 
-@interface VerifyOrderViewController ()
+@interface VerifyOrderViewController (){
+
+    UIButton *payBtn;
+}
 
 @end
 
@@ -65,6 +68,7 @@
     [footView addSubview:buyBtn];
     [self.tableView setTableFooterView:footView];
     [footView release];
+    payBtn=buyBtn;
     
 }
 - (void)viewDidLoad
@@ -169,6 +173,7 @@
                 {
                     float price=[[_productInfoDic objectForKey:@"MarketPrice"]floatValue]*[[_productInfoDic objectForKey:@"Discount"] floatValue]/10.f*[[_orderInfoDic objectForKey:@"ProductCount"] integerValue];
                     cell.textLabel.text=[NSString stringWithFormat:AppLocalizedString(@"总价:  %.2f"),price];
+                    [payBtn setTitle:[NSString stringWithFormat:@"付款 ￥:%.2f",price] forState:UIControlStateNormal];
                 }
                 default:
                     break;
