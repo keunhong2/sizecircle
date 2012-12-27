@@ -159,6 +159,13 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)viewDidUnload
+{
+    self.tableView=nil;
+    [numberView release];numberView=nil;
+    
+}
+
 -(void)takePicture:(UIButton *)btn
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -224,6 +231,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {    
     [super viewDidAppear:animated];
+    [self view];
 }
 
 -(void)remindAction:(UIButton *)sender
@@ -380,7 +388,7 @@
     }
     cell.textLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     cell.textLabel.textColor = [UIColor colorWithString:@"#605D58"];
-    if (indexPath.section==1&&indexPath.row==3) {
+    if (indexPath.section==1&&indexPath.row==1) {
         cell.badgeNumber=_chatMsgValue;
     }else
         cell.badgeNumber=0;

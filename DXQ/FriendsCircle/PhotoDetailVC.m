@@ -136,7 +136,7 @@
     self.deviceInfoLbl = nil;
     self.viewCountLbl = nil;
     self.commentTableView = nil;
-    [super dealloc];
+    [super viewDidUnload];
 }
 
 - (id)initWithUserInfo:(NSDictionary *)info

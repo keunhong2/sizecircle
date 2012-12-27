@@ -12,6 +12,7 @@
 
 extern NSString *const DXQChatMessageWillGetUnReadMessageNotification;
 extern NSString *const DXQChatMessageDidGetUnReadMessageNotification;
+extern NSString *const DXQChatMessageGetNewMessage;
 
 @protocol ChatMessageDelegate <NSObject>
 
@@ -31,7 +32,11 @@ extern NSString *const DXQChatMessageDidGetUnReadMessageNotification;
 
 -(void)postNewChatMessageArray:(NSArray *)msgArray;
 
+//获取未读消息 并且从未读中删除
 -(NSArray *)getMsgWithChatName:(NSString *)chatName;
+
+//获取消息但是不删除未读消息
+-(NSInteger)getMsgNumberWithChatName:(NSString *)chatName;
 
 -(void)addChatViewController:(UIViewController *)controller chatName:(NSString *)chatName;
 

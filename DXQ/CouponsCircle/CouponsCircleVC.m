@@ -44,11 +44,11 @@
 
 -(void)dealloc{
 
+    [self cancelAllRequest];
     [_couponsList release];
     [_couponsOnMapList release];
     [_tableView release];_tableView=nil;
     [_mapView release];_mapView=nil;
-    [self cancelAllRequest];
     [_annArray release];
     [loadMoreView release];
     [mapTitleLabel release];

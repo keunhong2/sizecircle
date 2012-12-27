@@ -29,7 +29,7 @@
 -(void)viewDidUnload
 {
     self.tableView = nil;
-    [super dealloc];
+    [super viewDidUnload];
 }
 
 - (id)init

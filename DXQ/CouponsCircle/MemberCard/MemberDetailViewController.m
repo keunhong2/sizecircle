@@ -183,11 +183,11 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (_infoDic&&allCount!=0) {
-        NSDate *date=[NSDate dateWithTimeIntervalSince1970:[[_infoDic objectForKey:@"ExpiredDate"]floatValue] ];
-        NSTimeInterval time=[date timeIntervalSinceNow];
-        [self startCountDownWithTime:time];
-    }
+//    if (_infoDic&&allCount!=0) {
+//        NSDate *date=[NSDate dateWithTimeIntervalSince1970:[[_infoDic objectForKey:@"ExpiredDate"]floatValue] ];
+//        NSTimeInterval time=[date timeIntervalSinceNow];
+//        [self startCountDownWithTime:time];
+//    }
 }
 
 -(void)setSimpleInfoDic:(NSDictionary *)simpleInfoDic{
@@ -227,6 +227,12 @@
     NSDate *startDate=[NSDate dateWithTimeIntervalSince1970:[[_infoDic objectForKey:@"StartDate"] floatValue]];
     NSDate *endDate=[NSDate dateWithTimeIntervalSince1970:[[_infoDic objectForKey:@"EndDate"] floatValue]];
     NSDate *expDate=[NSDate dateWithTimeIntervalSince1970:[[_infoDic objectForKey:@"ExpiredDate"] floatValue]];
+    NSTimeInterval endTimerInterval=[expDate timeIntervalSinceNow];
+    MemberDetailHeaderView *headerInfoView=(MemberDetailHeaderView *)[self memberInfoView];
+    if (endTimerInterval<=0) {
+         headerInfoView.countDownTime=AppLocalizedString(@"已结束");
+    }else
+         headerInfoView.countDownTime=[Tool convertTimestampToNSDate:[[_infoDic objectForKey:@"ExpiredDate"] integerValue]];
     [self startCountDownWithTime:[expDate timeIntervalSinceNow]];
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -243,10 +249,10 @@
 
     NSString *price=[_infoDic objectForKey:@"MarketPrice"];
     NSString *discount=[_infoDic objectForKey:@"Discount"];
-    float theDiscount=[discount floatValue]/10.f;
     NSString *nowPrice=[NSString stringWithFormat:@"%0.2f",([price floatValue]-[[_infoDic objectForKey:@"MemberPrice"] floatValue])];
     tempDetail.firstLineText=[NSString stringWithFormat:@"市场价 ¥%@ , 折扣: %@折 , 节省:¥%@",price,discount,nowPrice,nil];
     tempDetail.secoundLineText=[NSString stringWithFormat:@"已有%@人购买",[_infoDic objectForKey:@"BuyerCount"]];
+    [buyBtn setTitle:[NSString stringWithFormat:@"点击购买 ￥:%@",nowPrice] forState:UIControlStateNormal];
 }
 
 -(void)startCountDownWithTime:(NSTimeInterval)secound{
