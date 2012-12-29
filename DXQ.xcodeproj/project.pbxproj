@@ -465,6 +465,7 @@
 		F754D448165B813800EEB5A9 /* InPutPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F754D445165B813800EEB5A9 /* InPutPageVC.m */; };
 		F754D449165B813800EEB5A9 /* InputProfesionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F754D447165B813800EEB5A9 /* InputProfesionVC.m */; };
 		F754D44C165B819400EEB5A9 /* ShowAddressOnMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F754D44B165B819400EEB5A9 /* ShowAddressOnMapVC.m */; };
+		F75A7051168E937E0012464B /* UserRemovePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = F75A7050168E937E0012464B /* UserRemovePhoto.m */; };
 		F76B633A1676C24500B65A53 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B63301676C24500B65A53 /* JSONKit.m */; };
 		F76B633B1676C24500B65A53 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F76B63321676C24500B65A53 /* SinaWeibo.bundle */; };
 		F76B633C1676C24500B65A53 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B63341676C24500B65A53 /* SinaWeibo.m */; };
@@ -1410,6 +1411,8 @@
 		F754D447165B813800EEB5A9 /* InputProfesionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputProfesionVC.m; sourceTree = "<group>"; };
 		F754D44A165B819400EEB5A9 /* ShowAddressOnMapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowAddressOnMapVC.h; sourceTree = "<group>"; };
 		F754D44B165B819400EEB5A9 /* ShowAddressOnMapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowAddressOnMapVC.m; sourceTree = "<group>"; };
+		F75A704F168E937E0012464B /* UserRemovePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRemovePhoto.h; sourceTree = "<group>"; };
+		F75A7050168E937E0012464B /* UserRemovePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRemovePhoto.m; sourceTree = "<group>"; };
 		F76B632F1676C24500B65A53 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		F76B63301676C24500B65A53 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		F76B63321676C24500B65A53 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
@@ -3166,6 +3169,8 @@
 				F7CAA29316550526004E614D /* UpdateSignatureRequest.m */,
 				18E877651667C46300284333 /* FriendsCircleRequest.h */,
 				18E877661667C46400284333 /* FriendsCircleRequest.m */,
+				F75A704F168E937E0012464B /* UserRemovePhoto.h */,
+				F75A7050168E937E0012464B /* UserRemovePhoto.m */,
 				18E877671667C46400284333 /* UserAddCommentRequest.h */,
 				18E877681667C46600284333 /* UserAddCommentRequest.m */,
 				18E877691667C46600284333 /* UserAddPraiseRequest.h */,
@@ -4516,6 +4521,7 @@
 				18028C06168B41E8000EA0AF /* ForPswGetPhoneNumberViewController.m in Sources */,
 				18028C09168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.m in Sources */,
 				18028C0C168B4402000EA0AF /* ChangePswViewController.m in Sources */,
+				F75A7051168E937E0012464B /* UserRemovePhoto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
