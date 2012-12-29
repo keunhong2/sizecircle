@@ -461,6 +461,10 @@
     {
         [self refreshUI];
     }
+    if ([viewController isKindOfClass:[PhotoDetailVC class]])
+    {
+        [self refreshPhoto];
+    }
     else
     {
         [self didCancelViewViewController];
@@ -1173,10 +1177,10 @@
     NSLog(@"item --- >%@",item);
     [_userinfo setObject:item forKey:@"uploadphotourl"];
     PhotoDetailVC *vc = [[PhotoDetailVC alloc]initWithUserInfo:_userinfo];
+    vc.vDelegate = self;
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
 }
-
 
 
 - (UIImage *) scaleFromImage: (UIImage *) image toSize: (CGSize) size

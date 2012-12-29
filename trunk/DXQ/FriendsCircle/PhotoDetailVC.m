@@ -7,6 +7,7 @@
 //
 
 #import "PhotoDetailVC.h"
+#import "UserRemovePhoto.h"
 #import "UserLoadPhotoRequest.h"
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
@@ -16,10 +17,9 @@
 #import "UserAddPraiseRequest.h"
 #import "UserAddCommentRequest.h"
 #import "PhotoCommentCell.h"
-
 #import "TecentWeiBoShare.h"
 #import "SinaWeiBoShare.h"
-
+#import "ImageFilterVC.h"
 #import "SDImageCache.h"
 
 @interface PhotoDetailVC ()< UserLoadPhotoRequestDelegate,FriendsCircleRequestDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,SinaWeiBoShareDelegate,TecentWeiBoShareDelegate>
@@ -36,7 +36,9 @@
     UserAddPraiseRequest *userAddPraiseRequest;
     
     UserLoadPhotoRequest *userLoadPhotoRequest;
-    
+
+    UserRemovePhoto *userRemovePhotoRequest;
+
     NSMutableDictionary *userInfo;
     
     NSMutableArray *dataArr;
@@ -350,6 +352,19 @@
         
         [self getPhotoDetailInfo:photoid];
     }
+    else if([request isEqual:userRemovePhotoRequest])
+    {
+        [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"删除成功!")];
+        [[ProgressHUD sharedProgressHUD]done];
+        [userRemovePhotoRequest release];userRemovePhotoRequest = nil;
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        if (self.vDelegate && [self.vDelegate respondsToSelector:@selector(didFinishedAction:)])
+        {
+            [self.vDelegate didFinishedAction:self];
+        }
+    }
     HYLog(@"%@",data);
 }
 
@@ -372,21 +387,33 @@
             [[ProgressHUD sharedProgressHUD]done:NO];
             [userAddCommentRequest release];userAddCommentRequest = nil;
     }
+    else if([request isEqual:userRemovePhotoRequest])
+    {
+        [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"删除失败!")];
+        [[ProgressHUD sharedProgressHUD]done:NO];
+        [userRemovePhotoRequest release];userRemovePhotoRequest = nil;
+    }
 }
 
-
-#define vDelegate Methord
+#pragma vDelegate Methord
 -(void)didFinishedAction:(UIViewController *)viewController witfhInfo:(id)info
 {
-    if (info && [info isKindOfClass:[NSString class]] && [info length]>0)
+    if ([viewController isKindOfClass:[ImageFilterVC class]])
     {
-        [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"正在处理...")];
-        [[ProgressHUD sharedProgressHUD]showInView:self.navigationController.view];
-        NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
-                           @"MemberFile",@"ObjectKind",photoid,@"ObjectNo",[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId",info,@"Content", nil];
-        userAddCommentRequest=[[UserAddCommentRequest alloc]initWithRequestWithDic:dic];
-        userAddCommentRequest.delegate=self;
-        [userAddCommentRequest startAsynchronous];
+        //set avatar
+    }
+    else
+    {
+        if (info && [info isKindOfClass:[NSString class]] && [info length]>0)
+        {
+            [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"正在处理...")];
+            [[ProgressHUD sharedProgressHUD]showInView:self.navigationController.view];
+            NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
+                               @"MemberFile",@"ObjectKind",photoid,@"ObjectNo",[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId",info,@"Content", nil];
+            userAddCommentRequest=[[UserAddCommentRequest alloc]initWithRequestWithDic:dic];
+            userAddCommentRequest.delegate=self;
+            [userAddCommentRequest startAsynchronous];
+        }
     }
     HYLog(@"%@",info);
 }
@@ -617,13 +644,24 @@
 //删除照片
 -(void)deletePhoto
 {
-    
+    [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"正在处理...")];
+    [[ProgressHUD sharedProgressHUD]showInView:self.navigationController.view];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
+                       photoid,@"Id", nil];
+    userRemovePhotoRequest=[[UserRemovePhoto alloc]initWithRequestWithDic:dic];
+    userRemovePhotoRequest.delegate=self;
+    [userRemovePhotoRequest startAsynchronous];
 }
 
 //设置为头像
 -(void)setToUserAvatar
 {
-    
+        ImageFilterVC *vc = [[ImageFilterVC alloc]initWithImage:_contentImageView.image type:@"1"];
+        CustonNavigationController *nav = [[CustonNavigationController alloc]initWithRootViewController:vc];
+        vc.vDelegate = self;
+        [[AppDelegate sharedAppDelegate].menuController presentModalViewController:nav animated:YES];
+        [vc release];
+        [nav release];
 }
 
 -(void)tapImage:(UIGestureRecognizer *)sender

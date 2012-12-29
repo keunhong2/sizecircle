@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface PhotoDetailVC : BaseViewController
+@interface PhotoDetailVC : BaseViewController<UniversalViewControlDelegate>
 {
 }
 
