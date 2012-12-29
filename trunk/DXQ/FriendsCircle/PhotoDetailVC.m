@@ -66,6 +66,7 @@
     BOOL isPraised;
     BOOL isCommented;
     
+    BOOL isUserAccount;
 }
 
 @property(nonatomic,retain)NSMutableDictionary *userInfo;
@@ -163,6 +164,9 @@
         [calculateTxtView setHidden:YES];
         [calculateTxtView setFont:[UIFont systemFontOfSize:14.0]];
         [self.view addSubview:calculateTxtView];
+        
+        isUserAccount =  ([[_userInfo objectForKey:@"AccountId"] isEqualToString:[[SettingManager sharedSettingManager] loggedInAccount]]);
+
     }
     return self;
 }
@@ -438,7 +442,16 @@
 //更多
 -(void)actionMore
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:AppLocalizedString(@"取消") destructiveButtonTitle:nil otherButtonTitles:AppLocalizedString(@"保存到相册"), nil];
+    UIActionSheet *sheet;
+
+    if (isUserAccount)
+    {
+        sheet = [[UIActionSheet alloc]initWithTitle:AppLocalizedString(@"请选择需要的操作") delegate:self cancelButtonTitle:AppLocalizedString(@"取消") destructiveButtonTitle:AppLocalizedString(@"删除该图片") otherButtonTitles:AppLocalizedString(@"设为头像"),AppLocalizedString(@"保存到相册"), nil];
+    }
+    else
+    {
+        sheet = [[UIActionSheet alloc]initWithTitle:AppLocalizedString(@"请选择需要的操作") delegate:self cancelButtonTitle:AppLocalizedString(@"取消") destructiveButtonTitle:nil otherButtonTitles:AppLocalizedString(@"保存到相册"), nil];
+    }
     sheet.tag = 2;
     [sheet showInView:self.navigationController.view];
     [sheet release];
@@ -459,6 +472,7 @@
     {
         return;
     }
+    
     else if( actionSheet.tag ==1)
     {
         if(buttonIndex == 0)
@@ -472,9 +486,27 @@
     }
     else if( actionSheet.tag ==2)
     {
-        if(buttonIndex == 0)
+        if (isUserAccount)
         {
-            [self performSelector:@selector(saveToPhoto) withObject:nil afterDelay:0.0];
+            if(buttonIndex == 0)
+            {
+                [self performSelector:@selector(deletePhoto) withObject:nil afterDelay:0.0];
+            }
+            else if(buttonIndex == 1)
+            {
+                [self performSelector:@selector(setToUserAvatar) withObject:nil afterDelay:0.0];
+            }
+            else if(buttonIndex == 2)
+            {
+                [self performSelector:@selector(saveToPhoto) withObject:nil afterDelay:0.0];
+            }
+        }
+        else
+        {
+            if(buttonIndex == 0)
+            {
+                [self performSelector:@selector(saveToPhoto) withObject:nil afterDelay:0.0];
+            }
         }
     }
 }
@@ -582,6 +614,17 @@
     [[ProgressHUD sharedProgressHUD]done];
 }
 
+//删除照片
+-(void)deletePhoto
+{
+    
+}
+
+//设置为头像
+-(void)setToUserAvatar
+{
+    
+}
 
 -(void)tapImage:(UIGestureRecognizer *)sender
 {
