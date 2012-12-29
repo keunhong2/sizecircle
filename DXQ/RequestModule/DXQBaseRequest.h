@@ -24,7 +24,6 @@
     //参数
     NSString  *parameterJSONString;
 }
-
 @property (nonatomic, retain) ASIFormDataRequest *request;
 @property (nonatomic, retain) NSString *managerName;
 @property (nonatomic, retain) NSString *actionName;

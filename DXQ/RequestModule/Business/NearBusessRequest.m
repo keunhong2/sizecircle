@@ -10,8 +10,9 @@
 
 @implementation NearBusessRequest
 
--(NSString *)actionName{
-
+-(NSString *)actionName
+{
+    ASIHTTPRequest *a;
     return @"UserLoadNearShopList";
 }
 
