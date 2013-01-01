@@ -95,6 +95,7 @@
 		18A8A3A81633B5E500167D57 /* MemberDetailBusinessInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A8A3A71633B5E500167D57 /* MemberDetailBusinessInfoView.m */; };
 		18ACD22616344921004A426B /* TicketInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22516344921004A426B /* TicketInfoHeaderView.m */; };
 		18ACD22E163452F9004A426B /* TuanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22D163452F9004A426B /* TuanDetailViewController.m */; };
+		18D70E8E169342F8008C5A3A /* UserMakeFriendReponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D70E8C169342F8008C5A3A /* UserMakeFriendReponse.m */; };
 		18DA0A1B1636D02900AB2650 /* BasePullTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA0A1A1636D02900AB2650 /* BasePullTableViewController.m */; };
 		18DA0A281636D30C00AB2650 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA0A271636D30C00AB2650 /* EGORefreshTableHeaderView.m */; };
 		18DE297C164941C500B04BE0 /* RelationMakeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DE297B164941C500B04BE0 /* RelationMakeRequest.m */; };
@@ -953,6 +954,8 @@
 		18ACD22516344921004A426B /* TicketInfoHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicketInfoHeaderView.m; sourceTree = "<group>"; };
 		18ACD22C163452F9004A426B /* TuanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuanDetailViewController.h; sourceTree = "<group>"; };
 		18ACD22D163452F9004A426B /* TuanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuanDetailViewController.m; sourceTree = "<group>"; };
+		18D70E8C169342F8008C5A3A /* UserMakeFriendReponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMakeFriendReponse.m; sourceTree = "<group>"; };
+		18D70E8D169342F8008C5A3A /* UserMakeFriendReponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserMakeFriendReponse.h; sourceTree = "<group>"; };
 		18DA0A191636D02900AB2650 /* BasePullTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasePullTableViewController.h; sourceTree = "<group>"; };
 		18DA0A1A1636D02900AB2650 /* BasePullTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasePullTableViewController.m; sourceTree = "<group>"; };
 		18DA0A261636D30C00AB2650 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -3198,6 +3201,8 @@
 				18E87726166776B200284333 /* UserLoadFriendList.m */,
 				1830FACB16836CF00001593A /* UserLoadPersonalPage.h */,
 				1830FACC16836CF00001593A /* UserLoadPersonalPage.m */,
+				18D70E8C169342F8008C5A3A /* UserMakeFriendReponse.m */,
+				18D70E8D169342F8008C5A3A /* UserMakeFriendReponse.h */,
 			);
 			path = FriendsCircleRequest;
 			sourceTree = "<group>";
@@ -4536,6 +4541,7 @@
 				18028C0C168B4402000EA0AF /* ChangePswViewController.m in Sources */,
 				F75A7051168E937E0012464B /* UserRemovePhoto.m in Sources */,
 				F7EA4969169332B70074ECD6 /* UserLoadUserListRequest.m in Sources */,
+				18D70E8E169342F8008C5A3A /* UserMakeFriendReponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4652,7 +4658,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
+				PROVISIONING_PROFILE = "82553430-2AA9-4355-A14C-7517A30A957F";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -4678,7 +4684,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Boom 22 Technologies Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lorcan O'Brien (G9X3THZK5L)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DXQ/DXQ-Prefix.pch";
 				INFOPLIST_FILE = "DXQ/DXQ-Info.plist";
@@ -4686,7 +4692,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5DB06BE4-8172-4725-8E93-7238C1FB50AC";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

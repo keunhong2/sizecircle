@@ -21,6 +21,7 @@
 #import "LoadMoreView.h"
 #import "AcvityDetailViewController.h"
 #import "PhotoDetailVC.h"
+#import "UserMakeFriendReponse.h"
 
 #define COUPONS_TRENDS_CELL_FONT                        [UIFont systemFontOfSize:16.f]
 
@@ -34,6 +35,7 @@
     BOOL isRefresh;
     NSInteger currentPage;
     LoadMoreView *loadMoreView;
+    UserMakeFriendReponse *makeFriendRequest;
 }
 
 -(UITableViewCell *)trendCellForIndexPath:(NSIndexPath *)indexPath;
@@ -354,6 +356,7 @@
     shopPhotoList.delegate=self;
     [shopPhotoList startAsynchronous];
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -515,11 +518,19 @@
     cell.businessHeadImageView.image=nil;
     NSString *url=[dic objectForKey:@"PhotoUrl"];
     NSString *encodeUrl=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [cell.businessHeadImageView setImageWithURL:[NSURL URLWithString:encodeUrl]];
+    [cell.businessHeadImageView setImageWithURL:[NSURL URLWithString:encodeUrl] placeholderImage:[UIImage imageNamed:@"default_header"] success:^(UIImage *image ,BOOL isFinish)
+     {
+         [Tool setImageView:cell.businessHeadImageView toImage:image];
+     }failure:nil];
+    
     cell.eventInfoImageView.image=nil;
     NSString *eventUrl=[dic objectForKey:@"PictureUrl"];
     NSString *enEventUrl=[eventUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [cell.eventInfoImageView setImageWithURL:[NSURL URLWithString:enEventUrl]];
+    [cell.eventInfoImageView setImageWithURL:[NSURL URLWithString:enEventUrl] placeholderImage:nil success:^(UIImage *image ,BOOL isFinish)
+     {
+         [Tool setImageView:cell.eventInfoImageView toImage:image];
+     }failure:nil];
+    
     cell.businessNameLabel.text=[dic objectForKey:@"Title"];
     cell.detailInfoLabel.text=[dic objectForKey:@"Content"];
     cell.releaseDateLabel.text=[Tool convertTimestampToNSDate:[[dic objectForKey:@"OpTime"] integerValue]];
