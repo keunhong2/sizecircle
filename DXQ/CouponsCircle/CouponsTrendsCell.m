@@ -9,7 +9,11 @@
 #import "CouponsTrendsCell.h"
 #import "UIColor+ColorUtils.h"
 
-@implementation CouponsTrendsCell
+@implementation CouponsTrendsCell{
+
+    UIView *headContentView;
+    UIView *detailContentView;
+}
 
 @synthesize businessHeadImageView=_businessHeadImageView;
 @synthesize businessNameLabel=_businessNameLabel;
@@ -38,7 +42,7 @@
         UIImage *headImageBgImage=[UIImage imageNamed:@"image_bg"];
         UIImageView *headImgBgView=[[UIImageView alloc]initWithImage:headImageBgImage];
         [headImgBgView sizeToFit];
-        UIView *headContentView=[[UIView alloc]initWithFrame:CGRectMake(5.f, 5.f, headImgBgView.frame.size.width, headImgBgView.frame.size.height)];
+        headContentView=[[UIView alloc]initWithFrame:CGRectMake(5.f, 5.f, headImgBgView.frame.size.width, headImgBgView.frame.size.height)];
         [self.contentView addSubview:headContentView];
         [headContentView addSubview:headImgBgView];
         _businessHeadImageView=[[UIImageView alloc]initWithFrame:CGRectMake(4.f, 4.f, headContentView.frame.size.width-9.f, headContentView.frame.size.height-10.f)];
@@ -53,7 +57,8 @@
         UIImage *detailBgImg=[UIImage imageNamed:@"dt_bg"];
         UIImageView *detailBgImgView=[[UIImageView alloc]initWithImage:detailBgImg];
         [detailBgImgView sizeToFit];
-        UIView *detailContentView=[[UIView alloc]initWithFrame:CGRectMake(5.f, headContentView.frame.origin.y+headContentView.frame.size.height, self.contentView.frame.size.width-10.f, detailBgImg.size.height)];
+        
+        detailContentView=[[UIView alloc]initWithFrame:CGRectMake(5.f, headContentView.frame.origin.y+headContentView.frame.size.height, self.contentView.frame.size.width-10.f, detailBgImg.size.height)];
         detailContentView.autoresizingMask=UIViewAutoresizingFlexibleWidth;
         [detailContentView addSubview:detailBgImgView];
         [self.contentView addSubview:detailContentView];
@@ -98,6 +103,14 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)prepareForReuse{
+
+    [super prepareForReuse];
+ 
+     _businessHeadImageView.frame=CGRectMake(4.f, 4.f, headContentView.frame.size.width-9.f, headContentView.frame.size.height-10.f);
+    _eventInfoImageView.frame=CGRectMake(5.f, 12.f, detailContentView.frame.size.width-12.f, 115.f);
 }
 
 @end

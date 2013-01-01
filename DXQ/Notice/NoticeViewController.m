@@ -17,13 +17,15 @@
 #import "ChatVC.h"
 #import "OrderDetailViewController.h"
 #import "HotEventDetailViewController.h"
+#import "UserMakeFriendReponse.h"
 
-@interface NoticeViewController ()<UITableViewDataSource,UITableViewDelegate,BusessRequestDelegate>{
+@interface NoticeViewController ()<UITableViewDataSource,UITableViewDelegate,BusessRequestDelegate,UIActionSheetDelegate>{
 
     UerLoadNoticeList *userLoadNoticeRequest;
     LoadMoreView *loadMoreView;
     UIImageView *nodataImageView;
     BOOL isRefrush;
+    UserMakeFriendReponse *makeFriendRequest;
 }
 @property (nonatomic,retain)NSDictionary *currentEditDic;
 
@@ -233,7 +235,14 @@
 
 -(void)addFriendMsgByDic:(NSDictionary *)dic{
 
-    [self showActionSheetByTitle:@"好友请求" withDic:dic];
+//    [self showActionSheetByTitle:@"好友请求" withDic:dic];
+    
+    UIActionSheet *sheet=[[UIActionSheet alloc]initWithTitle:@"好友请求" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拒绝" otherButtonTitles:@"同意",@"同意并且添加为好友", nil];
+    sheet.tag=2;
+    [sheet showInView:self.view];
+    [sheet release];
+    self.currentEditDic=dic;
+    
 }
 
 -(void)joinEventByDic:(NSDictionary *)dic{
@@ -269,6 +278,7 @@
 -(void)cancelAllRequest{
 
     [self cancelGetNoticeList];
+    [self cancelMakeFriend];
 }
 
 -(void)cancelGetNoticeList{
@@ -279,6 +289,31 @@
         userLoadNoticeRequest=nil;
     }
 }
+
+-(void)cancelMakeFriend
+{
+    if (makeFriendRequest) {
+        [makeFriendRequest cancel];
+        [makeFriendRequest release];
+        makeFriendRequest=nil;
+    }
+}
+
+-(void)makeFriendByIndex:(NSInteger)index
+{
+    [self cancelMakeFriend];
+    [[ProgressHUD sharedProgressHUD]showInView:[[UIApplication sharedApplication]keyWindow]];
+    [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"请求中...")];
+
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
+                       [[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom",
+                       [_currentEditDic objectForKey:@"AccountFrom"],@"AccountTo",
+                       [NSString stringWithFormat:@"%d",index],@"Action", nil];
+    makeFriendRequest=[[UserMakeFriendReponse alloc]initWithRequestWithDic:dic];
+    [makeFriendRequest setDelegate:self];
+    [makeFriendRequest startAsynchronous];
+}
+
 
 -(void)requestNoticeListByPage:(NSInteger)page{
 
@@ -301,6 +336,7 @@
     userLoadNoticeRequest.delegate=self;
     [userLoadNoticeRequest startAsynchronous];
 }
+
 
 
 -(void)busessRequest:(DXQBusessBaseRequest *)request didFailedWithErrorMsg:(NSString *)msg{
@@ -333,6 +369,9 @@
         
         loadMoreView.state=LoadMoreStateNormal;
         [self.tableView refreshFinished];
+    }else if (request==makeFriendRequest)
+    {
+        [[ProgressHUD sharedProgressHUD]setText:@"回复请求成功"];
     }
 }
 
@@ -347,6 +386,17 @@
             [array addObjectsFromArray:_noticeArray];
         }
         self.noticeArray=array;
+    }
+}
+
+#pragma mark -UIActionSheetDelegate
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag==2) {
+        if (buttonIndex<3) {
+            [self makeFriendByIndex:buttonIndex];
+        }
     }
 }
 @end
