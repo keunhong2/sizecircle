@@ -52,7 +52,6 @@
     [view_ release];
     
     //登陆输入框
-    
     UITableView *loginTableView=[[UITableView alloc]initWithFrame:CGRectMake(0.f, 0.0f, self.view.frame.size.width, 120.f) style:UITableViewStyleGrouped];
     loginTableView.delegate=self;
     loginTableView.dataSource=self;

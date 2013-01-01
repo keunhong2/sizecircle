@@ -216,6 +216,8 @@
     {
         if (locationString && [locationString length]>0)
         {
+            locationString = [locationString stringByReplacingOccurrencesOfString:@"null" withString:@""];
+            locationString = [locationString stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             [info setObject:locationString forKey:@"AddressInfo"];
         }
         

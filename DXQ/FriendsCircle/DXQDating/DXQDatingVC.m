@@ -10,12 +10,15 @@
 #import "UIImageView+WebCache.h"
 #import "NearByListCell.h"
 #import "CustomSearchBar.h"
+#import "UserLoadUserListRequest.h"
 
 @interface DXQDatingVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 {
     NSMutableArray *datingList;
     
     UITableView *tableView;
+    
+    UserLoadUserListRequest *userLoadUserListRequest;
 }
 
 @property (nonatomic,retain)NSMutableArray *datingList;

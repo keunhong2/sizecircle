@@ -69,6 +69,8 @@
     BOOL isCommented;
     
     BOOL isUserAccount;
+    
+    UITextView *desTxtView;
 }
 
 @property(nonatomic,retain)NSMutableDictionary *userInfo;
@@ -90,6 +92,7 @@
 
 @property(nonatomic,retain)UITableView *commentTableView;
 @property(nonatomic,retain)NSMutableArray *dataArr;
+@property(nonatomic,retain)UITextView *desTxtView;
 
 @end
 
@@ -107,9 +110,11 @@
 @synthesize viewCountLbl=_viewCountLbl;
 @synthesize commentTableView=_commentTableView;
 @synthesize dataArr = _dataArr;
+@synthesize desTxtView = _desTxtView;
 
 -(void)dealloc
 {
+    [_desTxtView release];_desTxtView = nil;
     [_dataArr release];_dataArr = nil;
     [_userInfo release];_userInfo = nil;
     [_avatarImageView release];_avatarImageView = nil;
@@ -118,8 +123,6 @@
     [_tagScrollView release];_tagScrollView = nil;
     [_dateLbl release];_dateLbl = nil;
     [_contentScrollView release];_contentScrollView = nil;
-//    [_goodButton release];_goodButton = nil;
-//    [_commentButton release];_commentButton = nil;
     [_deviceInfoLbl release];_deviceInfoLbl = nil;
     [_viewCountLbl release];_viewCountLbl = nil;
     [_commentTableView release];_commentTableView = nil;
@@ -128,6 +131,7 @@
 
 -(void)viewDidUnload
 {
+    self.desTxtView = nil;
     self.avatarImageView = nil;
     self.nameLbl = nil;
     self.contentScrollView = nil;
@@ -149,6 +153,8 @@
     {
         _userInfo = [[NSMutableDictionary alloc]initWithDictionary:info
                      ];
+        
+        
         NSDictionary *item ;
         if ([_userInfo.allKeys containsObject:@"uploadphotourl"]) {
             
@@ -209,9 +215,22 @@
     _contentImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     _contentImageView.layer.borderWidth = 6.0f;
     _contentImageView.image=[UIImage imageNamed:@"Info_icon_default.jpg"];
-    _contentImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _contentImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _contentImageView.clipsToBounds = YES;
     _contentImageView.userInteractionEnabled = YES;
-    [_contentScrollView addSubview:_contentImageView];
+    [_contentScrollView addSubview:_contentImageView];    
+    
+    CGRect desFrame = CGRectMake(20, 200, 280, 100);
+    _desTxtView = [[UITextView alloc]initWithFrame:desFrame];
+    _desTxtView.textColor = [UIColor whiteColor];
+    [_desTxtView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.3]];
+    _desTxtView.text = photoDes;
+    [_desTxtView sizeToFit];
+    _desTxtView.userInteractionEnabled = NO;
+    desFrame.size.height = _desTxtView.contentSize.height;
+    desFrame.origin.y = 350 - _desTxtView.contentSize.height;
+    _desTxtView.frame  = desFrame;
+    [_contentScrollView addSubview:_desTxtView];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
     [_contentImageView addGestureRecognizer:tap];

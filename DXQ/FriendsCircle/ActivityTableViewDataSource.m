@@ -7,7 +7,9 @@
 //
 
 #import "ActivityTableViewDataSource.h"
-
+#import "CouponsTrendsCell.h"
+#import "UIImageView+WebCache.h"
+#import "AcvityDetailViewController.h"
 
 @interface ActivityTableViewDataSource()
 @property (nonatomic,assign)UIViewController *viewControl;
@@ -35,71 +37,66 @@
     }
     return self;
 }
+#pragma mark - Table view data source
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{    
     return _data.count;
 }
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 30.0f;
-//}
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44;
+    return 260.f;
 }
 
-//-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *headerView = [[[UIView alloc]initWithFrame:CGRectZero] autorelease];
-//    [headerView setBackgroundColor:[UIColor clearColor]];
-//    CGRect  lblFrame  = section == 0?CGRectMake(-5.0f,0.0f,330.0f,30.0f):CGRectMake(-5.0f,-1.0f,330.0f,31.0f);
-//    UITextView *titletxt = [[UITextView alloc]initWithFrame:lblFrame];
-//    titletxt.layer.borderColor = TABLEVIEW_SEPARATORCOLOR.CGColor;
-//    titletxt.layer.borderWidth = 1.0f;
-//    [titletxt setContentInset:UIEdgeInsetsMake(0,20,0,0)];
-//    [titletxt setUserInteractionEnabled:NO];
-//    [titletxt setFont:NormalDefaultFont];
-//    [titletxt setTextColor:[UIColor grayColor]];
-//    [titletxt setBackgroundColor:[UIColor clearColor]];
-//    [titletxt setText:[[_data objectAtIndex:section] objectForKey:@"sectiontitle"]];
-//    [headerView addSubview:titletxt];
-//    [titletxt release];
-//    return headerView;
-//}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.0f;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return nil;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *indentifier = @"AboutTableViewDataSource";
+    static NSString *CellIdentifier = @"Cell";
+    CouponsTrendsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
-    if (cell == nil)
-    {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
-                                       reuseIdentifier:indentifier] autorelease];
+    if (!cell){
+        cell=[[[CouponsTrendsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-    cell.textLabel.font = MiddleNormalDefaultFont;
-    cell.textLabel.textColor = [UIColor grayColor];
-    NSDictionary *dic=[_data objectAtIndex:indexPath.row];
-    cell.textLabel.text = [Tool checkData:[dic objectForKey:@"Title"]];
-    cell.detailTextLabel.text = [Tool checkData:[dic objectForKey:@"MemberName"]];
-    cell.imageView.image = nil;
+    NSDictionary *dic=[self.data objectAtIndex:indexPath.row];
+    cell.businessHeadImageView.image=nil;
+    NSString *url=[dic objectForKey:@"PhotoUrl"];
+    NSString *encodeUrl=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [cell.businessHeadImageView setImageWithURL:[NSURL URLWithString:encodeUrl]];
+    cell.eventInfoImageView.image=nil;
+    NSString *eventUrl=[dic objectForKey:@"PictureUrl"];
+    NSString *enEventUrl=[eventUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [cell.eventInfoImageView setImageWithURL:[NSURL URLWithString:enEventUrl]];
+    cell.businessNameLabel.text=[dic objectForKey:@"Title"];
+    cell.detailInfoLabel.text=[dic objectForKey:@"Content"];
+    NSDate *confromTime = [NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"OpTime"]longLongValue]];
+    cell.releaseDateLabel.text =  [NSString stringWithFormat:@"%@前",[Tool calculateDate:confromTime]];
+    cell.releaseDateLabel.frame=CGRectMake(cell.releaseDateLabel.frame.origin.x, 10.f, cell.releaseDateLabel.frame.size.width, 20.f);
     return cell;
+
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    AcvityDetailViewController *acvity=[[AcvityDetailViewController alloc]init];
+    [_viewControl.navigationController pushViewController:acvity animated:YES];
+    acvity.simpleDic=[self.data objectAtIndex:indexPath.row];
+    [acvity release];
 }
-
 
 @end

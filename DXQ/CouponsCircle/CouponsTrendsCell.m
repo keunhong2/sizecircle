@@ -59,7 +59,8 @@
         [self.contentView addSubview:detailContentView];
         
         _eventInfoImageView=[[UIImageView alloc]initWithFrame:CGRectMake(5.f, 12.f, detailContentView.frame.size.width-12.f, 115.f)];
-        _eventInfoImageView.contentMode=UIViewContentModeScaleAspectFit;
+        _eventInfoImageView.contentMode=UIViewContentModeScaleAspectFill;
+        _eventInfoImageView.clipsToBounds = YES;
         _eventInfoImageView.backgroundColor=[UIColor grayColor];
         [detailContentView addSubview:_eventInfoImageView];
         _detailInfoLabel=[[UILabel alloc]initWithFrame:CGRectMake(5.f, 130.f, detailContentView.frame.size.width-12.f, 40.f)];
