@@ -30,10 +30,11 @@
 #import "WaterFlowView.h"
 #import "ImageViewCell.h"
 #import "PhotoDetailVC.h"
+#import "UserActivityRequest.h"
 
 #define TOP_IMAGE_HEIGHT  204.0f
 
-@interface UserDetailInfoVC ()<WaterFlowViewDelegate,WaterFlowViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UIScrollViewDelegate,UIActionSheetDelegate,UserInfoDetailRequestDelegate,SayHelloRequestDelegate,RelationMakeRequestDelegate,UserRemoveRelationDelegate,UniversalViewControlDelegate,UserReportUserRequestDelegate,UserLoadAlbumRequestDelegate>
+@interface UserDetailInfoVC ()<WaterFlowViewDelegate,WaterFlowViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UIScrollViewDelegate,UIActionSheetDelegate,UserInfoDetailRequestDelegate,SayHelloRequestDelegate,RelationMakeRequestDelegate,UserRemoveRelationDelegate,UniversalViewControlDelegate,UserReportUserRequestDelegate,UserLoadAlbumRequestDelegate,UserActivityRequestDelegate>
 {
     UserInfoDetailRequest *userInfoDetailRequest;//获取用户详细
     SayHelloRequest *sayHelloReqest;//打招呼
@@ -42,6 +43,8 @@
     UserReportUserRequest *userReportUserRequest;//举报
     
     UserLoadAlbumRequest  *userLoadAlbumRequest;
+    
+    UserActivityRequest *userActivityRequest;
     
     UILabel *noPhotoLabel;
     WaterFlowView *waterFlow;
@@ -59,6 +62,8 @@
     RelationType relationType;
     
     BOOL isUploadPhoto;
+    
+    NSInteger currentPage;
 }
 
 @property(nonatomic,retain)AboutTableViewDataSource *aboutTableViewDataSource;
@@ -235,6 +240,10 @@
     _activityTableView.backgroundColor=[UIColor whiteColor];
     _activityTableView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     [_activityTableView setHidden:YES];
+    [_activityTableView setPullToRefreshHandler:^{
+        currentPage = 1;
+        [self requestActivityListByPage:currentPage];
+    }];
     _activityTableView.delegate=_activityTableViewDataSource;
     _activityTableView.dataSource=_activityTableViewDataSource;
     [self.view addSubview:_activityTableView];
@@ -574,6 +583,7 @@
             [_activityTableView setHidden:NO];
             [_scrollView setHidden:YES];
             [_noPhotoLabel setHidden:YES];
+            
             break;
         case BottomToolBarItemTypePhotos:
             [_waterFlow setHidden:NO];
@@ -652,13 +662,16 @@
 {
     if (tap.view.tag == 1)
     {
-        if ([[_userinfo objectForKey:@"IsMylink"] intValue] == 0)
+        if (!isUserAccount)
         {
-            [self handleCreateUserRelationWithType:RelationTypeFans];
-        }
-        else
-        {
-            [self handleRemoveUserRelationWithType:RelationTypeFans];
+            if ([[_userinfo objectForKey:@"IsMylink"] intValue] == 0)
+            {
+                [self handleCreateUserRelationWithType:RelationTypeFans];
+            }
+            else
+            {
+                [self handleRemoveUserRelationWithType:RelationTypeFans];
+            }
         }
     }
     else  if (tap.view.tag == 2)
@@ -1040,11 +1053,24 @@
     [userRemoveRelationRequest release];userRemoveRelationRequest = nil;
 }
 
+
+-(void)requestActivityListByPage:(NSInteger)page
+{
+    [[ProgressHUD sharedProgressHUD]showInView:self.view];
+    [[ProgressHUD sharedProgressHUD]setText:nil];
+    NSDictionary *pager=[NSDictionary dictionaryWithObjectsAndKeys:
+                           [NSString stringWithFormat:@"%d",page],@"PageIndex",
+                           [NSString stringWithFormat:@"%d",DEFAULT_REQUEST_PAGE_COUNT],@"ReturnCount", nil];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[_userinfo objectForKey:@"AccountId"],@"AccountId",@"-1",@"Type",pager,@"Pager", nil];
+    userActivityRequest = [[UserActivityRequest alloc]initRequestWithDic:dic];
+    userActivityRequest.delegate=self;
+    [userActivityRequest startAsynchronous];
+}
+
 #pragma mark -GetUserActivityRequestDelegate
 -(void)userActivityRequestDidFinishedWithParamters:(NSArray *)activityList
 {
-    HYLog(@"Function %s",__FUNCTION__);
-
+    HYLog(@"%@",activityList);
     _activityTableViewDataSource.data=activityList;
     [_activityTableView reloadData];
     [[ProgressHUD sharedProgressHUD]hide];
@@ -1053,8 +1079,7 @@
 
 -(void)userActivityRequestDidFinishedWithErrorMessage:(NSString *)errorMsg
 {
-    HYLog(@"Function %s",__FUNCTION__);
-    HYLog(@"error msg %@",errorMsg);
+    HYLog(@"%@",errorMsg);
     [[ProgressHUD sharedProgressHUD]setText:errorMsg];
     [[ProgressHUD sharedProgressHUD]done:NO];
     [[self activityTableView]refreshFinished];
