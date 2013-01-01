@@ -100,6 +100,11 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)getDatingList
+{
+//    userLoadUserListRequest = [[UserLoadUserListRequest alloc]initWithRequestWithDic:<#(NSDictionary *)#>];
+    
+}
 
 -(void)filterAction:(UIButton*)sender
 {
