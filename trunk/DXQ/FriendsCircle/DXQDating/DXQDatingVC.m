@@ -304,10 +304,10 @@
     if (cell==nil)
     {
         cell=[[[NearByListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(0, 0, 40,30)];
         [btn addTarget:self action:@selector(anLian:) forControlEvents:UIControlEventTouchUpInside];
-        [btn setTitle:AppLocalizedString(@"暗恋") forState:UIControlStateNormal];
+//        [btn setTitle:AppLocalizedString(@"暗恋") forState:UIControlStateNormal];
         cell.accessoryView = btn;
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
@@ -336,11 +336,13 @@
     
     if ([[item objectForKey:@"IsLove"] boolValue])
     {
-        [btn setTitle:AppLocalizedString(@"取消") forState:UIControlStateNormal];
+//        [btn setTitle:AppLocalizedString(@"取消") forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"btn_heart_useless"] forState:UIControlStateNormal];
     }
     else
     {
-        [btn setTitle:AppLocalizedString(@"暗恋") forState:UIControlStateNormal];
+//        [btn setTitle:AppLocalizedString(@"暗恋") forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"btn_heart"] forState:UIControlStateNormal];
     }
     return cell;
 }
