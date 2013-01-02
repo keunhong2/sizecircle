@@ -621,7 +621,7 @@
         case 2:
         {
             UITableViewCell *cell=[[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"about"] autorelease];
-            if (_shopDetailInfoDic) {
+            if (!_shopDetailInfoDic) {
                 cell.textLabel.text=@"";
             }else
                 cell.textLabel.text=[_shopDetailInfoDic objectForKey:@"BusinessHours"];

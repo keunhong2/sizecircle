@@ -70,6 +70,10 @@
 		182C0BC81625D8F60075367C /* UserInforViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC71625D8F50075367C /* UserInforViewController.m */; };
 		182C9E7016949A1A00448E8D /* UserLoadOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C9E6E16949A1A00448E8D /* UserLoadOrderDetail.m */; };
 		182C9E7316949A2700448E8D /* NoticeOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C9E7216949A2700448E8D /* NoticeOrderDetailViewController.m */; };
+		182C9E771694A04A00448E8D /* btn_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 182C9E751694A04A00448E8D /* btn_heart.png */; };
+		182C9E781694A04A00448E8D /* btn_heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 182C9E761694A04A00448E8D /* btn_heart@2x.png */; };
+		182C9E7B1694A0D000448E8D /* btn_heart_useless.png in Resources */ = {isa = PBXBuildFile; fileRef = 182C9E791694A0D000448E8D /* btn_heart_useless.png */; };
+		182C9E7C1694A0D000448E8D /* btn_heart_useless@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 182C9E7A1694A0D000448E8D /* btn_heart_useless@2x.png */; };
 		1830FAC31680AD690001593A /* UserLoadUnReceivedChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */; };
 		1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC61680B2BB0001593A /* ChatUserManager.m */; };
 		1830FACA168366BA0001593A /* ChatManageUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC9168366BA0001593A /* ChatManageUserCell.m */; };
@@ -910,6 +914,10 @@
 		182C9E6F16949A1A00448E8D /* UserLoadOrderDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadOrderDetail.h; sourceTree = "<group>"; };
 		182C9E7216949A2700448E8D /* NoticeOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeOrderDetailViewController.m; sourceTree = "<group>"; };
 		182C9E7416949A2F00448E8D /* NoticeOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeOrderDetailViewController.h; sourceTree = "<group>"; };
+		182C9E751694A04A00448E8D /* btn_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_heart.png; sourceTree = "<group>"; };
+		182C9E761694A04A00448E8D /* btn_heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_heart@2x.png"; sourceTree = "<group>"; };
+		182C9E791694A0D000448E8D /* btn_heart_useless.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_heart_useless.png; sourceTree = "<group>"; };
+		182C9E7A1694A0D000448E8D /* btn_heart_useless@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_heart_useless@2x.png"; sourceTree = "<group>"; };
 		1830FAC11680AD690001593A /* UserLoadUnReceivedChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadUnReceivedChat.h; sourceTree = "<group>"; };
 		1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadUnReceivedChat.m; sourceTree = "<group>"; };
 		1830FAC51680B2BB0001593A /* ChatUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUserManager.h; sourceTree = "<group>"; };
@@ -2540,6 +2548,10 @@
 				F71C7A81166A79AC007F3EC9 /* user_detail_topdefault@2x.jpg */,
 				F71C7A82166A79AC007F3EC9 /* weibo_follow.png */,
 				F71C7A83166A79AC007F3EC9 /* weibo_follow@2x.png */,
+				182C9E751694A04A00448E8D /* btn_heart.png */,
+				182C9E761694A04A00448E8D /* btn_heart@2x.png */,
+				182C9E791694A0D000448E8D /* btn_heart_useless.png */,
+				182C9E7A1694A0D000448E8D /* btn_heart_useless@2x.png */,
 			);
 			path = "朋友圈";
 			sourceTree = "<group>";
@@ -4249,6 +4261,10 @@
 				18808AE31689E76E001D4B71 /* pic_default@2x.png in Resources */,
 				F7291FE9168CB71A006BF5A3 /* Icon.png in Resources */,
 				F7291FEA168CB71A006BF5A3 /* Icon@2x.png in Resources */,
+				182C9E771694A04A00448E8D /* btn_heart.png in Resources */,
+				182C9E781694A04A00448E8D /* btn_heart@2x.png in Resources */,
+				182C9E7B1694A0D000448E8D /* btn_heart_useless.png in Resources */,
+				182C9E7C1694A0D000448E8D /* btn_heart_useless@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
