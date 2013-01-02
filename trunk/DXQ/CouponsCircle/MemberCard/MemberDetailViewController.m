@@ -234,8 +234,10 @@
          headerInfoView.countDownTime=AppLocalizedString(@"已结束");
         isFinish=YES;
     }else
+    {
          headerInfoView.countDownTime=[Tool convertTimestampToNSDate:[[_infoDic objectForKey:@"ExpiredDate"] integerValue]];
-    [self startCountDownWithTime:[expDate timeIntervalSinceNow]];
+    }
+//    [self startCountDownWithTime:[expDate timeIntervalSinceNow]];
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *startDateText=[dateFormatter stringFromDate:startDate];
