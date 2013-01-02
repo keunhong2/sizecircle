@@ -4683,16 +4683,16 @@
 		F720C920160DD982007B954E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lorcan O'Brien (G9X3THZK5L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Boom 22 Technologies Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Boom 22 Technologies Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DXQ/DXQ-Prefix.pch";
 				INFOPLIST_FILE = "DXQ/DXQ-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5DB06BE4-8172-4725-8E93-7238C1FB50AC";
+				PROVISIONING_PROFILE = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -353,7 +353,8 @@
     NSString  *ageImgName = ([[item objectForKey:@"Sex"] intValue]==0)?@"pyq_girl.png":@"pyq_boy.png";
     cell.ageImg.image = [UIImage imageNamed:ageImgName];
     cell.ageLbl.text = [[item objectForKey:@"Age"] stringValue];
-    cell.distanceLbl.text = [NSString stringWithFormat:@"%@  |  当前在线",[[GPS gpsManager] getDistanceFromLat:[item objectForKey:@"WeiDu"] Lon:[item objectForKey:@"JingDu"]]];
+    NSString *online = [[item objectForKey:@"IsOnline"] intValue]==0?AppLocalizedString(@"当前不在线"):AppLocalizedString(@"当前在线");
+    cell.distanceLbl.text = [NSString stringWithFormat:@"%@  |  %@",[[GPS gpsManager] getDistanceFromLat:[item objectForKey:@"WeiDu"] Lon:[item objectForKey:@"JingDu"]],online];
     NSString *statusString = [item objectForKey:@"Introduction"];
     if (!statusString || [statusString isEqual:[NSNull null]]  || [statusString length]<1 )
     {

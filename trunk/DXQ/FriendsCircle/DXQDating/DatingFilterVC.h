@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DatingFilterVC : UIViewController
+@interface DatingFilterVC : BaseViewController<UniversalViewControlDelegate>
+
+- (id)initWithDelegate:(id)delegate_;
 
 @end
