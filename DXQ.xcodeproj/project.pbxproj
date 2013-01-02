@@ -68,6 +68,8 @@
 		182C0BC21625CD8B0075367C /* UserRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC11625CD8B0075367C /* UserRegisterVC.m */; };
 		182C0BC51625D02F0075367C /* UITextField+InputTextFiled.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC41625D02E0075367C /* UITextField+InputTextFiled.m */; };
 		182C0BC81625D8F60075367C /* UserInforViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C0BC71625D8F50075367C /* UserInforViewController.m */; };
+		182C9E7016949A1A00448E8D /* UserLoadOrderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C9E6E16949A1A00448E8D /* UserLoadOrderDetail.m */; };
+		182C9E7316949A2700448E8D /* NoticeOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C9E7216949A2700448E8D /* NoticeOrderDetailViewController.m */; };
 		1830FAC31680AD690001593A /* UserLoadUnReceivedChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */; };
 		1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC61680B2BB0001593A /* ChatUserManager.m */; };
 		1830FACA168366BA0001593A /* ChatManageUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC9168366BA0001593A /* ChatManageUserCell.m */; };
@@ -904,6 +906,10 @@
 		182C0BC41625D02E0075367C /* UITextField+InputTextFiled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+InputTextFiled.m"; sourceTree = "<group>"; };
 		182C0BC61625D8F50075367C /* UserInforViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInforViewController.h; sourceTree = "<group>"; };
 		182C0BC71625D8F50075367C /* UserInforViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInforViewController.m; sourceTree = "<group>"; };
+		182C9E6E16949A1A00448E8D /* UserLoadOrderDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadOrderDetail.m; sourceTree = "<group>"; };
+		182C9E6F16949A1A00448E8D /* UserLoadOrderDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadOrderDetail.h; sourceTree = "<group>"; };
+		182C9E7216949A2700448E8D /* NoticeOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeOrderDetailViewController.m; sourceTree = "<group>"; };
+		182C9E7416949A2F00448E8D /* NoticeOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeOrderDetailViewController.h; sourceTree = "<group>"; };
 		1830FAC11680AD690001593A /* UserLoadUnReceivedChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadUnReceivedChat.h; sourceTree = "<group>"; };
 		1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadUnReceivedChat.m; sourceTree = "<group>"; };
 		1830FAC51680B2BB0001593A /* ChatUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUserManager.h; sourceTree = "<group>"; };
@@ -1992,6 +1998,8 @@
 				18063C3116778EC600210719 /* DXQNoticeCenter.m */,
 				185C58DF1678CC3C00A6BFAF /* NoticeCell.h */,
 				185C58E01678CC3C00A6BFAF /* NoticeCell.m */,
+				182C9E7416949A2F00448E8D /* NoticeOrderDetailViewController.h */,
+				182C9E7216949A2700448E8D /* NoticeOrderDetailViewController.m */,
 			);
 			path = Notice;
 			sourceTree = "<group>";
@@ -2062,6 +2070,8 @@
 				18063C1E16762E2900210719 /* UserSetAlertDay.m */,
 				1830FAC11680AD690001593A /* UserLoadUnReceivedChat.h */,
 				1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */,
+				182C9E6E16949A1A00448E8D /* UserLoadOrderDetail.m */,
+				182C9E6F16949A1A00448E8D /* UserLoadOrderDetail.h */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -4542,6 +4552,8 @@
 				F75A7051168E937E0012464B /* UserRemovePhoto.m in Sources */,
 				F7EA4969169332B70074ECD6 /* UserLoadUserListRequest.m in Sources */,
 				18D70E8E169342F8008C5A3A /* UserMakeFriendReponse.m in Sources */,
+				182C9E7016949A1A00448E8D /* UserLoadOrderDetail.m in Sources */,
+				182C9E7316949A2700448E8D /* NoticeOrderDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

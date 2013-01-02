@@ -18,6 +18,7 @@
 #import "OrderDetailViewController.h"
 #import "HotEventDetailViewController.h"
 #import "UserMakeFriendReponse.h"
+#import "NoticeOrderDetailViewController.h"
 
 @interface NoticeViewController ()<UITableViewDataSource,UITableViewDelegate,BusessRequestDelegate,UIActionSheetDelegate>{
 
@@ -153,7 +154,10 @@
     cell.productNameLabel.text=[dic objectForKey:@"Title"];
     cell.exdateLabel.text=[dic objectForKey:@"Content"];
     if (cell.productNameLabel.text.length==0) {
-        cell.productNameLabel.text=[dic objectForKey:@"MemberAccount"];
+        cell.productNameLabel.text=[dic objectForKey:@"AccountFromName"];
+    }
+    if ([[dic objectForKey:@"ObjectKind"] isEqualToString:@"Order"]) {
+        cell.productNameLabel.text=@"订单";
     }
     NSDate *date=[NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"OpTime"] floatValue]];
     NSInteger time=-[date timeIntervalSinceNow];
@@ -217,6 +221,7 @@
 
     NSMutableDictionary *tempDic=[NSMutableDictionary dictionaryWithDictionary:dic];
     [tempDic setObject:[dic objectForKey:@"AccountFrom"] forKey:@"AccountId"];
+    [tempDic setObject:[dic objectForKey:@"AccountFromName"] forKey:@"MemberName"];
     UserDetailInfoVC *vc=[[UserDetailInfoVC alloc]initwithUserInfo:tempDic];
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
@@ -227,7 +232,7 @@
     NSMutableDictionary *tempDic=[NSMutableDictionary dictionaryWithDictionary:dic];
     [tempDic setObject:[dic objectForKey:@"AccountFrom"] forKey:@"AccountId"];
     [tempDic setObject:[dic objectForKey:@"AccountFromPhotoUrl"] forKey:@"PhotoUrl"];
-    [tempDic setObject:[dic objectForKey:@"MemberAccount"] forKey:@"MemberName"];
+    [tempDic setObject:[dic objectForKey:@"AccountFromName"] forKey:@"MemberName"];
     ChatVC *vc=[[ChatVC alloc]initWithInfo:tempDic];
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
@@ -261,7 +266,8 @@
 
 -(void)goOrderPageByDic:(NSDictionary *)dic{
 
-    OrderDetailViewController *order=[[OrderDetailViewController alloc]init];
+    NoticeOrderDetailViewController *order=[[NoticeOrderDetailViewController alloc]init];
+    order.simpleDic=dic;
     [self.navigationController pushViewController:order animated:YES];
     [order release];
 }
