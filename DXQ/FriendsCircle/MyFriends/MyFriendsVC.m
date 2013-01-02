@@ -188,6 +188,7 @@
 
 -(void)friendsCircleRequestRequest:(FriendsCircleRequest *)request didFailedWithErrorMsg:(NSString *)msg
 {
+    isUserLoadFriendListRequesting = NO;
     if ([userLoadFriendListRequest isEqual:request])
     {
         [_friendsTableView refreshFinished];
@@ -199,6 +200,8 @@
 -(void)friendsCircleRequestRequest:(FriendsCircleRequest *)request didFinishWithData:(id)data
 {
     HYLog(@"%@",data);
+    isUserLoadFriendListRequesting = NO;
+
     if ([userLoadFriendListRequest isEqual:request])
     {
         NSArray *friends = (NSArray *)data;

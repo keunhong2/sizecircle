@@ -759,6 +759,8 @@
         for (int i = 0 ; i < [lbls count]; i++)
         {
             NSString *s =[lbls objectAtIndex:i];
+            s = [s stringByReplacingOccurrencesOfString:@"null" withString:@""];
+            s = [s stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             UILabel *lbl =[[UILabel alloc]initWithFrame:CGRectMake(lbl_x, 0, 89,25)];
             [lbl setText:s];
             [lbl setFont:[UIFont systemFontOfSize:12.0]];
