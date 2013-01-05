@@ -51,6 +51,12 @@
 				<key>title</key>
 				<string>我赞</string>
 			</dict>
+			<dict>
+				<key>image</key>
+				<string></string>
+				<key>title</key>
+				<string>我关注</string>
+			</dict>
 		</array>
 	</dict>
 	<dict>

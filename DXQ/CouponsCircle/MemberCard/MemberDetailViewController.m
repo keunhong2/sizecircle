@@ -145,7 +145,7 @@
     location.imageLocationLeft=NO;
     location.firstImage=[UIImage imageNamed:@"icon_position"];
     location.secoundImage=[UIImage imageNamed:@"icon_phone"];
-    location.firstLineText=[NSString stringWithFormat:@"地址:%@",[_simpleInfoDic objectForKey:@"Address"]];
+//    location.firstLineText=[NSString stringWithFormat:@"地址:%@",[_simpleInfoDic objectForKey:@"Address"]];
     location.delegate=self;
     self.businessInfoView=location;
     [location release];
@@ -248,13 +248,13 @@
     MemberDetailView *tempDetail=(MemberDetailView *)self.detailView;
     
     MemberDetailView *locationView=(MemberDetailView *)self.businessInfoView;
-//    locationView.firstLineText=[NSString stringWithFormat:@"地址:%@",[_infoDic objectForKey:@"Address"] ];
+    locationView.firstLineText=[NSString stringWithFormat:@"地址:%@",[_infoDic objectForKey:@"CompanyAddress"] ];
     locationView.secoundLineText=[NSString stringWithFormat:@"电话:%@",[_infoDic objectForKey:@"CompanyTelephone"]];
 
     NSString *price=[_infoDic objectForKey:@"MarketPrice"];
+    NSString *nowPrice=[NSString stringWithFormat:@"%@",[_infoDic objectForKey:@"MemberPrice"]];
     NSString *discount=[_infoDic objectForKey:@"Discount"];
-    NSString *nowPrice=[NSString stringWithFormat:@"%0.2f",([price floatValue]-[[_infoDic objectForKey:@"MemberPrice"] floatValue])];
-    tempDetail.firstLineText=[NSString stringWithFormat:@"市场价 ¥%@ , 折扣: %@折 , 节省:¥%@",price,discount,nowPrice,nil];
+    tempDetail.firstLineText=[NSString stringWithFormat:@"市场价 ¥%@ , 折扣: %@折 , 节省:￥%2.f",price,discount,[price floatValue]-[nowPrice floatValue],nil];
     tempDetail.secoundLineText=[NSString stringWithFormat:@"已有%@人购买",[_infoDic objectForKey:@"BuyerCount"]];
     if (!isFinish) {
         [buyBtn setTitle:[NSString stringWithFormat:@"点击购买 ￥:%@",nowPrice] forState:UIControlStateNormal];

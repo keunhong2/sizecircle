@@ -18,6 +18,7 @@
 #import "NSString+MD5Addition.h"
 #import "GPS.h"
 #import "DXQWebSocket.h"
+#import "ChatMessageCenter.h"
 
 @interface SignInVC ()<SignInRequestDelegate>
 {
@@ -275,6 +276,8 @@
 
         [[AppDelegate sharedAppDelegate] saveAccountInfoToCoreData:dict withPassword:[Tool ConMD5:accountPwd]
                                              dismissViewController:YES];
+        
+        [[ChatMessageCenter shareMessageCenter]getUnReadMessage];
    }
 }
 #pragma 登陆失败回调

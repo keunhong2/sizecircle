@@ -12,6 +12,7 @@
 @interface EventRemindViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,BusessRequestDelegate>{
 
     UserSetAlertDay *alertRequest;
+    NSArray *remindDataSource;
 }
 
 @end
@@ -23,6 +24,7 @@
     [_pickerView release];
     [alertRequest cancel];
     [alertRequest release];
+    [remindDataSource release];
     [super dealloc];
 }
 
@@ -31,7 +33,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.selectDay=5;
-        self.maxDays=31;
+        self.maxDays=3;
+        remindDataSource=[[NSArray alloc]initWithObjects:
+                          @"          当天",
+                          @"          提前一天",
+                          @"          提前两天", nil];
     }
     return self;
 }
@@ -60,7 +66,7 @@
     [doneBtn setBackgroundImage:btnImg forState:UIControlStateNormal];
     [doneBtn sizeToFit];
     [doneBtn.titleLabel setFont:font];
-    [doneBtn setTitle:AppLocalizedString(@"确定") forState:UIControlStateNormal];
+    [doneBtn setTitle:AppLocalizedString(@"保存") forState:UIControlStateNormal];
     [doneBtn addTarget:self action:@selector(doneBtnDone:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *doneItem=[[UIBarButtonItem alloc]initWithCustomView:doneBtn];
     self.navigationItem.rightBarButtonItem=doneItem;
@@ -126,12 +132,12 @@
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
 
-    return _maxDays;
+    return remindDataSource.count;
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
 
-    return [NSString stringWithFormat:@"        提前 %02d 天提醒",row+1];
+    return [remindDataSource objectAtIndex:row];
 }
 
 @end

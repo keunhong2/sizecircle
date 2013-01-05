@@ -165,13 +165,13 @@
                     break;
                 case 2:
                 {
-                    float price=[[_productInfoDic objectForKey:@"MarketPrice"]floatValue]*[[_productInfoDic objectForKey:@"Discount"] floatValue]/10.f;
-                    cell.textLabel.text=[NSString stringWithFormat:AppLocalizedString(@"单价:  %.2f"),price];
+//                    float price=[[_productInfoDic objectForKey:@"MarketPrice"]floatValue]*[[_productInfoDic objectForKey:@"Discount"] floatValue]/10.f;
+                    cell.textLabel.text=[NSString stringWithFormat:@"单价:  %@",[_productInfoDic objectForKey:@"MemberPrice"]];
                 }
                     break;
                 case 3:
                 {
-                    float price=[[_productInfoDic objectForKey:@"MarketPrice"]floatValue]*[[_productInfoDic objectForKey:@"Discount"] floatValue]/10.f*[[_orderInfoDic objectForKey:@"ProductCount"] integerValue];
+                    float price=[[_productInfoDic objectForKey:@"MemberPrice"]floatValue]*[[_orderInfoDic objectForKey:@"ProductCount"] integerValue];
                     cell.textLabel.text=[NSString stringWithFormat:AppLocalizedString(@"总价:  %.2f"),price];
                     [payBtn setTitle:[NSString stringWithFormat:@"付款 ￥:%.2f",price] forState:UIControlStateNormal];
                 }

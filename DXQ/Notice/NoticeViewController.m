@@ -378,6 +378,7 @@
     }else if (request==makeFriendRequest)
     {
         [[ProgressHUD sharedProgressHUD]setText:@"回复请求成功"];
+        [[ProgressHUD sharedProgressHUD]done:YES];
     }
 }
 

@@ -217,7 +217,7 @@
                 case 4:
                 {
                     cell.textLabel.text=AppLocalizedString(@"商家地址");
-                    cell.detailTextLabel.text=[_orderDic objectForKey:@"Address"];
+                    cell.detailTextLabel.text=[_productDic objectForKey:@"CompanyAddress"];
                 }
                     break;
                 case 5:
@@ -270,7 +270,7 @@
         default:
             break;
     }
-    cell.detailTextLabel.numberOfLines=0;
+    cell.detailTextLabel.numberOfLines=2;
     return cell;
 }
 

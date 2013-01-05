@@ -81,6 +81,8 @@
 		184E41F1162D89D000D6C908 /* CounponsAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E41EF162D89D000D6C908 /* CounponsAboutCell.m */; };
 		184E420D162D972200D6C908 /* CouponsBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E420C162D972200D6C908 /* CouponsBottomBar.m */; };
 		184E4210162DA5F300D6C908 /* ThumbImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E420F162DA5F300D6C908 /* ThumbImageCell.m */; };
+		184F184116987B890062F185 /* MyAttentionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F184016987B890062F185 /* MyAttentionViewController.m */; };
+		184F1844169880620062F185 /* UserLoadFavoriteProductList.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F1843169880620062F185 /* UserLoadFavoriteProductList.m */; };
 		185BEFF1163559E400DF3E70 /* BaseScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF0163559E400DF3E70 /* BaseScreenViewController.m */; };
 		185BEFF416355E3100DF3E70 /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF316355E3000DF3E70 /* ScreenViewController.m */; };
 		185BEFF71635653500DF3E70 /* ScreenSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF61635653500DF3E70 /* ScreenSelectCell.m */; };
@@ -932,6 +934,10 @@
 		184E420C162D972200D6C908 /* CouponsBottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponsBottomBar.m; sourceTree = "<group>"; };
 		184E420E162DA5F300D6C908 /* ThumbImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbImageCell.h; sourceTree = "<group>"; };
 		184E420F162DA5F300D6C908 /* ThumbImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbImageCell.m; sourceTree = "<group>"; };
+		184F183F16987B890062F185 /* MyAttentionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAttentionViewController.h; sourceTree = "<group>"; };
+		184F184016987B890062F185 /* MyAttentionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAttentionViewController.m; sourceTree = "<group>"; };
+		184F1842169880620062F185 /* UserLoadFavoriteProductList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadFavoriteProductList.h; sourceTree = "<group>"; };
+		184F1843169880620062F185 /* UserLoadFavoriteProductList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadFavoriteProductList.m; sourceTree = "<group>"; };
 		185BEFEF163559E400DF3E70 /* BaseScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScreenViewController.h; sourceTree = "<group>"; };
 		185BEFF0163559E400DF3E70 /* BaseScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseScreenViewController.m; sourceTree = "<group>"; };
 		185BEFF216355E3000DF3E70 /* ScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenViewController.h; sourceTree = "<group>"; };
@@ -2031,6 +2037,15 @@
 			path = Color;
 			sourceTree = "<group>";
 		};
+		184F183D16987B4D0062F185 /* MyAttention */ = {
+			isa = PBXGroup;
+			children = (
+				184F183F16987B890062F185 /* MyAttentionViewController.h */,
+				184F184016987B890062F185 /* MyAttentionViewController.m */,
+			);
+			path = MyAttention;
+			sourceTree = "<group>";
+		};
 		18DA0A251636D30C00AB2650 /* EGOTableViewPullRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -2080,6 +2095,8 @@
 				1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */,
 				182C9E6E16949A1A00448E8D /* UserLoadOrderDetail.m */,
 				182C9E6F16949A1A00448E8D /* UserLoadOrderDetail.h */,
+				184F1842169880620062F185 /* UserLoadFavoriteProductList.h */,
+				184F1843169880620062F185 /* UserLoadFavoriteProductList.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -2769,6 +2786,7 @@
 				18063C1116761B9200210719 /* CitySelected */,
 				18063C1C16762E1300210719 /* Remind Event */,
 				18063C271677748000210719 /* Share */,
+				184F183D16987B4D0062F185 /* MyAttention */,
 				F7469F03163EA88A00A2077D /* SettingVC.h */,
 				F7469F04163EA88A00A2077D /* SettingVC.m */,
 				F70D59CC165223E300FCB4AB /* Setting.plist */,
@@ -4570,6 +4588,8 @@
 				18D70E8E169342F8008C5A3A /* UserMakeFriendReponse.m in Sources */,
 				182C9E7016949A1A00448E8D /* UserLoadOrderDetail.m in Sources */,
 				182C9E7316949A2700448E8D /* NoticeOrderDetailViewController.m in Sources */,
+				184F184116987B890062F185 /* MyAttentionViewController.m in Sources */,
+				184F1844169880620062F185 /* UserLoadFavoriteProductList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

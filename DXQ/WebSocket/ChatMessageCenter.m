@@ -132,6 +132,10 @@ static ChatMessageCenter *msgCenter=nil;
     return number;
 }
 
+-(NSInteger)getAllMsgNumber
+{
+    return [chatMsgArray count];
+}
 -(void)addChatViewController:(UIViewController *)controller chatName:(NSString *)chatName{
 
     ChatObserveObject *obj=[ChatObserveObject chatWithController:controller chatName:chatName];
