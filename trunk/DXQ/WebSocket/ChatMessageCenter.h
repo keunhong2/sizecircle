@@ -38,6 +38,8 @@ extern NSString *const DXQChatMessageGetNewMessage;
 //获取消息但是不删除未读消息
 -(NSInteger)getMsgNumberWithChatName:(NSString *)chatName;
 
+-(NSInteger)getAllMsgNumber;
+
 -(void)addChatViewController:(UIViewController *)controller chatName:(NSString *)chatName;
 
 -(void)removeChatViewController:(UIViewController *)controller;

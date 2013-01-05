@@ -532,7 +532,7 @@
      }failure:nil];
     
     cell.businessNameLabel.text=[dic objectForKey:@"Title"];
-    cell.detailInfoLabel.text=[dic objectForKey:@"Content"];
+    cell.detailInfoLabel.text=[dic objectForKey:@"Summary"];
     cell.releaseDateLabel.text=[Tool convertTimestampToNSDate:[[dic objectForKey:@"OpTime"] integerValue]];
     cell.releaseDateLabel.frame=CGRectMake(cell.releaseDateLabel.frame.origin.x, 10.f, cell.releaseDateLabel.frame.size.width, 20.f);
     return cell;

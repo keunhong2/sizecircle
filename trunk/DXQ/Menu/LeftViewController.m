@@ -232,6 +232,7 @@
 {    
     [super viewDidAppear:animated];
     [self view];
+    [self setChatMsgValue:[[ChatMessageCenter shareMessageCenter]getAllMsgNumber]];
 }
 
 -(void)remindAction:(UIButton *)sender
