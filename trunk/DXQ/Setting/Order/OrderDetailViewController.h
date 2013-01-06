@@ -13,5 +13,5 @@
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic,retain)NSDictionary *orderDic;
 @property (nonatomic,retain)NSDictionary *productDic;
-
+@property (nonatomic)BOOL isMemberCard;
 @end

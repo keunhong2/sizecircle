@@ -7,7 +7,7 @@
 //
 
 #import "MyAttentionViewController.h"
-#import "UserProductSegmentControl.h"
+#import "UserProductViewController.h"
 
 @interface MyAttentionViewController ()
 

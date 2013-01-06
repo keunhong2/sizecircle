@@ -147,6 +147,9 @@
     }
     [_orderDic release];
     _orderDic=[orderDic retain];
+    if ([[_orderDic objectForKey:@"ProductType"] isEqualToString:@"H"]) {
+        self.isMemberCard=YES;
+    }
     [self.tableView reloadData];
 }
 
@@ -169,7 +172,10 @@
 
     switch (section) {
         case 0:
-            return 6;
+            if (_isMemberCard) {
+                return 7;
+            }else
+                return 6;
             break;
         case 1:
             return 3;
@@ -186,7 +192,13 @@
     switch (indexPath.section) {
         case 0:
         {
-            switch (indexPath.row) {
+            NSInteger tempValue=0;
+            if (_isMemberCard) {
+                cell.textLabel.text=@"会员卡卡号:";
+                cell.detailTextLabel.text=[_orderDic objectForKey:@"OrderProductCode"];
+                tempValue=1;
+            }
+            switch (indexPath.row-tempValue) {
                 case 0:
                 {
                     cell.textLabel.text=AppLocalizedString(@"名称");

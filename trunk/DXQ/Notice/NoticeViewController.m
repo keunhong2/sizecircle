@@ -19,6 +19,7 @@
 #import "HotEventDetailViewController.h"
 #import "UserMakeFriendReponse.h"
 #import "NoticeOrderDetailViewController.h"
+#import "HotEventDetailViewController.h"
 
 @interface NoticeViewController ()<UITableViewDataSource,UITableViewDelegate,BusessRequestDelegate,UIActionSheetDelegate>{
 
@@ -252,7 +253,17 @@
 
 -(void)joinEventByDic:(NSDictionary *)dic{
 
-    [self showActionSheetByTitle:@"活动邀请" withDic:dic];
+//    [self showActionSheetByTitle:@"活动邀请" withDic:dic];
+    NSMutableDictionary *tempDic=[NSMutableDictionary dictionaryWithDictionary:dic];
+    [tempDic setObject:[dic objectForKey:@"Content"] forKey:@"Title"];
+    [tempDic setObject:[dic objectForKey:@"AccountFromPhotoUrl"] forKey:@"PhotoUrl"];
+    [tempDic setObject:[dic objectForKey:@"ObjectNo"] forKey:@"ProductCode"];
+    HotEventDetailViewController *hotEvent=[[HotEventDetailViewController alloc]init];
+    hotEvent.simpleDic=tempDic;
+    [self.navigationController pushViewController:hotEvent animated:YES];
+    [hotEvent setNavgationTitle:[dic objectForKey:@"Content"] backItemTitle:@"通知中心"];
+    [hotEvent release];
+    
 }
 
 -(void)showActionSheetByTitle:(NSString *)title withDic:(NSDictionary *)dic{
