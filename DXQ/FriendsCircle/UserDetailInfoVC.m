@@ -583,7 +583,8 @@
             [_activityTableView setHidden:NO];
             [_scrollView setHidden:YES];
             [_noPhotoLabel setHidden:YES];
-            
+            if ([_activityTableViewDataSource.data count]<1)
+                [_activityTableView pullToRefresh];
             break;
         case BottomToolBarItemTypePhotos:
             [_waterFlow setHidden:NO];

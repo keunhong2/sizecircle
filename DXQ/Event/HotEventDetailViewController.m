@@ -375,7 +375,10 @@
     _interBtn.frame=CGRectMake(_interBtn.frame.origin.x, _imageContentView.frame.origin.y+_imageContentView.frame.size.height+15.f, _interBtn.frame.size.width, _interBtn.frame.size.height);
     _shareBtn.frame=CGRectMake(_shareBtn.frame.origin.x, _interBtn.frame.origin.y, _shareBtn.frame.size.width, _shareBtn.frame.size.height);
    
-    
+    NSString *startDate=[Tool convertTimestampToNSDate:[[detailDic objectForKey:@"StartDate"] integerValue] dateStyle:@"YYYY-MM-dd HH-mm"];
+    NSString *endDate=[Tool convertTimestampToNSDate:[[detailDic objectForKey:@"ExpiredDate"] integerValue] dateStyle:@"HH-MM"];
+    _headerView.dateLabel.text= [NSString stringWithFormat:@"%@--%@",startDate,endDate];
+    _headerView.nameLabel.text=[detailDic objectForKey:@"ProductTitle"];
     contentWebView.frame=CGRectMake(10.f, _shareBtn.frame.origin.y+_shareBtn.frame.size.height+15.f, self.view.frame.size.width-20.f, contentWebView.frame.size.height);
     [contentWebView loadHTMLString:[detailDic objectForKey:@"Content"] baseURL:nil];
     

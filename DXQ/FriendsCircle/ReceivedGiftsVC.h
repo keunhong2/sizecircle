@@ -10,4 +10,6 @@
 
 @interface ReceivedGiftsVC : BaseViewController
 
+@property (nonatomic,retain)UITableView *tableView;
+@property (nonatomic,retain)NSArray *giftList;
 @end

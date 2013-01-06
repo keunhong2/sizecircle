@@ -14,6 +14,7 @@
 #endif
 
 //#define WebServiceURL @"http://zlan20120816001.h101.996h.cn/webservice.aspx"
+#define WebServiceDomain @"http://www.daxiaoquan.com:90"
 #define WebServiceURL @"http://www.daxiaoquan.com:90/webservice.aspx"
 //#define WebServiceURL @"http://124.237.121.75:8000/webservice.aspx"
 //#define WebSocketURL  @"ws://zlan20120816001.h101.996h.cn:2100"

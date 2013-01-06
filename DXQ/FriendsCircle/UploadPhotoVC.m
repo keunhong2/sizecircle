@@ -189,14 +189,15 @@
 {
     if ([_desTextView.text length]<1)
     {
-        [Tool showAlertWithTitle:@"请添加描述" msg:nil];
-        return;
+        _desTextView.text=@"";
+//        [Tool showAlertWithTitle:@"请添加描述" msg:nil];
+//        return;
     }
     
     if ([selectTagsArray count]<1)
     {
-        [Tool showAlertWithTitle:@"请添加至少一个标签" msg:nil];
-        return;
+//        [Tool showAlertWithTitle:@"请添加至少一个标签" msg:nil];
+//        return;
     }
     
     NSMutableDictionary *info = [NSMutableDictionary dictionaryWithObjectsAndKeys:nil, nil, nil];
@@ -205,12 +206,13 @@
     {
         NSString *tags = [selectTagsArray componentsJoinedByString:@","];
         [info setObject:tags forKey:@"Label"];
-    }
+    }else
+        [info setObject:@"," forKey:@"Label"];
     
-    if ([_desTextView.text length]>0)
-    {
+//    if ([_desTextView.text length]>0)
+//    {
         [info setObject:_desTextView.text forKey:@"FileDesc"];
-    }
+//    }
     
     if (isLocationOpen)
     {
@@ -219,7 +221,8 @@
             locationString = [locationString stringByReplacingOccurrencesOfString:@"null" withString:@""];
             locationString = [locationString stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             [info setObject:locationString forKey:@"AddressInfo"];
-        }
+        }else
+            [info setObject:@"" forKey:@"AddressInfo"];
         
         NSString *lat = [[GPS gpsManager]getLocation:GPSLocationLatitude];
         
