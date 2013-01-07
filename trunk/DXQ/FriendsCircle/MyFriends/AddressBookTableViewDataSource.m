@@ -75,7 +75,7 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     NSDictionary *item = [_data objectAtIndex:indexPath.row];
-    [cell.avatarImg setImageWithURL:[NSURL URLWithString:[item objectForKey:@"imageurl"]]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
+    [cell.avatarImg setImageWithURL:[NSURL URLWithString:[[item objectForKey:@"imageurl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
     cell.usernameLbl.text = [item objectForKey:@"username"];
     cell.ageImg.image = [UIImage imageNamed:@"pyq_girl.png"];
     cell.ageLbl.text = @"18";

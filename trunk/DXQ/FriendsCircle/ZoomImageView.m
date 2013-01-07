@@ -104,7 +104,7 @@
     
     if (url&&[url length]>0)
     {
-        [imgView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"Info_icon_default.jpg"] success:^(UIImage *image ,BOOL iscache){
+        [imgView setImageWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"Info_icon_default.jpg"] success:^(UIImage *image ,BOOL iscache){
             [self resizeImageView:image withUrl:nil];
         } failure:^(NSError *error)
          {

@@ -255,6 +255,12 @@
     [controller release];
     [menuController popViewControllerWithNewCenterController:navController animated:YES];
     [navController release];
+    [self performSelector:@selector(showActivity:) withObject:controller afterDelay:.1f];
+}
+
+-(void)showActivity:(UserDetailInfoVC *)controller{
+
+     [controller showType:BottomToolBarItemTypeActivity];
 }
 
 -(void)friendCircleAction:(NSNumber*)actiontag
@@ -371,7 +377,7 @@
         DXQAccount *account = [[DXQCoreDataManager sharedCoreDataManager]getCurrentLoggedInAccount];
         if (account.dxq_PhotoUrl && [account.dxq_PhotoUrl length]>0)
         {
-            [iconImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@.thumb.jpg",account.dxq_PhotoUrl]] placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
+            [iconImageView setImageWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@.thumb.jpg",account.dxq_PhotoUrl] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
         }
         else
             [iconImageView setImage:[UIImage imageNamed:@"tx_gray.png"]];

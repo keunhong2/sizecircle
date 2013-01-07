@@ -12,7 +12,6 @@
 #import "FansView.h"
 #import "UserActionToolBar.h"
 #import "UIImageView+WebCache.h"
-#import "BottomToolBar.h"
 #import "AboutTableViewDataSource.h"
 #import "ActivityTableViewDataSource.h"
 #import "SendGiftsVC.h"
@@ -355,6 +354,12 @@
     _scrollView.contentSize = CGSizeMake(0.0f, height_);
 }
 
+-(void)showType:(BottomToolBarItemType)type{
+
+    self.bottomToolBar.selectIndex=type;
+    self.selectedBottomToolBarItemType=type;
+}
+
 -(void)refreshUI
 {
     //刷新UI上的数据
@@ -387,7 +392,7 @@
     NSString *picurl = [NSString stringWithFormat:@"%@",currentUser.dxq_PhotoUrl];
     if (picurl && [picurl isKindOfClass:[NSString class]] && [picurl length]>0)
     {
-        [_topUserImageView setImageWithURL:[NSURL URLWithString:picurl] placeholderImage:[UIImage imageNamed:@"user_detail_topdefault.jpg"] success:^(UIImage *image,BOOL iscached){[self showTopImage:image];} failure:nil];
+        [_topUserImageView setImageWithURL:[NSURL URLWithString:[picurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"user_detail_topdefault.jpg"] success:^(UIImage *image,BOOL iscached){[self showTopImage:image];} failure:nil];
     }
     else
     {
@@ -1153,7 +1158,7 @@
     if (imageUrl&&[imageUrl length]>0)
     {
         NSString *picurl = [NSString stringWithFormat:@"%@%@",imageUrl,THUMB_IMAGE_SUFFIX];        
-        NSURL *URL = [NSURL URLWithString:picurl];
+        NSURL *URL = [NSURL URLWithString:[picurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         [(ImageViewCell *)view setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"tx_gray.png"] ];
     }
     else

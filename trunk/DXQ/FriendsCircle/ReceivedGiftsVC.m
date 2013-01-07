@@ -31,6 +31,7 @@
     [_giftList release];
     [nodataView release];
     [loadMoreView release];
+    [_userID release];
     [super dealloc];
 }
 
@@ -38,7 +39,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -149,14 +150,13 @@
     }
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     NSDictionary *item=[_giftList objectAtIndex:indexPath.row];
-    cell.accessoryType =UITableViewCellAccessoryDisclosureIndicator;
     cell.detailTextLabel.numberOfLines = 2;
     cell.detailTextLabel.textColor = [UIColor colorWithRed:0.000 green:0.180 blue:0.311 alpha:0.950];
 
     cell.detailTextLabel.text = [item objectForKey:@"Name"];
     cell.detailTextLabel.font = NormalDefaultFont;
     UIImageView *iconImageView =(UIImageView *)[cell.contentView viewWithTag:1];
-    [iconImageView setImageWithURL:[NSURL URLWithString:[item objectForKey:@"imgurl"]] placeholderImage:[UIImage imageNamed:@"demo_gift"]];
+    [iconImageView setImageWithURL:[NSURL URLWithString:[[item objectForKey:@"Url"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"demo_gift"]];
     cell.indentationWidth=75;
     cell.indentationLevel=1;
     return cell;
@@ -185,7 +185,7 @@
     
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
                        logId,@"AccountId",pager,@"Pager",
-                       logId,@"AccountFrom",@"-1",@"Kind", nil];
+                       _userID,@"AccountFrom",@"-1",@"Kind", nil];
     [loadMoreView setState:LoadMoreStateRequesting];
     gigtRequest=[[GetGiftListRequest alloc]initRequestWithDic:dic];
     [gigtRequest setDelegate:self];
