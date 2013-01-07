@@ -149,7 +149,7 @@
         cell=[[[NoticeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ident] autorelease];
     }
     NSDictionary *dic=[_noticeArray objectAtIndex:indexPath.row];
-    [cell.productImageView setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"PictureUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] success:^(UIImage *image,BOOL isSucces){
+    [cell.productImageView setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"PictureUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] success:^(UIImage *image,BOOL isSucces){
         [Tool setImageView:cell.productImageView toImage:image];
     } failure:nil];
     cell.productNameLabel.text=[dic objectForKey:@"Title"];

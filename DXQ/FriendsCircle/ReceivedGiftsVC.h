@@ -12,4 +12,6 @@
 
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic,retain)NSArray *giftList;
+@property (nonatomic,retain)NSString *userID;
+
 @end

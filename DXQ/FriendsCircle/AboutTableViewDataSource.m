@@ -27,6 +27,7 @@
 @interface AboutTableViewDataSource()
 @property (nonatomic,assign)    UIViewController *viewControl;
 @property (retain, nonatomic)   NSMutableArray   *data;
+@property (nonatomic,retain) NSString *userID;
 
 @end
 
@@ -38,6 +39,7 @@
 {
     [_viewControl release];_viewControl = nil;
     [_data release];_data = nil;
+    [_userID release];_userID=nil;
     [super dealloc];
 }
 
@@ -53,7 +55,9 @@
 }
 
 -(void)reloadData:(NSString *)accountID
-{    
+{
+    self.userID=accountID;
+    
     [_data removeAllObjects];
     
     DXQAccount *user = [[DXQCoreDataManager sharedCoreDataManager]getAccountByAccountID:accountID];
@@ -362,7 +366,7 @@
     UIImageView *iconImageView =(UIImageView *)[cell.contentView viewWithTag:1];
     if ([item objectForKey:@"imgurl"])
     {
-        [iconImageView setImageWithURL:[NSURL URLWithString:[item objectForKey:@"imgurl"]] placeholderImage:[UIImage imageNamed:@"demo_gift"]];
+        [iconImageView setImageWithURL:[NSURL URLWithString:[[item objectForKey:@"imgurl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"demo_gift"]];
         [cell.imageView setImage:[UIImage imageNamed:@"demo_gift"]];
         [cell.imageView setHidden:YES];
     }
@@ -400,6 +404,7 @@
     if (info)
     {
         ReceivedGiftsVC *vc=[[ReceivedGiftsVC alloc]init];
+        vc.userID=_userID;
         [_viewControl.navigationController pushViewController:vc animated:YES];
         [vc release];
     }

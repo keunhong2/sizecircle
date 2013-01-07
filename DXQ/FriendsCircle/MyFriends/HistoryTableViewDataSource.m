@@ -77,7 +77,7 @@
     NSDictionary *item = [_data objectAtIndex:indexPath.row];
     NSString *picurl = [NSString stringWithFormat:@"%@%@",[item objectForKey:@"PhotoUrl"],THUMB_IMAGE_SUFFIX];
     if (!picurl)picurl = @"";
-    [cell.avatarImg setImageWithURL:[NSURL URLWithString:picurl]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
+    [cell.avatarImg setImageWithURL:[NSURL URLWithString:[picurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
     [cell.avatarImg addTarget:self action:@selector(viewUserDetailInfoAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.usernameLbl.text = [item objectForKey:@"MemberName"];
     NSString *statusString = [item objectForKey:@"Introduction"];

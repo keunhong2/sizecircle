@@ -198,7 +198,7 @@
         cell=[[[MyPraiseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ident] autorelease];
     }
     NSDictionary *dic=[_visibleArray objectAtIndex:indexPath.row];
-    [cell.praiseImageView setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"PictureUrl"]] placeholderImage:[UIImage imageNamed:@"default_header"] success:^(UIImage *image,BOOL isCache){
+    [cell.praiseImageView setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"PictureUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"default_header"] success:^(UIImage *image,BOOL isCache){
         [Tool setImageView:cell.praiseImageView toImage:image];
     } failure:nil];
     cell.praiseNameLabel.text=[dic objectForKey:@"Title"];

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BottomToolBar.h"
 
 @interface UserDetailInfoVC : BaseViewController
 
 - (id)initwithUserInfo:(NSDictionary *)item;
+
+-(void)showType:(BottomToolBarItemType)type;
 
 @end

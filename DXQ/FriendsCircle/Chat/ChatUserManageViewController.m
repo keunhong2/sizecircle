@@ -102,7 +102,7 @@
     NSDictionary *item = [[DXQCoreDataEntityBuilder sharedCoreDataEntityBuilder]DXQAccountToNSDictionary:(DXQAccount *)user];
     NSString *picurl = [NSString stringWithFormat:@"%@%@",[item objectForKey:@"PhotoUrl"],THUMB_IMAGE_SUFFIX];
     if (!picurl)picurl = @"";
-    [cell.avatarImg setImageWithURL:[NSURL URLWithString:picurl]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
+    [cell.avatarImg setImageWithURL:[NSURL URLWithString:[picurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
     cell.usernameLbl.text = [item objectForKey:@"MemberName"];
     NSString  *ageImgName = ([[item objectForKey:@"Sex"] intValue]==0)?@"pyq_girl.png":@"pyq_boy.png";
     cell.ageImg.image = [UIImage imageNamed:ageImgName];

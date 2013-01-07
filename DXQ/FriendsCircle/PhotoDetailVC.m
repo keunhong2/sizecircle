@@ -741,7 +741,7 @@
     NSDictionary *info = [_userInfo objectForKey:@"Info"];
     
     NSString *picurl = [NSString stringWithFormat:@"%@%@",[info objectForKey:@"PhotoUrl"],THUMB_IMAGE_SUFFIX];
-    NSURL *URL = [NSURL URLWithString:picurl];
+    NSURL *URL = [NSURL URLWithString:[picurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [_avatarImageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"Info_icon_default.jpg"] ];
     
     _nameLbl.text = [info objectForKey:@"MemberName"];
@@ -780,7 +780,7 @@
     NSDate *confromTime = [NSDate dateWithTimeIntervalSince1970:[[info objectForKey:@"CreateDate"]longLongValue]];
     _dateLbl.text =  [NSString stringWithFormat:@"%@前",[Tool calculateDate:confromTime]];
     
-    [_contentImageView setImageWithURL:[NSURL URLWithString:[info objectForKey:@"FilePath"]] placeholderImage:[UIImage imageNamed:@"user_detail_topdefault.jpg"]];
+    [_contentImageView setImageWithURL:[NSURL URLWithString:[[info objectForKey:@"FilePath"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"user_detail_topdefault.jpg"]];
     
     [_goodButton setTitle:[NSString stringWithFormat:@"%@人",[info objectForKey:@"PraiseCount"]] forState:UIControlStateNormal];
     [_commentButton setTitle:[NSString stringWithFormat:@"%@人",[info objectForKey:@"CommentCount"]] forState:UIControlStateNormal];
@@ -899,7 +899,7 @@
         cCell = (PhotoCommentCell*)[[[PhotoCommentCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     NSDictionary *item = [_dataArr objectAtIndex:indexPath.row];
-    [cCell.iconButton setImageWithURL:[NSURL URLWithString:[item objectForKey:@"PhotoUrl"]]];
+    [cCell.iconButton setImageWithURL:[NSURL URLWithString:[[item objectForKey:@"PhotoUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [cCell.iconButton addTarget:self action:@selector(viewUser:) forControlEvents:UIControlEventTouchUpInside];
     cCell.aliasLable.text = [item objectForKey:@"MemberName"];
     NSDate *confromTime = [NSDate dateWithTimeIntervalSince1970:[[item objectForKey:@"OpTime"]longLongValue]];
