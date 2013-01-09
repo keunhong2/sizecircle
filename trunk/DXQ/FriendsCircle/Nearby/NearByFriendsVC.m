@@ -239,7 +239,6 @@
     [self didCancelViewViewController];
 }
 
-
 -(void)filterAction:(UIButton*)sender
 {
     FriendFilterVC *vc = [[FriendFilterVC alloc]initWithDelegate:self];
