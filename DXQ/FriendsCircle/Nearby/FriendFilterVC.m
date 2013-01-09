@@ -47,6 +47,7 @@
     }
     //-1表示所有，0表示女，1表示男
     NSArray *sexSegmentedArray = [[NSArray alloc]initWithObjects:@"全部",@"男",@"女",nil];
+    
     UISegmentedControl *sexSegmentedControl = [self createSegmentControl:CGRectMake(10.0,40.0, 300.0, 45.0) withItems:sexSegmentedArray defaultSelected:[sexkeyConfig intValue]];
     sexSegmentedControl.tag = 1;
     [self.view addSubview:sexSegmentedControl];
@@ -57,7 +58,7 @@
     [self.view addSubview:appearTipLbl];
     [appearTipLbl release];
     
-    NSArray *appearTimeSegmentedArray = [[NSArray alloc]initWithObjects:@"15分钟",@"1小时",@"1天",@"3天",nil];
+    NSArray *appearTimeSegmentedArray = [[NSArray alloc]initWithObjects:@"15分钟",@"1小时",@"1天",@"3天",@"不限",nil];
     UISegmentedControl *appearTimeSegmentedControl = [self createSegmentControl:CGRectMake(10.0,135.0,300.0, 45.0) withItems:appearTimeSegmentedArray defaultSelected:[appearkeyTimeConfig intValue]];
     appearTimeSegmentedControl.tag = 2;
     [self.view addSubview:appearTimeSegmentedControl];
@@ -156,6 +157,8 @@
                 break;
             case 3:
                 [dict setObject:[NSNumber numberWithInt:259200] forKey:@"time"];
+            case 4:
+                [dict setObject:[NSNumber numberWithInt:-1] forKey:@"time"];
                 break;
             default:
                 break;
