@@ -272,7 +272,7 @@
 -(void)sendMessageContent:(NSString *)content
 {
     //链接成功了给服务器发送cpc接口的数据
-    NSDictionary *pDict = [NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom",[_chatUserInfo objectForKey:@"AccountId"],@"AccountTo",content,@"Content", nil];
+    NSDictionary *pDict = [NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom",[_chatUserInfo objectForKey:@"AccountId"],@"AccountTo",[Tool encodeBase64:content],@"Content", nil];
     [[ChatMessageCenter shareMessageCenter]sendMsg:pDict target:self];
     _chatToolBar.messageTextField.text = @"";
 }
@@ -286,7 +286,7 @@
     if ([[receiveDict objectForKey:@"AccountFrom"] isEqualToString:[_chatUserInfo objectForKey:@"AccountId"]])
     {
         long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
-        NSBubbleData *heyBubble = [NSBubbleData dataWithText:[receiveDict objectForKey:@"Content"] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
+        NSBubbleData *heyBubble = [NSBubbleData dataWithText:[Tool decodeBase64:[receiveDict objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
         heyBubble.avatar = chatUserAvatar;
         [_bubbleData addObject:heyBubble];
         [_chatTableView reloadData];
@@ -296,7 +296,7 @@
 -(void)getChatMessage:(NSDictionary *)receiveDict{
     
     long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
-    NSBubbleData *heyBubble = [NSBubbleData dataWithText:[receiveDict objectForKey:@"Content"] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
+    NSBubbleData *heyBubble = [NSBubbleData dataWithText:[Tool decodeBase64:[receiveDict objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
     heyBubble.avatar = chatUserAvatar;
     [_bubbleData addObject:heyBubble];
     [_chatTableView reloadData];
