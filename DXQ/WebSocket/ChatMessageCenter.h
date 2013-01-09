@@ -64,6 +64,8 @@ extern NSString *const DXQChatMessageGetNewMessage;
 
 -(void)cancelGetUnReadMessage;
 
+-(NSArray *)getHistoryChatMsgFromUser:(NSString *)userID number:(NSInteger)number page:(NSInteger)page;
+
 @end
 
 @interface ChatObserveObject : NSObject

@@ -103,6 +103,7 @@
 		18A8A3A81633B5E500167D57 /* MemberDetailBusinessInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A8A3A71633B5E500167D57 /* MemberDetailBusinessInfoView.m */; };
 		18ACD22616344921004A426B /* TicketInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22516344921004A426B /* TicketInfoHeaderView.m */; };
 		18ACD22E163452F9004A426B /* TuanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22D163452F9004A426B /* TuanDetailViewController.m */; };
+		18BFA24D169C714F009D35CB /* UserLoadUnReadNoticeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BFA24C169C714F009D35CB /* UserLoadUnReadNoticeList.m */; };
 		18D70E8E169342F8008C5A3A /* UserMakeFriendReponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D70E8C169342F8008C5A3A /* UserMakeFriendReponse.m */; };
 		18DA0A1B1636D02900AB2650 /* BasePullTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA0A1A1636D02900AB2650 /* BasePullTableViewController.m */; };
 		18DA0A281636D30C00AB2650 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA0A271636D30C00AB2650 /* EGORefreshTableHeaderView.m */; };
@@ -974,6 +975,8 @@
 		18ACD22516344921004A426B /* TicketInfoHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicketInfoHeaderView.m; sourceTree = "<group>"; };
 		18ACD22C163452F9004A426B /* TuanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuanDetailViewController.h; sourceTree = "<group>"; };
 		18ACD22D163452F9004A426B /* TuanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuanDetailViewController.m; sourceTree = "<group>"; };
+		18BFA24B169C714F009D35CB /* UserLoadUnReadNoticeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadUnReadNoticeList.h; sourceTree = "<group>"; };
+		18BFA24C169C714F009D35CB /* UserLoadUnReadNoticeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadUnReadNoticeList.m; sourceTree = "<group>"; };
 		18D70E8C169342F8008C5A3A /* UserMakeFriendReponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMakeFriendReponse.m; sourceTree = "<group>"; };
 		18D70E8D169342F8008C5A3A /* UserMakeFriendReponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserMakeFriendReponse.h; sourceTree = "<group>"; };
 		18DA0A191636D02900AB2650 /* BasePullTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasePullTableViewController.h; sourceTree = "<group>"; };
@@ -2097,6 +2100,8 @@
 				182C9E6F16949A1A00448E8D /* UserLoadOrderDetail.h */,
 				184F1842169880620062F185 /* UserLoadFavoriteProductList.h */,
 				184F1843169880620062F185 /* UserLoadFavoriteProductList.m */,
+				18BFA24B169C714F009D35CB /* UserLoadUnReadNoticeList.h */,
+				18BFA24C169C714F009D35CB /* UserLoadUnReadNoticeList.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -4590,6 +4595,7 @@
 				182C9E7316949A2700448E8D /* NoticeOrderDetailViewController.m in Sources */,
 				184F184116987B890062F185 /* MyAttentionViewController.m in Sources */,
 				184F1844169880620062F185 /* UserLoadFavoriteProductList.m in Sources */,
+				18BFA24D169C714F009D35CB /* UserLoadUnReadNoticeList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

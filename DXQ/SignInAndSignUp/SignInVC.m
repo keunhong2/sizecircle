@@ -19,6 +19,7 @@
 #import "GPS.h"
 #import "DXQWebSocket.h"
 #import "ChatMessageCenter.h"
+#import "DXQNoticeCenter.h"
 
 @interface SignInVC ()<SignInRequestDelegate>
 {
@@ -278,6 +279,7 @@
                                              dismissViewController:YES];
         
         [[ChatMessageCenter shareMessageCenter]getUnReadMessage];
+        [[DXQNoticeCenter defaultNoticeCenter]getUnReadNotice];
    }
 }
 #pragma 登陆失败回调

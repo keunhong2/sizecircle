@@ -19,4 +19,6 @@
 
 -(void)removeNoticeByArray:(NSArray *)array;
 
+-(void)getUnReadNotice;
+
 @end
