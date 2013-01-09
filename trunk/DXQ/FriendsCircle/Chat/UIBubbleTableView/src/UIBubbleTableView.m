@@ -231,4 +231,12 @@
     return cell;
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (scrollView.contentOffset.y<=-70.f) {
+        if (_bubbleDataSource&&[_bubbleDataSource respondsToSelector:@selector(pullToRereshBubbleTable:)]) {
+            [_bubbleDataSource pullToRereshBubbleTable:self];
+        }
+    }
+}
 @end

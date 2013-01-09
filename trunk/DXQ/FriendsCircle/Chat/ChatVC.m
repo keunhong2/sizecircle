@@ -18,6 +18,8 @@
 #import "DXQWebSocket.h"
 #import "ChatMessageCenter.h"
 
+#define CHAT_VC_HISTORY_NUMBER  10
+
 @interface ChatVC ()<UIBubbleTableViewDataSource,UITextFieldDelegate>
 {
     NSMutableArray *bubbleData;
@@ -335,6 +337,29 @@
 - (NSBubbleData *)bubbleTableView:(UIBubbleTableView *)tableView dataForRow:(NSInteger)row
 {
     return [_bubbleData objectAtIndex:row];
+}
+
+-(void)pullToRereshBubbleTable:(UIBubbleTableView *)tableView{
+
+    NSInteger page=_bubbleData.count/CHAT_VC_HISTORY_NUMBER;
+    NSString *tempUserID=[_chatUserInfo objectForKey:@"AccountId"];
+    NSArray *tempArray=[[ChatMessageCenter shareMessageCenter]getHistoryChatMsgFromUser:tempUserID number:CHAT_VC_HISTORY_NUMBER*page page:0];
+    NSMutableArray *tempData=[NSMutableArray array];
+    for (int i=0; i<tempArray.count; i++) {
+        NSDictionary *receiveDict=[tempArray objectAtIndex:i];
+        NSBubbleType tempType;
+        if ([[receiveDict objectForKey:@"AccountFrom"] isEqualToString:tempUserID]) {
+            tempType=BubbleTypeSomeoneElse;
+        }else
+            tempType=BubbleTypeMine;
+        long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
+        NSBubbleData *heyBubble = [NSBubbleData dataWithText:[Tool decodeBase64:[receiveDict objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:tempType];
+        heyBubble.avatar = chatUserAvatar;
+        [tempData addObject:heyBubble];
+    }
+    [_bubbleData removeAllObjects];
+    [_bubbleData addObjectsFromArray:tempData];
+    [tableView reloadData];
 }
 
 - (void) registerForKeyboardNotifications

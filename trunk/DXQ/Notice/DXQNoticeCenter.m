@@ -7,10 +7,12 @@
 //
 
 #import "DXQNoticeCenter.h"
+#import "UserLoadUnReadNoticeList.h"
 
-@interface DXQNoticeCenter (){
+@interface DXQNoticeCenter ()<BusessRequestDelegate>{
 
     NSMutableArray *allNoticeArray;
+    UserLoadUnReadNoticeList *noticeRequest;
 }
 
 @end
@@ -29,6 +31,7 @@ static DXQNoticeCenter *noticeCenter=nil;
 -(void)dealloc{
 
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIFICATIONCENTER_RECEIED_NOTICE object:nil];
+    [self cancelGetUnReadNotice];
     [super dealloc];
 }
 
@@ -69,6 +72,40 @@ static DXQNoticeCenter *noticeCenter=nil;
     id notice=[not object];
     if (notice) {
         [self addNoticeByArray:[NSArray arrayWithObject:notice]];
+    }
+}
+
+
+#pragma mark -Unread
+
+-(void)cancelGetUnReadNotice
+{
+    if (noticeRequest) {
+        [noticeRequest cancel];
+        [noticeRequest release];
+        noticeRequest=nil;
+    }
+}
+
+-(void)getUnReadNotice{
+
+    [self cancelGetUnReadNotice];
+    
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[SettingManager sharedSettingManager].loggedInAccount,@"AccountId", nil];
+    noticeRequest=[[UserLoadUnReadNoticeList alloc]initWithRequestWithDic:dic];
+    noticeRequest.delegate=self;
+    [noticeRequest startAsynchronous];
+}
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFailedWithErrorMsg:(NSString *)msg{
+
+    [self getUnReadNotice];
+}
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
+
+    for (int i=0; i<[data count]; i++) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATIONCENTER_RECEIED_NOTICE object:[data objectAtIndex:i]];
     }
 }
 @end

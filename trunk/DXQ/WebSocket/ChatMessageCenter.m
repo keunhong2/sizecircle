@@ -66,6 +66,9 @@ static ChatMessageCenter *msgCenter=nil;
             [self chatMsgIsSend:msg];
             return;
         }
+        [msg chatHistory];
+        [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
+        
         BOOL isPost=NO;
         NSString *toUser=[msg objectForKey:@"AccountFrom"];
         for (ChatObserveObject *obj in chatObserArray) {
@@ -245,6 +248,30 @@ static ChatMessageCenter *msgCenter=nil;
     }
 }
 
+-(NSArray *)getHistoryChatMsgFromUser:(NSString *)userID number:(NSInteger)number page:(NSInteger)page{
+
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSManagedObjectContext *managedObjectContext =[[DXQCoreDataManager sharedCoreDataManager]managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatHistory" inManagedObjectContext:managedObjectContext];
+    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc]
+                                         initWithKey:@"dxq_OpTime" ascending:YES];
+    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"(dxq_AccountFrom==%@ and dxq_AccountTo==%@) or (dxq_AccountFrom==%@ and dxq_AccountTo==%@)",userID,[[SettingManager sharedSettingManager]loggedInAccount],[[SettingManager sharedSettingManager]loggedInAccount],userID];
+    NSArray *sortDescriptors = [[NSArray alloc]
+                                initWithObjects:sortDescriptor1, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:predicate];
+    [fetchRequest setFetchLimit:number];
+    [fetchRequest setFetchOffset:page*number];
+    NSArray *objecs = [managedObjectContext executeFetchRequest: fetchRequest error:nil];
+    NSMutableArray *tempArray=[NSMutableArray array];
+    for (int i=0; i<objecs.count; i++) {
+        [tempArray addObject:[(ChatHistory *)[objecs objectAtIndex:i] chatDictionary]];
+    }
+    
+    return tempArray;
+}
 //for un read msg
 
 -(void)getUnReadMessage{

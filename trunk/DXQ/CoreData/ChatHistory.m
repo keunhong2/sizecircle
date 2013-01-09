@@ -105,12 +105,12 @@
         chat.dxq_Face=@"";
     
     if ([keys containsObject:@"JingDu"]) {
-        chat.dxq_JingDu=[self objectForKey:@"JingDu"];
+        chat.dxq_JingDu=[NSString stringWithFormat:@"%@",[self objectForKey:@"JingDu"]];
     }else
         chat.dxq_JingDu=@"0";
     
     if ([keys containsObject:@"WeiDu"]) {
-        chat.dxq_WeiDu=[self objectForKey:@"WeiDu"];
+        chat.dxq_WeiDu=[NSString stringWithFormat:@"%@",[self objectForKey:@"WeiDu"]];
     }else
         chat.dxq_WeiDu=@"0";
     
