@@ -342,9 +342,15 @@ static DXQCoreDataEntityBuilder *dXQCoreDataEntityBuilder = nil;
         }
         
         NSObject* dxq_JingDu = [dictionary objectForKey:@"JingDu"];
-        if (dxq_JingDu && [dxq_JingDu isKindOfClass:[NSString class]])
+        if (dxq_JingDu)
         {
-            user.dxq_JingDu = (NSString*)dxq_JingDu;
+            user.dxq_JingDu =[NSString stringWithFormat:@"%@",dxq_JingDu];
+        }else
+        {
+            NSString *userID=[[SettingManager sharedSettingManager]loggedInAccount];
+            if ([userID isEqualToString:(NSString *)AccountId]) {
+                user.dxq_JingDu=[[GPS gpsManager]getLocation:GPSLocationLongitude];
+            }
         }
         
         NSObject* dxq_LinkmeCount = [dictionary objectForKey:@"LinkmeCount"];
@@ -385,9 +391,15 @@ static DXQCoreDataEntityBuilder *dXQCoreDataEntityBuilder = nil;
         }
         
         NSObject* dxq_WeiDu = [dictionary objectForKey:@"WeiDu"];
-        if (dxq_WeiDu && [dxq_WeiDu isKindOfClass:[NSString class]])
+        if (dxq_WeiDu)
         {
-            user.dxq_WeiDu = (NSString*)dxq_WeiDu;
+            user.dxq_WeiDu = [NSString stringWithFormat:@"%@",dxq_WeiDu];
+        }else
+        {
+            NSString *userID=[[SettingManager sharedSettingManager]loggedInAccount];
+            if ([userID isEqualToString:(NSString *)AccountId]) {
+                user.dxq_WeiDu=[[GPS gpsManager]getLocation:GPSLocationLatitude];
+            }
         }
         
         NSObject* dxq_ReceivedGifts = [dictionary objectForKey:@"ReceivedGifts"];

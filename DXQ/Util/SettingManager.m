@@ -235,6 +235,10 @@ static SettingManager *setting = nil;
         if ([AccountId isEqualToString:[item objectForKey:@"AccountId"]])
         {
             isExist = YES;
+            if (contact.allKeys.count>item.allKeys.count) {
+                [allContacts removeObject:item];
+                [allContacts replaceObjectAtIndex:[allContacts indexOfObject:item] withObject:contact];
+            }
             break;
         }
     }
@@ -243,6 +247,25 @@ static SettingManager *setting = nil;
     [userDefault setObject:allContacts forKey:key];
     [userDefault synchronize];
     [allContacts release];
+}
+
+-(BOOL)isContentAndHadDetailInfomationInLastest:(NSDictionary *)contact
+{
+    NSArray *tempArray=[self getLastestContact];
+    NSMutableArray *allContacts = [[NSMutableArray alloc]initWithArray:tempArray];
+    for (NSDictionary *item in allContacts)
+    {
+        NSString *AccountId = [contact objectForKey:@"AccountId"];
+        
+        if ([AccountId isEqualToString:[item objectForKey:@"AccountId"]])
+        {
+            if (contact.allKeys.count==item.allKeys.count) {
+                return NO;
+            }else
+                return YES;
+        }
+    }
+    return NO;
 }
 
 -(void)saveLastestContact:(NSMutableArray *)allContacts

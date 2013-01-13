@@ -31,7 +31,7 @@
     CGRect rect = [UIScreen mainScreen].bounds;
     CustomUIView *view_ = [[CustomUIView alloc] initWithFrame:rect];
     self.view = view_;
-    [view_ release];    
+    [view_ release];
     
     UILabel *sexTipLbl = [self createLabel:AppLocalizedString(@"您想看到的用户") frame:CGRectMake(15,10,280,20)];
     [self.view addSubview:sexTipLbl];
@@ -46,7 +46,7 @@
         if ([config objectForKey:@"timekey"])appearkeyTimeConfig = [config objectForKey:@"timekey"];
     }
     //-1表示所有，0表示女，1表示男
-    NSArray *sexSegmentedArray = [[NSArray alloc]initWithObjects:@"全部",@"男",@"女",nil];
+    NSArray *sexSegmentedArray = [[NSArray alloc]initWithObjects:@"不限",@"男",@"女",nil];
     
     UISegmentedControl *sexSegmentedControl = [self createSegmentControl:CGRectMake(10.0,40.0, 300.0, 45.0) withItems:sexSegmentedArray defaultSelected:[sexkeyConfig intValue]];
     sexSegmentedControl.tag = 1;
@@ -58,7 +58,8 @@
     [self.view addSubview:appearTipLbl];
     [appearTipLbl release];
     
-    NSArray *appearTimeSegmentedArray = [[NSArray alloc]initWithObjects:@"15分钟",@"1小时",@"1天",@"3天",@"不限",nil];
+    NSArray *appearTimeSegmentedArray = [[NSArray alloc]initWithObjects:@"不限",@"15分钟",@"1小时",@"1天",@"3天",nil];
+
     UISegmentedControl *appearTimeSegmentedControl = [self createSegmentControl:CGRectMake(10.0,135.0,300.0, 45.0) withItems:appearTimeSegmentedArray defaultSelected:[appearkeyTimeConfig intValue]];
     appearTimeSegmentedControl.tag = 2;
     [self.view addSubview:appearTimeSegmentedControl];
@@ -95,7 +96,7 @@
 }
 
 -(UISegmentedControl *)createSegmentControl:(CGRect)rect_ withItems:(NSArray *)items_ defaultSelected:(NSUInteger)selectedIndex
-{ 
+{
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:items_];
     segmentedControl.frame = rect_;
     segmentedControl.selectedSegmentIndex = selectedIndex;
@@ -144,8 +145,11 @@
     else if(seg.tag == 2)
     {
         [dict setObject:[NSNumber numberWithInt:Index] forKey:@"timekey"];
-        switch (Index)
+        switch (Index-1)
         {
+            case -1:
+                [dict setObject:[NSNumber numberWithInt:-1] forKey:@"time"];
+                break;
             case 0:
                 [dict setObject:[NSNumber numberWithInt:900] forKey:@"time"];
                 break;
@@ -157,6 +161,7 @@
                 break;
             case 3:
                 [dict setObject:[NSNumber numberWithInt:259200] forKey:@"time"];
+                break;
             case 4:
                 [dict setObject:[NSNumber numberWithInt:-1] forKey:@"time"];
                 break;

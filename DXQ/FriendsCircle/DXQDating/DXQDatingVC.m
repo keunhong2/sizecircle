@@ -93,7 +93,7 @@
     self.view = view_;
     [view_ release];
     
-    [self.navigationItem setTitle:AppLocalizedString(@"大小圈相亲")];
+    [self.navigationItem setTitle:AppLocalizedString(@"圈圈相亲")];
 
     //custom segment
     /*

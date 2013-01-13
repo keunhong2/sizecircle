@@ -9,6 +9,7 @@
 #import "ChatMessageCenter.h"
 #import "DXQWebSocket.h"
 #import "UserLoadUnReceivedChat.h"
+#import "UserLoadPersonalPage.h"
 
 @interface ChatMessageCenter ()<BusessRequestDelegate>{
 
@@ -17,6 +18,7 @@
     NSMutableArray *chatMsgNumObserArray;
     NSMutableArray *sendAndNotReceviecArray;
     UserLoadUnReceivedChat *getUnReadMsgRequest;
+    NSMutableArray *requestUserDetailIDs;
 }
 
 @end
@@ -45,6 +47,7 @@ static ChatMessageCenter *msgCenter=nil;
         chatMsgArray=[NSMutableArray new];
         chatMsgNumObserArray=[NSMutableArray new];
         sendAndNotReceviecArray=[NSMutableArray new];
+        requestUserDetailIDs=[NSMutableArray new];
     }
     return self;
 }
@@ -55,6 +58,7 @@ static ChatMessageCenter *msgCenter=nil;
     [chatObserArray release];
     [chatMsgNumObserArray release];
     [sendAndNotReceviecArray release];
+    [requestUserDetailIDs release];
     [super dealloc];
 }
 
@@ -66,6 +70,13 @@ static ChatMessageCenter *msgCenter=nil;
             [self chatMsgIsSend:msg];
             return;
         }
+        NSString *tempAccountID=[msg objectForKey:@"AccountFrom"];
+        NSDictionary *tempChatUserDic=[NSDictionary dictionaryWithObjectsAndKeys:
+                                       tempAccountID,@"AccountId",tempAccountID,@"MemberName",@"",@"PhotoUrl",@"",@"Introduction", nil];
+        if (![[SettingManager sharedSettingManager]isContentAndHadDetailInfomationInLastest:tempChatUserDic]) {
+            [self requestUserDefailtInfoByID:tempAccountID];
+        }
+        [[SettingManager sharedSettingManager]addLastestContact:tempChatUserDic];
         [msg chatHistory];
         [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
         
@@ -103,6 +114,13 @@ static ChatMessageCenter *msgCenter=nil;
         if (!isPost) {
             [chatMsgArray addObject:msg];
             number++;
+            NSString *tempAccountID=[msg objectForKey:@"AccountFrom"];
+            NSDictionary *tempChatUserDic=[NSDictionary dictionaryWithObjectsAndKeys:
+                                           tempAccountID,@"AccountId",tempAccountID,@"MemberName",@"",@"PhotoUrl",@"",@"Introduction", nil];
+            if (![[SettingManager sharedSettingManager]isContentAndHadDetailInfomationInLastest:tempChatUserDic]) {
+                [self requestUserDefailtInfoByID:tempAccountID];
+            }
+
         }
     }
     for (ChatMessageNumberChangeObject *object in chatMsgNumObserArray) {
@@ -303,6 +321,11 @@ static ChatMessageCenter *msgCenter=nil;
 
     if (request==getUnReadMsgRequest) {
         [self getUnReadMessage];
+    }else
+    {
+        NSString *tempID=[request.paramDic objectForKey:@"AccountFrom"];
+        [requestUserDetailIDs removeObject:tempID];
+        [request release];
     }
 }
 
@@ -311,7 +334,41 @@ static ChatMessageCenter *msgCenter=nil;
     if (request==getUnReadMsgRequest) {
         [self postNewChatMessageArray:data];
         [[NSNotificationCenter defaultCenter]postNotificationName:DXQChatMessageDidGetUnReadMessageNotification object:data];
+    }else
+    {
+        NSString *tempID=[request.paramDic objectForKey:@"AccountFrom"];
+        [requestUserDetailIDs removeObject:tempID];
+        [[SettingManager sharedSettingManager]addLastestContact:[data objectForKey:@"Info"]];
+        [request release];
+
     }
+}
+
+
+#pragma mark --Request
+
+-(void)requestUserDefailtInfoByID:(NSString *)tempID
+{
+    if ([requestUserDetailIDs containsObject:tempID]) {
+        return;
+    }
+    
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId",tempID,@"AccountFrom", nil];
+    UserLoadPersonalPage *request=[[UserLoadPersonalPage alloc]initWithRequestWithDic:dic];
+    request.delegate=self;
+    [requestUserDetailIDs addObject:tempID];
+    [request startAsynchronous];
+}
+
+
+- (void)userInfoDetailRequestDidFinishedWithParamters:(NSDictionary *)dic{
+
+    
+}
+
+- (void)userInfoDetailRequestDidFinishedWithErrorMessage:(NSString *)errorMsg{
+
+    
 }
 @end
 
