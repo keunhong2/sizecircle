@@ -65,7 +65,8 @@
     map.delegate = self;
     [self.view addSubview:map];
     
-	NSString *address = [mapInfoDict objectForKey:@"address"];
+    NSString *addTitle=[mapInfoDict objectForKey:@"title"];
+	NSString *address = [mapInfoDict objectForKey:@"value"];
 	NSString *latString = [mapInfoDict objectForKey:@"lat"];
 	NSString *lngString = [mapInfoDict objectForKey:@"lng"];
 	
@@ -81,8 +82,8 @@
     HYMapAnnotation *annotation = [[HYMapAnnotation alloc] init];
 	annotation.latitude = [NSNumber numberWithDouble:[latString doubleValue]];
 	annotation.longitude = [NSNumber numberWithDouble:[lngString doubleValue]];
-	annotation.title = address;
-	annotation.subtitle = @"";
+	annotation.title =addTitle;
+	annotation.subtitle = address;
 	[mapAnnotations addObject:annotation];
     [annotation release];
     

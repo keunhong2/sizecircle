@@ -16,6 +16,9 @@
 #import "NearByUserListRequest.h"
 #import "UIScrollView+AH3DPullRefresh.h"
 #import "GPS.h"
+#import "LoadMoreView.h"
+#import "FriendAnnotation.h"
+#import "FriendAnnotationView.h"
 
 #define ROWNUMBERS 4
 
@@ -27,6 +30,9 @@
     BOOL isNearByUserListRequesting;
     
     NSInteger currentPage;
+    LoadMoreView *loadMoreView;
+    UIImageView *nodataImgView;
+    NSMutableArray *allAnntion;
 }
 
 @property (nonatomic,retain)NSMutableArray *friendsList;
@@ -46,6 +52,9 @@
     [_friendsList release];_friendsList = nil;
     [_mapView release];_mapView = nil;
     [_tableView release];_tableView = nil;
+    [nodataImgView release];
+    [loadMoreView release];
+    [allAnntion release];
     [super dealloc];
 }
 
@@ -63,6 +72,8 @@
         _showType=SegmentTypeList;
         
         _friendsList = [[NSMutableArray alloc]init];
+        
+        allAnntion=[NSMutableArray new];
         
         currentPage = 1;
     }
@@ -87,6 +98,18 @@
     [segment release];
     
     [self.view insertSubview:[self tableView] atIndex:0];
+    
+    
+    if (!loadMoreView) {
+        loadMoreView=[[LoadMoreView alloc]initWithFrame:CGRectMake(0.f, 0.f, self.view.frame.size.width, 60.f)];
+        [loadMoreView setLoadMoreBlock:^{
+            [self nearByUserListRequestByPage:_friendsList.count/20+1];
+        }];
+    }
+    
+    if (nodataImgView) {
+        nodataImgView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"nodata"]];
+    }
 }
 
 -(UITableView *)tableView
@@ -105,7 +128,6 @@
 //            [self loadMore];
 //        }];
 
-        [_tableView setPullToLoadMoreViewPullingText:@"继续上拉加载更多"];
 
 //        UIView *footer = [[UIView alloc]initWithFrame:CGRectZero];
 //        _tableView.tableFooterView = footer;
@@ -161,11 +183,12 @@
 {
     currentPage = 1;
     [_friendsList removeAllObjects];
+    [self.mapView removeAnnotations:allAnntion];
     [_tableView reloadData];
-    [self nearByUserListRequest];
+    [self nearByUserListRequestByPage:1];
 }
 
--(void)nearByUserListRequest
+-(void)nearByUserListRequestByPage:(NSInteger)page
 {
     if (isNearByUserListRequesting)return;
     NSMutableDictionary *parametersDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:nil, nil];
@@ -173,11 +196,11 @@
     NSString *lon =   [[GPS gpsManager]getLocation:GPSLocationLongitude];    
     [parametersDic setObject:lon forKey:@"JingDu"];
     [parametersDic setObject:lat forKey:@"WeiDu"];
-    [parametersDic setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",currentPage],@"PageIndex",@"20",@"ReturnCount", nil] forKey:@"Pager"];
+    [parametersDic setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",page],@"PageIndex",@"20",@"ReturnCount", nil] forKey:@"Pager"];
     
     NSDictionary *config = [[SettingManager sharedSettingManager]getNearByFriendsListFilterConfig];
     NSNumber *sex = [NSNumber numberWithInt:-1];
-    NSNumber *time = [NSNumber numberWithInt:900];
+    NSNumber *time = [NSNumber numberWithInt:-1];
     if (config && [config isKindOfClass:[NSDictionary class]])
     {
         if ([config objectForKey:@"sex"])sex = [config objectForKey:@"sex"];
@@ -187,6 +210,7 @@
     [parametersDic setObject:[time stringValue] forKey:@"LogInDate"];
     [parametersDic setObject:[[SettingManager sharedSettingManager]loggedInAccount] forKey:@"AccountId"];
     currentPage++;
+    [loadMoreView setState:LoadMoreStateRequesting];
     isNearByUserListRequesting = YES;
     nearByUserListRequest = [[NearByUserListRequest alloc] initRequestWithDic:parametersDic];
     nearByUserListRequest.delegate = self;
@@ -207,6 +231,7 @@
     nearByUserListRequest = nil;
     [_tableView refreshFinished];
     [_tableView loadMoreFinished];
+    [loadMoreView setState:LoadMoreStateNormal];
 }
 
 
@@ -216,7 +241,21 @@
     {
         [_friendsList addObjectsFromArray:result];
         [self.tableView reloadData];
+        
+        for (NSDictionary *dic in result) {
+            FriendAnnotation *ann=[[FriendAnnotation alloc]init];
+            ann.dic=dic;
+            [allAnntion addObject:ann];
+            [ann release];
+            [self.mapView addAnnotation:ann];
+        }
     }
+    
+    if (result.count>=20) {
+        self.tableView.tableFooterView=loadMoreView;
+    }else
+        self.tableView.tableFooterView=nodataImgView;
+    
     [self finishedNearByUserListRequestSuccessed:YES withMessage:nil];
 }
 
@@ -392,12 +431,34 @@
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark -Map
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    
+    if ([annotation isKindOfClass:[FriendAnnotation class]]) {
+        static NSString *friendIdentifier=@"Friend";
+        FriendAnnotationView *view=(FriendAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:friendIdentifier];
+        if (!view) {
+            view=[[[FriendAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:friendIdentifier] autorelease];
+        }
+        view.headerImageView.image=nil;
+        NSString *url=[[(FriendAnnotation *)annotation dic]objectForKey:@"PhotoUrl"];
+        NSString *encodeUrl=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [view.headerImageView setImageWithURL:[NSURL URLWithString:encodeUrl] placeholderImage:nil];
+        view.frame=CGRectMake(view.frame.origin.x, view.frame.origin.y, view.headerImageView.frame.size.width,view.headerImageView.frame.size.height);
+        return view;
+    }else
+        return nil;
 }
 
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    if ([view.annotation isKindOfClass:[FriendAnnotation class]]) {
+        UserDetailInfoVC *vc=[[UserDetailInfoVC alloc]initwithUserInfo:[(FriendAnnotation*)(view.annotation) dic]];
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc release];
+    }
+}
 @end
                
                

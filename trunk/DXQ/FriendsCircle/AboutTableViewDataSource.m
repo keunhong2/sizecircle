@@ -246,7 +246,8 @@
                                   @"1",CELL_ITEM_KEY_STYLE,
                                   [self getCellHeight:LastestAddress],CELL_ITEM_KEY_HEIGHT,
                                   @"1",CELL_ITEM_KEY_ISACTION,
-                                  @"LastestAddress:",CELL_ITEM_KEY_ACTION, nil];
+                                  @"LastestAddress:",CELL_ITEM_KEY_ACTION,
+                                  user.dxq_JingDu,@"lng",user.dxq_WeiDu,@"lat", nil];
         [userinfoArray addObject:item];
     }
     NSDictionary *u_section = [NSDictionary dictionaryWithObjectsAndKeys:AppLocalizedString(@"个人信息"),@"sectiontitle",userinfoArray,@"rows",TABLEVIEW_SECTION_USERINFO,@"type", nil];

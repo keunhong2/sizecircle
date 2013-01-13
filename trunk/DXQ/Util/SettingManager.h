@@ -59,6 +59,10 @@
 
 -(void)saveLastestContact:(NSMutableArray *)allContacts;
 
+-(BOOL)isContentAndHadDetailInfomationInLastest:(NSDictionary *)item;
+
+-(BOOL)addLastestContactByMsgDic:(NSDictionary *)item;
+
 -(void)addLastestContact:(NSDictionary *)item;
 
 - (NSMutableArray *)getLastestContact;
