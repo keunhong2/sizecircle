@@ -279,5 +279,15 @@ static SettingManager *setting = nil;
     [userDefault synchronize];
 }
 
+//相亲 设置
 
+-(NSDictionary *)getHiddenLoveSettingDic{
+
+    return [self valueForKey:HIDDEN_FILTER_CONFIG];
+}
+
+-(void)setHiddenLoveSettingDic:(NSDictionary *)dic
+{
+    [self setValue:dic forKey:HIDDEN_FILTER_CONFIG];
+}
 @end
