@@ -67,4 +67,11 @@
 
 - (NSMutableArray *)getLastestContact;
 
+
+//相亲 设置
+
+-(NSDictionary *)getHiddenLoveSettingDic;
+
+-(void)setHiddenLoveSettingDic:(NSDictionary *)dic;
+
 @end

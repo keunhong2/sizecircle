@@ -155,17 +155,29 @@
 {
     NSMutableDictionary *parametersDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:nil, nil];
     [parametersDic setObject:[[SettingManager sharedSettingManager]loggedInAccount] forKey:@"AccountId"];
-    [parametersDic setObject:@"-1" forKey:@"Sex"];
-    [parametersDic setObject:@"-1" forKey:@"LogInDate"];
-    [parametersDic setObject:@"-1" forKey:@"MaxAge"];
-    [parametersDic setObject:@"-1" forKey:@"MinAge"];
-    [parametersDic setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"PageIndex",@"200",@"ReturnCount", nil] forKey:@"Pager"];
+    NSString *loginDate=@"-1";
+    NSString *maxAge=@"-1";
+    NSString *minAge=@"-1";
+    NSString *sex=@"-1";
+    NSDictionary *configDic=[[SettingManager sharedSettingManager]getHiddenLoveSettingDic];
+    if (configDic) {
+        loginDate=[configDic objectForKey:@"LogInDate"];
+        maxAge=[configDic objectForKey:@"MaxAge"];
+        minAge=[configDic objectForKey:@"MinAge"];
+        sex=[configDic objectForKey:@"Sex"];
+    }
+    [parametersDic setObject:sex forKey:@"Sex"];
+    [parametersDic setObject:loginDate forKey:@"LogInDate"];
+    [parametersDic setObject:maxAge forKey:@"MaxAge"];
+    [parametersDic setObject:minAge forKey:@"MinAge"];
+    [parametersDic setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"PageIndex",@"2000",@"ReturnCount", nil] forKey:@"Pager"];
     [parametersDic setObject:@"0.0" forKey:@"JingDu"];
     [parametersDic setObject:@"0.0" forKey:@"WeiDu"];
     isUserLoadUserListRequesting = YES;
     userLoadUserListRequest = [[UserLoadUserListRequest alloc]initWithRequestWithDic:parametersDic ];
     userLoadUserListRequest.delegate = self;
     [userLoadUserListRequest startAsynchronous];
+
 }
 
 
@@ -390,7 +402,7 @@
 
 -(void)didFinishedAction:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass:[EditUserInfoVC class]])
+    if ([viewController isKindOfClass:[DatingFilterVC class]])
     {
         [_tableView performSelector:@selector(pullToRefresh) withObject:nil afterDelay:0.1];
         [self didCancelViewViewController];
