@@ -144,7 +144,7 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+//    // [super didReceiveMemoryWarning];
 }
 #pragma mark -Set Method
 

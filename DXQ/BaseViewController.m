@@ -109,4 +109,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)didReceiveMemoryWarning
+{
+}
 @end

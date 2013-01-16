@@ -55,7 +55,7 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+    // [super didReceiveMemoryWarning];
 }
 
 -(void)commentInputViewController:(CommentInputViewController *)inputViewController cancelBtnDone:(UIButton *)btn{

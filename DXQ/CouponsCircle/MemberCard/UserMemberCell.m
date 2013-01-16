@@ -51,7 +51,10 @@
         rightMemberView.memberImageView.frame=CGRectMake(0.f, 0.f, rightMemberView.frame.size.width, rightMemberView.frame.size.height-20.f);
         [rightMemberView.memberImageView setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"PhotoUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"pic_default"] success:^(UIImage *image ,BOOL isChache){
             [Tool setImageView:rightMemberView.memberImageView toImage:image];
-        } failure:nil];
+        } failure:^(NSError *error){
+        
+            NSLog(@"mark error %@",error);
+        }];
         rightMemberView.memberNameLabel.text=[dic objectForKey:@"Title"];
     }else
     {

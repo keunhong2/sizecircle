@@ -79,9 +79,9 @@
 
 -(void)viewDidUnload{
     
-    [super viewDidUnload];
     [loadMoreView release];
     loadMoreView=nil;
+    [super viewDidUnload];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
