@@ -1331,7 +1331,10 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+    if ([[[UIDevice currentDevice] systemVersion]floatValue]<6.f) {
+        
+    }else
+        // [super didReceiveMemoryWarning];
     @try {
         [_rootViewController removeObserver:self forKeyPath:@"view.frame"];
     }

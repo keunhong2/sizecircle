@@ -88,7 +88,7 @@ static float		g_keyboardFrameHeightLastTime = 216;		// 默认初始键盘高度
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
+    // [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
 }

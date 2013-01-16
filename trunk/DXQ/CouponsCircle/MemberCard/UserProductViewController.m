@@ -132,7 +132,7 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+    // [super didReceiveMemoryWarning];
 }
 
 -(void)setIsUsed:(BOOL)isUsed{

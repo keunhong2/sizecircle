@@ -131,7 +131,7 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+    // [super didReceiveMemoryWarning];
 }
 
 

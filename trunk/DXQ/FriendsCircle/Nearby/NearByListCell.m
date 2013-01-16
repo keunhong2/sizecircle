@@ -106,7 +106,6 @@
 }
 - (void)dealloc
 {
-    [avatarImg release];
     [usernameLbl release];
     [ageImg release];
     [ageLbl release];
