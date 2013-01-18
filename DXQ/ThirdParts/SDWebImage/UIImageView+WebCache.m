@@ -46,13 +46,6 @@
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder success:(SDWebImageSuccessBlock)success failure:(SDWebImageFailureBlock)failure;
 {
-    NSString * test=[NSString stringWithFormat:@"url"];
-    
-    NSString *httpText=@"http://";
-    NSRange range=[test rangeOfString:httpText options:NSCaseInsensitiveSearch];
-    if (range.location==NSNotFound) {
-        url=[NSURL URLWithString:[NSString stringWithFormat:@"http://%@",url]];
-    }
     [self setImageWithURL:url placeholderImage:placeholder options:0 success:success failure:failure];
 }
 
