@@ -9,9 +9,9 @@
 #ifndef TCWeiBoSDKDemo_TCWBGlobalUtil_h
 #define TCWeiBoSDKDemo_TCWBGlobalUtil_h
 
-#define WiressSDKDemoAppKey     @"801285201"
-#define WiressSDKDemoAppSecret  @"45a39474bff52626964ed241d8fa69fa"
-#define REDIRECTURI             @"http://www.heyuan110.com"
+#define WiressSDKDemoAppKey     @"801290813"
+#define WiressSDKDemoAppSecret  @"Secret:af8eb52776477737b6a27de45ce4f1fd"
+#define REDIRECTURI             @"http://www.daxiaoquan.com/"
 
 #define TCWBSDKAPIDomain        @"https://open.t.qq.com/api/"
 #define kWBAuthorizeURL         @"https://open.t.qq.com/cgi-bin/oauth2/authorize/ios"

@@ -25,9 +25,9 @@
 
 
 //sina weibo
-#define kAppKey             @"3793227528"
-#define kAppSecret          @"9d68a02716a2bd3c482fa2e778e8078c"
-#define kAppRedirectURI     @"http://www.heyuan110.com/dxq"
+#define kAppKey             @"2305169459"
+#define kAppSecret          @"0a6e9f705fc7c72f2634603757a207cb"
+#define kAppRedirectURI     @"http://www.daxiaoquan.com/"
 
 
 //UIFONT
