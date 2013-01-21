@@ -30,6 +30,7 @@
 #import "ImageViewCell.h"
 #import "PhotoDetailVC.h"
 #import "UserActivityRequest.h"
+#import "LikeListVC.h"
 
 #define TOP_IMAGE_HEIGHT  204.0f
 
@@ -76,6 +77,7 @@
 @property(nonatomic,retain)BottomToolBar *bottomToolBar;
 @property(nonatomic)BottomToolBarItemType selectedBottomToolBarItemType;
 @property(nonatomic,retain)FansView *fansView;
+@property (nonatomic,retain)LikesView *likeView;
 @property(nonatomic,retain)WaterFlowView *waterFlow;
 @property(nonatomic,retain)NSMutableArray *photoArray;
 @property(nonatomic,retain)UILabel *noPhotoLabel;
@@ -115,6 +117,7 @@
     [_userinfo release];_userinfo = nil;
     [_topUserImageView release];_topUserImageView = nil;
     [_fansView release];_fansView=nil;
+    [_likeView release];_likeView=nil;
     [super dealloc];
 }
 
@@ -216,6 +219,12 @@
     self.fansView=fansView;
     [fansView release];
     
+    LikesView *likeView=[[LikesView alloc]initWithFrame:CGRectMake(228, 140.f, 0.f, 0.f) target:self action:@selector(tapLikeView:)];
+    likeView.tag=10001;
+    likeView.hidden=YES;
+    [_scrollView addSubview:likeView];
+    self.likeView=likeView;
+    [likeView release];
     //actionbar height
     CGFloat userActionToolBarHeight = 50.0f;
     NSArray *items = isUserAccount?USER_SELF_ACTION_ITEMS:USER_ACTION_ITEMS;
@@ -379,10 +388,11 @@
     
     FansView *fansView = (FansView *)[_scrollView viewWithTag:999];
     [fansView setFansCount:[currentUser.dxq_LinkmeCount intValue]];
-    
+    self.likeView.fansCount=[currentUser.dxq_MylinkCount intValue];
     [fansView setIsFans:[currentUser.dxq_IsMylink boolValue]];
 
     self.fansView.hidden = NO;
+    self.likeView.hidden=NO;
     _bottomToolBar.hidden = NO;
     
     //标题
@@ -686,6 +696,13 @@
         [self.navigationController pushViewController:vc animated:YES];
         [vc release];
     }    
+}
+-(void)tapLikeView:(LikesView *)view
+{    
+    LikeListVC *vc =  [[LikeListVC alloc]initWithAccountID:[_userinfo objectForKey:@"AccountId"]];
+    [self.navigationController pushViewController:vc animated:YES];
+    [vc release];
+
 }
 
 -(void)showUIActionSheet:(NSInteger)tag

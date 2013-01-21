@@ -13,5 +13,8 @@
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic,retain)NSArray *giftList;
 @property (nonatomic,retain)NSString *userID;
+@property (nonatomic,retain)NSArray *myGotGiftList;
+@property (nonatomic,retain)NSArray *sendGiftList;
+@property (nonatomic)BOOL isMyGotGift;//yes 我的收到的礼物 no 我送出的礼物
 
 @end
