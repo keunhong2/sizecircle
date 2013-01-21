@@ -96,3 +96,34 @@
 }
 
 @end
+
+
+@implementation LikesView
+
+-(id)initWithFrame:(CGRect)frame target:(id)target action:(SEL)action
+{
+    self=[super initWithFrame:frame target:target action:action];
+    if (self) {
+        self.starImageView.image=nil;
+        self.fansCountLbl.text=[NSString stringWithFormat:@"关注:%d",[self fansCount]];
+    }
+    return self;
+}
+
+
+-(void)setIsFans:(BOOL)isFans
+{
+    
+}
+
+-(void)setFansCount:(NSInteger)fansCount
+{
+    if (fansCount==self.fansCount) {
+        return;
+    }
+    
+    [super setFansCount:fansCount];
+    
+    self.fansCountLbl.text=[NSString stringWithFormat:@"关注:%d",fansCount];
+}
+@end

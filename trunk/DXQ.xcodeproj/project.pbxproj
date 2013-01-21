@@ -40,6 +40,8 @@
 		1818977A1655388D006B7124 /* UserProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181897781655388D006B7124 /* UserProductViewController.m */; };
 		18189781165664CC006B7124 /* UserProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18189780165664CC006B7124 /* UserProductCell.m */; };
 		181897871656882F006B7124 /* OrderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 181897861656882F006B7124 /* OrderRequest.m */; };
+		1819B23016AD8D03009D0C51 /* MyAttenListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1819B22F16AD8D03009D0C51 /* MyAttenListViewController.m */; };
+		1819B23416AD91A8009D0C51 /* LikeListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1819B23316AD91A7009D0C51 /* LikeListVC.m */; };
 		181B3280164EAB81006F797B /* ProductListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 181B327F164EAB81006F797B /* ProductListRequest.m */; };
 		181B328416500290006F797B /* ProductDetailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 181B328316500290006F797B /* ProductDetailRequest.m */; };
 		181E69F71652AC9700C1FF91 /* FriendAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 181E69F41652AC9700C1FF91 /* FriendAnnotationView.m */; };
@@ -859,6 +861,10 @@
 		18189780165664CC006B7124 /* UserProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProductCell.m; sourceTree = "<group>"; };
 		181897851656882F006B7124 /* OrderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderRequest.h; sourceTree = "<group>"; };
 		181897861656882F006B7124 /* OrderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderRequest.m; sourceTree = "<group>"; };
+		1819B22E16AD8D03009D0C51 /* MyAttenListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAttenListViewController.h; sourceTree = "<group>"; };
+		1819B22F16AD8D03009D0C51 /* MyAttenListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAttenListViewController.m; sourceTree = "<group>"; };
+		1819B23216AD91A7009D0C51 /* LikeListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeListVC.h; sourceTree = "<group>"; };
+		1819B23316AD91A7009D0C51 /* LikeListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeListVC.m; sourceTree = "<group>"; };
 		181B327E164EAB81006F797B /* ProductListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListRequest.h; sourceTree = "<group>"; };
 		181B327F164EAB81006F797B /* ProductListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListRequest.m; sourceTree = "<group>"; };
 		181B328216500290006F797B /* ProductDetailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailRequest.h; sourceTree = "<group>"; };
@@ -3611,6 +3617,10 @@
 				F7FEA65416369E810086409A /* UserDetailInfoVC.m */,
 				F7FEA64516369E810086409A /* FansView.h */,
 				F7FEA64616369E810086409A /* FansView.m */,
+				1819B23216AD91A7009D0C51 /* LikeListVC.h */,
+				1819B23316AD91A7009D0C51 /* LikeListVC.m */,
+				1819B22E16AD8D03009D0C51 /* MyAttenListViewController.h */,
+				1819B22F16AD8D03009D0C51 /* MyAttenListViewController.m */,
 				F7FEA65116369E810086409A /* UserActionToolBar.h */,
 				F7FEA65216369E810086409A /* UserActionToolBar.m */,
 				F754D441165B811F00EEB5A9 /* DataPickerSelectView.h */,
@@ -4596,6 +4606,8 @@
 				184F184116987B890062F185 /* MyAttentionViewController.m in Sources */,
 				184F1844169880620062F185 /* UserLoadFavoriteProductList.m in Sources */,
 				18BFA24D169C714F009D35CB /* UserLoadUnReadNoticeList.m in Sources */,
+				1819B23016AD8D03009D0C51 /* MyAttenListViewController.m in Sources */,
+				1819B23416AD91A8009D0C51 /* LikeListVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

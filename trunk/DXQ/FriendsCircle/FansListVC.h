@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserLoadFriendListRequest.h"
 
-@interface FansListVC : BaseViewController
+@interface FansListVC : BaseViewController{
+
+    
+    BOOL isUserLoadFriendListRequesting;
+    
+    NSString *accountID;
+    
+    UserLoadFriendListRequest *userLoadFriendListRequest;
+}
+
+-(id)initWithAccountID:(NSString *)accountID_;
 
 @end

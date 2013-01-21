@@ -18,6 +18,8 @@
     GetGiftListRequest *gigtRequest;
     UIImageView *nodataView;
     LoadMoreView *loadMoreView;
+    BOOL isFinishGetGift;
+    BOOL isFinishSendGift;
 }
 
 @end
@@ -32,6 +34,8 @@
     [nodataView release];
     [loadMoreView release];
     [_userID release];
+    [_myGotGiftList release];
+    [_sendGiftList release];
     [super dealloc];
 }
 
@@ -39,7 +43,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        _isMyGotGift=YES;
     }
     return self;
 }
@@ -70,10 +74,29 @@
 
 - (void)viewDidLoad
 {
-    [self setNavgationTitle:@"收到的礼物" backItemTitle:AppLocalizedString(@"返回")];
 
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *bgImage=[UIImage imageNamed:@"btn_round"];
+    UIImage *btnBgImg=[bgImage stretchableImageWithLeftCapWidth:bgImage.size.width/2 topCapHeight:bgImage.size.height/2];
+    [btn setBackgroundImage:btnBgImg forState:UIControlStateNormal];
+    btn.frame=CGRectMake(0.f, 44.f/2-31.f/2, 70.f, 31.f);
+    [btn.titleLabel setFont:MiddleBoldDefaultFont];
+    UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem=item;
+    [item release];
+    
+    if (_isMyGotGift) {
+        [self setNavgationTitle:@"收到的礼物" backItemTitle:AppLocalizedString(@"返回")];
+        [btn setTitle:@"送出礼物" forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(showSendGift) forControlEvents:UIControlEventTouchUpInside];
+    }else
+    {
+        [self setNavgationTitle:@"送出的礼物" backItemTitle:@"返回"];
+        [btn setTitle:@"收到礼物" forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(showGetGift) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -92,10 +115,54 @@
 - (void)didReceiveMemoryWarning
 {
     // [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark -Set method
+
+-(void)setIsMyGotGift:(BOOL)isMyGotGift
+{
+    if (isMyGotGift==_isMyGotGift) {
+        return;
+    }
+    _isMyGotGift=isMyGotGift;
+    
+    [self cancelAllRequest];
+
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *bgImage=[UIImage imageNamed:@"btn_round"];
+    UIImage *btnBgImg=[bgImage stretchableImageWithLeftCapWidth:bgImage.size.width/2 topCapHeight:bgImage.size.height/2];
+    [btn setBackgroundImage:btnBgImg forState:UIControlStateNormal];
+    btn.frame=CGRectMake(0.f, 44.f/2-31.f/2, 70.f, 31.f);
+    [btn.titleLabel setFont:MiddleBoldDefaultFont];
+    UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem=item;
+    [item release];
+    
+    if (_isMyGotGift) {
+        [self setNavgationTitle:@"收到的礼物" backItemTitle:AppLocalizedString(@"返回")];
+        [btn setTitle:@"送出礼物" forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(showSendGift) forControlEvents:UIControlEventTouchUpInside];
+        self.giftList=self.myGotGiftList;
+        if (isFinishGetGift) {
+            self.tableView.tableFooterView=nodataView;
+        }else
+            self.tableView.tableFooterView=loadMoreView;
+    }else
+    {
+        [self setNavgationTitle:@"送出的礼物" backItemTitle:@"返回"];
+        [btn setTitle:@"收到礼物" forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(showGetGift) forControlEvents:UIControlEventTouchUpInside];
+        self.giftList=self.sendGiftList;
+        if (isFinishSendGift) {
+            self.tableView.tableFooterView=nodataView;
+        }else
+            self.tableView.tableFooterView=loadMoreView;
+    }
+    
+    if (self.giftList==nil) {
+        [self.tableView pullToRefresh];
+    }
+}
 
 -(void)setTableView:(UITableView *)tableView{
 
@@ -120,6 +187,18 @@
     [_giftList release];
     _giftList=[giftList retain];
     [self.tableView reloadData];
+}
+
+#pragma mark -Action
+
+-(void)showGetGift
+{
+    self.isMyGotGift=YES;
+}
+
+-(void)showSendGift
+{
+    self.isMyGotGift=NO;
 }
 
 #pragma mark -UITableViewDatasource
@@ -167,6 +246,8 @@
 -(void)cancelAllRequest{
 
     [self cancelGetGiftRequest];
+    [self.tableView refreshFinished];
+    [loadMoreView setState:LoadMoreStateNormal];
 }
 
 -(void)getGiftListByPage:(NSInteger)page{
@@ -183,9 +264,21 @@
                          [NSString stringWithFormat:@"%d",page],@"PageIndex",
                          [NSString stringWithFormat:@"%d",20],@"ReturnCount", nil];
     
+    NSString * getUserId=nil;
+    if (self.isMyGotGift) {
+        getUserId=_userID;
+    }else
+    {
+        getUserId=logId;
+    }
+    
+    NSString *classText=@"-1";
+    if (self.isMyGotGift==NO) {
+        classText=@"0";
+    }
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
                        logId,@"AccountId",pager,@"Pager",
-                       _userID,@"AccountFrom",@"-1",@"Kind", nil];
+                       _userID,@"AccountFrom",classText,@"Kind", nil];
     [loadMoreView setState:LoadMoreStateRequesting];
     gigtRequest=[[GetGiftListRequest alloc]initRequestWithDic:dic];
     [gigtRequest setDelegate:self];
@@ -224,6 +317,21 @@
         self.tableView.tableFooterView=loadMoreView;
     }else
         self.tableView.tableFooterView=nodataView;
+    
+    if (_isMyGotGift) {
+        self.myGotGiftList=self.giftList;
+        if (giftList.count==20) {
+            isFinishGetGift=NO;
+        }else
+            isFinishGetGift=YES;
+    }else
+    {
+        self.sendGiftList=self.giftList;
+        if (giftList.count==20) {
+            isFinishSendGift=NO;
+        }else
+            isFinishSendGift=YES;
+    }
     
     [self.tableView refreshFinished];
     [loadMoreView setState:LoadMoreStateNormal];

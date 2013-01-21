@@ -17,11 +17,6 @@
 @interface FansListVC ()<FriendsCircleRequestDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     
-    BOOL isUserLoadFriendListRequesting;
-    
-    NSString *accountID;
-    
-    UserLoadFriendListRequest *userLoadFriendListRequest;
 }
 
 @property (nonatomic,retain)UITableView *fansTableView;

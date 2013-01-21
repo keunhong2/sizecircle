@@ -21,3 +21,8 @@
 - (id)initWithFrame:(CGRect)frame target:(id)target action:(SEL)action;
 
 @end
+
+
+@interface LikesView : FansView
+
+@end
