@@ -90,4 +90,4 @@ typedef NS_ENUM(NSInteger, OrderType)
 
 #define HomeWebSite                 @"http://www.daxiaoquan.com"
 #define HelpWebSite                 @"http://www.daxiaoquan.com"
-#define ServiceTel                  @"10086"
+#define ServiceTel                  @"4000133618"

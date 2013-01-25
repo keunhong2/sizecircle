@@ -176,10 +176,10 @@ static ProgressHUD *YKPHD = nil;
   //self.hidden = YES;
   
   [UIView beginAnimations:@"YKProgressHUD hide" context:NULL];
-  [UIView setAnimationDuration:0.5];
+  [UIView setAnimationDuration:0.3];
   [UIView setAnimationDelegate:self];
   [UIView setAnimationDidStopSelector:@selector(hideAnimationDidStop:finished:context:)];
-  self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1.5, 1.5));
+//  self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1.5, 1.5));
   self.alpha = 0.02;
   [UIView commitAnimations];
 }

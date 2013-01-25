@@ -502,12 +502,21 @@
 {
     isLocationSuccess = YES;
     
-    locationString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",placeMark.country,placeMark.administrativeArea,
-                      placeMark.locality,//武汉市
-                      placeMark.subLocality,//洪山区
-                      placeMark.thoroughfare,//雄楚大道
-                      placeMark.subThoroughfare, //68号
-                      placeMark.name];//毛毛美容店
+//    NSString *address = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",
+//                      placeMark.country,
+//                      placeMark.administrativeArea,
+//                      placeMark.locality,//武汉市
+//                      placeMark.subLocality,//洪山区
+//                      placeMark.thoroughfare,//雄楚大道
+//                      placeMark.subThoroughfare, //68号
+//                      placeMark.name];//毛毛美容店
+
+    locationString  = [NSString stringWithFormat:@"%@%@%@%@",
+                       placeMark.administrativeArea,
+                       placeMark.locality,//武汉市
+                       placeMark.subLocality,//洪山区
+                       placeMark.thoroughfare//雄楚大道
+                       ];
     if (locationString)
     {
         [self setLocation:locationString];
@@ -534,12 +543,13 @@
          {
              isLocationSuccess = YES;
              
-             locationString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",placeMark.country,placeMark.administrativeArea,
+            locationString  = [NSString stringWithFormat:@"%@%@%@%@",
+                               placeMark.administrativeArea,
                                placeMark.locality,//武汉市
                                placeMark.subLocality,//洪山区
-                               placeMark.thoroughfare,//雄楚大道
-                               placeMark.subThoroughfare, //68号
-                               placeMark.name];//毛毛美容店
+                               placeMark.thoroughfare//雄楚大道
+                               ];
+
              if (locationString)
              {
                  [self setLocation:locationString];

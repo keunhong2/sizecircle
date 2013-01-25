@@ -53,6 +53,8 @@
     //coredata
     [[DXQCoreDataManager sharedCoreDataManager] setDXQManageObjectContext:[self managedObjectContext]];
     
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    
     //menu
     TicketViewController *viewController = [[TicketViewController alloc]init];
     self.navViewController = [[CustonNavigationController alloc] initWithRootViewController:viewController];
