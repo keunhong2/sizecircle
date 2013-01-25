@@ -131,7 +131,9 @@
 -(void)tableView:(UITableView *)tb didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tb deselectRowAtIndexPath:indexPath animated:YES];
+    
     NSString *item = [_dataArray objectAtIndex:indexPath.row];
+    
     if ([selectTagsArray containsObject:item])
     {
         [selectTagsArray removeObject:item];

@@ -53,6 +53,12 @@
     self.view = view_;
     [view_ release];
     
+    UIButton *resignbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    resignbtn.frame = self.view.bounds;
+    [resignbtn addTarget:self
+                  action:@selector(resignControl:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:resignbtn];
+    
     //登陆输入框
     UITableView *loginTableView=[[UITableView alloc]initWithFrame:CGRectMake(0.f, 0.0f, self.view.frame.size.width, 120.f) style:UITableViewStyleGrouped];
     loginTableView.delegate=self;
@@ -181,8 +187,8 @@
         [Tool showAlertWithTitle:AppLocalizedString(@"提示") msg:AppLocalizedString(@"连接服务器异常，请稍后再试...")];
         return;
     }
-    [_accuntTextField resignFirstResponder];
-    [_pswTextField resignFirstResponder];
+ 
+    [self resignControl:nil];
     
     [[ProgressHUD sharedProgressHUD]setText:@"正在登陆..."];
     [[ProgressHUD sharedProgressHUD] showInView:[[UIApplication sharedApplication].windows lastObject]];
@@ -306,11 +312,43 @@
 
 -(UITextField *)inputTextField{
 
-    UITextField *textFiled=[UITextField creatTextFiledWithFrame:CGRectMake(60.f, 44.f/2-31.f/2+4.f, 200.f, 31.f)];
+    UITextField *textFiled=[UITextField creatTextFiledWithFrame:CGRectMake(60.f, 44.f/2-31.f/2+4.f, 230.f, 31.f)];
     textFiled.delegate=self;
     return textFiled;
 }
 
+-(void)resignControl:(UIButton *)btn
+{
+    [_accuntTextField resignFirstResponder];
+    [_pswTextField resignFirstResponder];
+    CGFloat offset_y = 0.0;
+    CGRect rect = self.view.frame;
+    rect.origin.y = offset_y;
+    [UIView animateWithDuration:0.3 animations:^(void){
+        self.view.frame = rect;
+    }];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self resignControl:nil];
+}
+
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    CGFloat offset_y = 0.0;
+    if (textField == _pswTextField)
+    {
+        offset_y = -30.0f;
+    }
+    CGRect rect = self.view.frame;
+    rect.origin.y = offset_y;
+    [UIView animateWithDuration:0.3 animations:^(void){
+        self.view.frame = rect;
+    }];
+}
 
 #pragma mark -UITableViewDataSource
 

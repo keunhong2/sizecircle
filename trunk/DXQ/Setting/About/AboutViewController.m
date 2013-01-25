@@ -63,7 +63,9 @@
 
 - (IBAction)goCall:(id)sender {
     
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:ServiceTel]];
+    NSString *telNumberString = [NSString stringWithFormat:@"tel://%@",ServiceTel];
+
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:telNumberString]];
 }
 
 - (void)dealloc {
