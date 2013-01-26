@@ -142,8 +142,8 @@
     ScreenViewController *screen=[[ScreenViewController alloc]initWithScreenType:ScreenTypeDefault];
     screen.screenDelegate=self;
     CustonNavigationController *navigation=[[CustonNavigationController alloc]initWithRootViewController:screen];
-    screen.selectClassName=[screenObje.classify isEqualToString:@"-1"]?@"不限":screenObje.classify;
-    screen.selectLocationName=[screenObje.area isEqualToString:@"-1"]?@"不限":screenObje.area;
+    screen.selectClassName=screenObje.classify;
+    screen.selectLocationName=screenObje.area;
     [self.navigationController presentModalViewController:navigation animated:YES];
     [screen release];
     [navigation release];

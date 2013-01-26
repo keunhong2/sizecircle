@@ -69,29 +69,29 @@
         float locationOrX=nameLabOrX;
         float locationOrY=20.f+nameLabOrY;
         _locationImgView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_position"]];
-        _locationImgView.frame=CGRectMake(locationOrX, locationOrY, _locationImgView.frame.size.width, _locationImgView.frame.size.height);
+        _locationImgView.frame=CGRectMake(locationOrX, locationOrY+8.f, _locationImgView.frame.size.width, _locationImgView.frame.size.height);
         [self addSubview:_locationImgView];
         
         float labelOrX=locationOrX+_locationImgView.frame.size.width+5.f;
         float labelWidth=self.frame.size.width-labelOrX-15.f;
-        _locationLabel=[self labelWithFrame:CGRectMake(labelOrX, _locationImgView.frame.origin.y,labelWidth,_locationImgView.frame.size.height)];
+        _locationLabel=[self labelWithFrame:CGRectMake(labelOrX, locationOrY,labelWidth,30.f)];
         _locationLabel.textColor=[UIColor colorWithString:@"#D18E3F"];
         [self addSubview:_locationLabel];
         
-        float dateOrY=locationOrY+_locationImgView.frame.size.height+5.f;
+        float dateOrY=locationOrY+_locationLabel.frame.size.height+5.f;
         _dateImgView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_time"]];
-        _dateImgView.frame=CGRectMake(locationOrX, dateOrY, _dateImgView.frame.size.width, _dateImgView.frame.size.height);
+        _dateImgView.frame=CGRectMake(locationOrX, dateOrY+5, _dateImgView.frame.size.width, _dateImgView.frame.size.height);
         [self addSubview:_dateImgView];
         
-        _dateLabel=[self labelWithFrame:CGRectMake(labelOrX, dateOrY, labelWidth, _dateImgView.frame.size.height)];
+        _dateLabel=[self labelWithFrame:CGRectMake(labelOrX, dateOrY, labelWidth, 30)];
         [self addSubview:_dateLabel];
         
-        float infoOrY=dateOrY+_dateImgView.frame.size.height+5.f;
+        float infoOrY=dateOrY+_dateLabel.frame.size.height+5.f;
         _infoImgView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_info"]];
-        _infoImgView.frame=CGRectMake(locationOrX, infoOrY, _infoImgView.frame.size.width, _infoImgView.frame.size.height);
+        _infoImgView.frame=CGRectMake(locationOrX, infoOrY+5, _infoImgView.frame.size.width, _infoImgView.frame.size.height);
         [self addSubview:_infoImgView];
         
-        _infoLabel=[self labelWithFrame:CGRectMake(labelOrX, infoOrY, labelWidth, _infoImgView.frame.size.height)];
+        _infoLabel=[self labelWithFrame:CGRectMake(labelOrX, infoOrY, labelWidth, 30.f)];
         [self addSubview:_infoLabel];
         
     }
@@ -103,7 +103,8 @@
     UILabel *label=[[UILabel alloc]initWithFrame:frame];
     label.backgroundColor=[UIColor clearColor];
     label.textColor=[UIColor grayColor];
-    label.font=[UIFont systemFontOfSize:14.f];
+    label.numberOfLines=0;
+    label.font=[UIFont systemFontOfSize:12.f];
     return label;
     
 }
