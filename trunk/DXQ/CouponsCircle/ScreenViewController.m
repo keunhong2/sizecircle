@@ -15,6 +15,8 @@
 {
     UITextField *areaTextFiled;
     UITextField *classTextFiled;
+    NSDictionary *locationDic;
+    NSDictionary *classDic;
 }
 @end
 
@@ -28,6 +30,8 @@
 
     [selectLocationName release];
     [selectClassName release];
+    [locationDic release];
+    [classDic release];
     [super dealloc];
 }
 
@@ -41,8 +45,26 @@
     self=[super initWithNibName:nil bundle:nil];
     if (self) {
         _screenType=type;
-        selectLocationName=[[NSString alloc]initWithString:@"不限"];
-        selectClassName=[[NSString alloc]initWithString:@"不限"];
+        selectLocationName=[[NSString alloc]initWithString:@"-1"];
+        selectClassName=[[NSString alloc]initWithString:@"-1"];
+        
+        locationDic=[[NSDictionary alloc]initWithObjectsAndKeys:
+                     @"不限",@"-1",
+                     @"白云区",@"BY",
+                     @"花都区",@"HD",
+                     @"海珠区",@"HZ",
+                     @"荔湾区",@"LW",
+                     @"番禺区",@"PY",
+                     @"周边",@"QT",
+                     @"天河区",
+                     @"TH",
+                     @"越秀区",@"YX", nil];
+        classDic=[[NSDictionary alloc]initWithObjectsAndKeys:
+                  @"不限",@"-1",
+                  @"美食",@"1",
+                  @"健康",@"2",
+                  @"休闲",@"3",
+                  @"娱乐",@"4", nil];
     }
     return self;
 }
@@ -73,7 +95,7 @@
         ScreenSelectCell *cell=[[[ScreenSelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"screnn "] autorelease];
         cell.textLabel.text=@"地区:";
         cell.showSelectPickerImageView=YES;
-        cell.textField.text=selectLocationName;
+        cell.textField.text=[locationDic objectForKey:selectLocationName ];
         cell.textField.delegate=self;
         areaTextFiled=cell.textField;
         cell.textField.inputView=[[[AreaSelectView alloc]initWithDelegate:self] autorelease];
@@ -84,8 +106,9 @@
         ScreenSelectCell *cell=[[[ScreenSelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"screnn "] autorelease];
         cell.textLabel.text=@"分类:";
         cell.textField.delegate=self;
+        cell.textField.inputView=[[[ClassSelectView alloc]initWithDelegate:self] autorelease];
         cell.showSelectPickerImageView=YES;
-        cell.textField.text=selectClassName;
+        cell.textField.text=[classDic objectForKey:selectClassName];
         classTextFiled=cell.textField;
         cell.textLabel.textColor=GrayColorForTextColor;
         return cell;
@@ -126,13 +149,36 @@
         classText=classCell.textField.text;
     
     if (self.screenType==ScreenTypeDefault) {
-        return [NSDictionary dictionaryWithObjectsAndKeys:[tempName isEqualToString:@"不限"]?@"-1":tempName,@"Area",location,@"Classify", nil];
+        return [NSDictionary dictionaryWithObjectsAndKeys:[self codeByLocation:tempName],@"Area",[self codeByClass:location],@"Classify", nil];
     }else
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 tempName,@"Name",
-                location,@"Area",
-                classText,@"Classify", nil];
+                [self codeByLocation:location],@"Area",
+                [self codeByClass:classText],@"Classify", nil];
 }
+
+-(NSString *)codeByLocation:(NSString *)location
+{
+    NSArray *allKey=[locationDic allKeys];
+    for (NSString *key in allKey) {
+        if ([[locationDic objectForKey:key] isEqualToString:location]) {
+            return key;
+        }
+    }
+    return @"-1";
+}
+
+-(NSString *)codeByClass:(NSString *)classText
+{
+    NSArray *allKey=[classDic allKeys];
+    for (NSString *key in allKey) {
+        if ([[classDic objectForKey:key] isEqualToString:classText]) {
+            return key;
+        }
+    }
+    return @"-1";
+}
+
 #pragma mark -Delegate
 
 -(void)cancelDoneAreaSelectView:(AreaSelectView *)areaSelectView{
@@ -173,13 +219,13 @@
 }
 #pragma mark -UITextFiledDelegate
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-
-    if ([textField isEqual:classTextFiled]) {
-        return NO;
-    }else
-        return YES;
-}
+//-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+//
+//    if ([textField isEqual:classTextFiled]) {
+//        return NO;
+//    }else
+//        return YES;
+//}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
@@ -192,5 +238,19 @@
         AreaSelectView *areaView=(AreaSelectView *)[textField inputView];
         [areaView setRowByText:textField.text];
     }
+}
+@end
+
+@implementation ClassSelectView
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [areaArray release];
+        areaArray=[[NSArray alloc]initWithObjects:@"不限",@"美食",@"健康",@"休闲",@"娱乐", nil];
+    }
+    return self;
 }
 @end

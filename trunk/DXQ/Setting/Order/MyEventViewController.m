@@ -33,7 +33,7 @@
                 [btn setTitle:notUserTitle forState:UIControlStateNormal];
             }else if (btn.tag==2)
             {
-                NSString *userTitle=[NSString stringWithFormat:AppLocalizedString(@"已过期的Product"),AppLocalizedString(@"活动")];
+                NSString *userTitle=@"感兴趣的活动";
                 [btn setTitle:userTitle forState:UIControlStateNormal];
             }
         }

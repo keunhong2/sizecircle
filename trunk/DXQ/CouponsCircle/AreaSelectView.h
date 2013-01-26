@@ -16,7 +16,10 @@
 -(void)cancelDoneAreaSelectView:(AreaSelectView *)areaSelectView;
 -(void)doneSelectAreaSelectView:(AreaSelectView *)areaSelectView;
 @end
-@interface AreaSelectView : UIView
+@interface AreaSelectView : UIView{
+
+    NSArray *areaArray;
+}
 
 -(id)initWithDelegate:(id<AreaSelectDelegate>)delegate;
 

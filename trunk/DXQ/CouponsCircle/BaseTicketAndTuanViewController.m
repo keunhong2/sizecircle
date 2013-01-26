@@ -39,25 +39,6 @@
 }
 
 
--(void)loadView
-{    
-    [super loadView];
-    self.searchBar.showsCancelButton=YES;
-    UIButton *cancelBtn=nil;
-    for (UIButton *btn in self.searchBar.subviews) {
-        if ([btn isKindOfClass:[UIButton class]]) {
-            cancelBtn=btn;
-            break;
-        }
-    }
-    UIImage *screenImg=[UIImage imageNamed:@"btn_sx"];
-    [cancelBtn setTitle:nil forState:UIControlStateNormal];
-    [cancelBtn setBackgroundImage:screenImg forState:UIControlStateNormal];
-    [cancelBtn setBackgroundImage:nil forState:UIControlStateHighlighted];
-    cancelBtn.adjustsImageWhenHighlighted=YES;
-}
-
-
 - (void)didReceiveMemoryWarning
 {
 //    // [super didReceiveMemoryWarning];

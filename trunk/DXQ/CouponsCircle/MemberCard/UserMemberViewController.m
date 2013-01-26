@@ -73,6 +73,21 @@
     self.searchBar=searchBar;
     [searchBar release];
     
+    self.searchBar.showsCancelButton=YES;
+    UIButton *cancelBtn=nil;
+    for (UIButton *btn in self.searchBar.subviews) {
+        if ([btn isKindOfClass:[UIButton class]]) {
+            cancelBtn=btn;
+            break;
+        }
+    }
+    UIImage *screenImg=[UIImage imageNamed:@"btn_sx"];
+    [cancelBtn setTitle:nil forState:UIControlStateNormal];
+    [cancelBtn setBackgroundImage:screenImg forState:UIControlStateNormal];
+    [cancelBtn setBackgroundImage:nil forState:UIControlStateHighlighted];
+    cancelBtn.adjustsImageWhenHighlighted=YES;
+    
+    
     UITableView *tempTableView=[[UITableView alloc]initWithFrame:CGRectMake(0.f, 44.f, self.view.frame.size.width, self.view.frame.size.height-44.f) style:UITableViewStylePlain];
     tempTableView.backgroundColor=[UIColor clearColor];
     tempTableView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
