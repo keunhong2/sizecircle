@@ -3089,7 +3089,6 @@
 				F713950A163248DC00D24D70 /* UniversalControl */,
 				F7751078162574550024423F /* SignInAndSignUp */,
 				F7F6109F1628814B00D1CBD1 /* CouponsCircle */,
-				F7F610AC162889E200D1CBD1 /* ActivityCircle */,
 				F71E62F5162D0ED600B6C040 /* WebSocket */,
 				F720C916160DD982007B954E /* AppDelegate.h */,
 				F720C917160DD982007B954E /* AppDelegate.m */,
@@ -3989,13 +3988,6 @@
 				182913BC164D265D007144DD /* AreaSelectView.m */,
 			);
 			path = CouponsCircle;
-			sourceTree = "<group>";
-		};
-		F7F610AC162889E200D1CBD1 /* ActivityCircle */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ActivityCircle;
 			sourceTree = "<group>";
 		};
 		F7F610AE16288CDC00D1CBD1 /* Menu */ = {
@@ -5286,14 +5278,14 @@
 		F720C91F160DD982007B954E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lorcan O'Brien (G9X3THZK5L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Huang Xiuyong (36WJ549L69)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DXQ/DXQ-Prefix.pch";
 				INFOPLIST_FILE = "DXQ/DXQ-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4667347D-DCD6-4212-99B8-4C4C4F05782C";
+				PROVISIONING_PROFILE = "1B53DD9F-ABC2-4290-908A-0CC146AEFCDC";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5301,7 +5293,7 @@
 		F720C920160DD982007B954E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Boom 22 Technologies Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Huang Xiuyong (36WJ549L69)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Boom 22 Technologies Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DXQ/DXQ-Prefix.pch";
@@ -5309,7 +5301,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
+				PROVISIONING_PROFILE = "1B53DD9F-ABC2-4290-908A-0CC146AEFCDC";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
 				WRAPPER_EXTENSION = app;
 			};
