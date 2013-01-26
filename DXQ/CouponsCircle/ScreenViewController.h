@@ -7,6 +7,7 @@
 //
 
 #import "BaseScreenViewController.h"
+#import "AreaSelectView.h"
 
 typedef NS_ENUM(NSInteger, ScreenType) {
     ScreenTypeDefault,
@@ -21,5 +22,11 @@ typedef NS_ENUM(NSInteger, ScreenType) {
 @property (nonatomic,retain)NSString *selectClassName;
 
 -(id)initWithScreenType:(ScreenType )type;
+
+@end
+
+
+
+@interface ClassSelectView : AreaSelectView
 
 @end

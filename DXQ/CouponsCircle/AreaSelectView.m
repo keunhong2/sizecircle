@@ -12,7 +12,7 @@
 
     UIToolbar *_toolBar;
     UIPickerView *_pickerView;
-    NSArray *areaArray;
+    
 }
 
 @end
@@ -120,3 +120,4 @@
     }
 }
 @end
+

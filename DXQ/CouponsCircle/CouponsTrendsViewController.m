@@ -532,7 +532,11 @@
      }failure:nil];
     
     cell.businessNameLabel.text=[dic objectForKey:@"Title"];
-    cell.detailInfoLabel.text=[dic objectForKey:@"Summary"];
+    NSString *summary=[dic objectForKey:@"Summary"];
+    if ([summary isEqual:[NSNull null]]) {
+        summary=@"";
+    }
+    cell.detailInfoLabel.text=summary;
     cell.releaseDateLabel.text=[Tool convertTimestampToNSDate:[[dic objectForKey:@"OpTime"] integerValue]];
     cell.releaseDateLabel.frame=CGRectMake(cell.releaseDateLabel.frame.origin.x, 10.f, cell.releaseDateLabel.frame.size.width, 20.f);
     return cell;
@@ -551,6 +555,9 @@
             NSString *intro=@"";
             if (_shopDetailInfoDic) {
                 intro=[_shopDetailInfoDic objectForKey:@"Content"];
+                if ([intro isEqual:[NSNull null]]) {
+                    intro=@"";
+                }
             }
             
             CGSize size=[intro sizeWithFont:COUPONS_TRENDS_CELL_FONT constrainedToSize:CGSizeMake(260.f, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
@@ -608,7 +615,7 @@
         {
             UITableViewCell *cell=[[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"about"] autorelease];
             if (_shopDetailInfoDic) {
-                cell.textLabel.text=[_shopDetailInfoDic objectForKey:@"Content"];
+                cell.textLabel.text=[NSString stringWithFormat:@"%@",[_shopDetailInfoDic objectForKey:@"Content"]];
             }else
                 cell.textLabel.text=@"";
             
