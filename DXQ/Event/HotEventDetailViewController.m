@@ -83,11 +83,11 @@
     _contentView.backgroundColor=[UIColor clearColor];
     [self.view addSubview:_contentView];
     
-    _headerView=[[HotEventHeaderView alloc]initWithFrame:CGRectMake(0.f, 0.f, self.view.frame.size.width, 110.f)];
+    _headerView=[[HotEventHeaderView alloc]initWithFrame:CGRectMake(0.f, 0.f, self.view.frame.size.width, 150.f)];
     [_contentView addSubview:_headerView];
     
     UIImage *buddleImg=[UIImage imageNamed:@"blue_title_bg"];
-    UIView *buddleView=[[UIView alloc]initWithFrame:CGRectMake(0.f, 110.f, buddleImg.size.width, buddleImg.size.height)];
+    UIView *buddleView=[[UIView alloc]initWithFrame:CGRectMake(0.f, 150.f, buddleImg.size.width, buddleImg.size.height)];
     buddleView.backgroundColor=[UIColor clearColor];
     UIImageView *bundImgView=[[UIImageView alloc]initWithImage:buddleImg];
     [buddleView addSubview:bundImgView];
@@ -352,7 +352,7 @@
     
     _headerView.locationLabel.text=[simpleDic objectForKey:@"Address"];
     NSString *startDate=[Tool convertTimestampToNSDate:[[simpleDic objectForKey:@"StartDate"] integerValue] dateStyle:@"YYYY-MM-dd HH-mm"];
-    NSString *endDate=[Tool convertTimestampToNSDate:[[simpleDic objectForKey:@"ExpiredDate"] integerValue] dateStyle:@"HH-MM"];
+    NSString *endDate=[Tool convertTimestampToNSDate:[[simpleDic objectForKey:@"ExpiredDate"] integerValue] dateStyle:@"YYYY-MM-dd HH-mm"];
     _headerView.dateLabel.text= [NSString stringWithFormat:@"%@--%@",startDate,endDate];
     NSString *enUrl=[[simpleDic objectForKey:@"PhotoUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [_headerView.imageView setImageWithURL:[NSURL URLWithString:enUrl] placeholderImage:nil];
@@ -376,7 +376,7 @@
     _shareBtn.frame=CGRectMake(_shareBtn.frame.origin.x, _interBtn.frame.origin.y, _shareBtn.frame.size.width, _shareBtn.frame.size.height);
    
     NSString *startDate=[Tool convertTimestampToNSDate:[[detailDic objectForKey:@"StartDate"] integerValue] dateStyle:@"YYYY-MM-dd HH-mm"];
-    NSString *endDate=[Tool convertTimestampToNSDate:[[detailDic objectForKey:@"ExpiredDate"] integerValue] dateStyle:@"HH-MM"];
+    NSString *endDate=[Tool convertTimestampToNSDate:[[detailDic objectForKey:@"ExpiredDate"] integerValue] dateStyle:@"YYYY-MM-dd HH-mm"];
     _headerView.dateLabel.text= [NSString stringWithFormat:@"%@--%@",startDate,endDate];
     _headerView.nameLabel.text=[detailDic objectForKey:@"ProductTitle"];
     contentWebView.frame=CGRectMake(10.f, _shareBtn.frame.origin.y+_shareBtn.frame.size.height+15.f, self.view.frame.size.width-20.f, contentWebView.frame.size.height);
