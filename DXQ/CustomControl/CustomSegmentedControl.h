@@ -24,6 +24,7 @@ typedef enum
 }
 @property(nonatomic,assign)id<CustomSegmentedControlDelegate>delegate;
 @property(nonatomic,retain) NSArray *items;
+@property (nonatomic)NSUInteger selectedIndex;
 
 - (id)initWithFrame:(CGRect)frame items:(NSArray *)items_ defaultSelectIndex:(NSUInteger)idx;
 

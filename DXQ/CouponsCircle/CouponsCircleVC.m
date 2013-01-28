@@ -471,7 +471,12 @@
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     if (isFirstGetLocatin) {
-        [mapView setCenterCoordinate:userLocation.coordinate animated:YES];
+//        [mapView setCenterCoordinate:userLocation.coordinate animated:YES];
+        MKCoordinateRegion region;
+        region.center=userLocation.coordinate;
+        region.span.longitudeDelta=1;
+        region.span.latitudeDelta=1;
+        [mapView setRegion:region animated:YES];
         isFirstGetLocatin=NO;
     }
 }

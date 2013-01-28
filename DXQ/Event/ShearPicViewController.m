@@ -13,6 +13,8 @@
 #import "PhotoDetailViewController.h"
 #import "ImageFilterVC.h"
 #import "PhotoDetailVC.h"
+#import "DXSegmenetControl.h"
+#import "UIColor+ColorUtils.h"
 
 @interface ShearPicViewController ()<BusessRequestDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UniversalViewControlDelegate>{
     
@@ -20,6 +22,7 @@
     BOOL isRefresh;
     
     LoadMoreView *loadMoreView;
+    DXSegmenetControl *segment;
 }
 
 @end
@@ -41,6 +44,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"_image_is_upload" object:nil];
     [self cancelAllRequest];
     [loadMoreView release];
+    [segment release];
     [super dealloc];
 }
 
@@ -58,6 +62,20 @@
         
         [self requestSharePicListByPage:1];
     }];
+    
+    CGRect frame=self.view.bounds;
+    frame.size.height=frame.size.height-49.f;
+    self.tableView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.tableView.frame=frame;
+    
+    if (!segment) {
+        segment=[[DXSegmenetControl alloc]initWithItems:[NSArray arrayWithObjects:@"热门",@"最新",@"附近",@"活动", nil]];
+        [segment addTarget:self action:@selector(segmentControlValueChange:) forControlEvents:UIControlEventValueChanged];
+    }
+    
+    segment.frame=CGRectMake(0.f, self.view.frame.size.height-49.f, self.view.frame.size.width, 49.f);
+    segment.autoresizingMask=UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:segment];
 }
 
 - (void)viewDidLoad
@@ -138,6 +156,13 @@
     [filter release];
     [navi release];
 }
+
+-(void)segmentControlValueChange:(DXSegmenetControl *)segment
+{
+    [self cancelAllRequest];
+    [self.tableView pullToRefresh];
+}
+
 #pragma mark -Request
 
 -(void)cancelAllRequest{
@@ -163,12 +188,14 @@
         isRefresh=YES;
     }else
         isRefresh=NO;
+    
+    NSString *dirText=[NSString stringWithFormat:@"%d",segment.selectIndex+1];
     NSDictionary *pager=[NSDictionary dictionaryWithObjectsAndKeys:
                          [NSString stringWithFormat:@"%d",page],@"PageIndex",
                          [NSString stringWithFormat:@"%d",20],@"ReturnCount", nil];
     NSString *accountID=[[SettingManager sharedSettingManager]loggedInAccount];
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:accountID,@"AccountId",
-                       @"2",@"Order",@"0",@"OrderDirection",
+                       dirText,@"Order",@"0",@"OrderDirection",
                        [[GPS gpsManager]getLocation:GPSLocationLatitude],@"WeiDu",
                        [[GPS gpsManager]getLocation:GPSLocationLongitude],@"JingDu",
                        pager,@"Pager", nil];

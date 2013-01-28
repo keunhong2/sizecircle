@@ -151,6 +151,7 @@
 -(void)logOut:(UIButton *)btn
 {
     //init account and pwd
+    [[SettingManager sharedSettingManager]setIsLogin:NO];
     [[SettingManager sharedSettingManager]setTempAccountID:nil];
     [[SettingManager sharedSettingManager]setTempAccountPassword:nil];
     [[SettingManager sharedSettingManager]setLoggedInAccountPwd:nil];

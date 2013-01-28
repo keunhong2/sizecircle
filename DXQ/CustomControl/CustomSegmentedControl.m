@@ -19,7 +19,7 @@
     if (self)
     {
         self.items = items_;
-        
+        _selectedIndex=idx;
         CGFloat margin_left = 0.0f;
         CGFloat segment_height = 0.0f;
         for (int i = 0 ; i < [self.items count]; i++)
@@ -73,6 +73,7 @@
         [btn setBackgroundImage:image forState:UIControlStateNormal];
         [btn setBackgroundImage:image forState:UIControlStateHighlighted];
     }
+    _selectedIndex=sender.tag-1;
     
     if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectIndex:withSegmentControl:)])
     {

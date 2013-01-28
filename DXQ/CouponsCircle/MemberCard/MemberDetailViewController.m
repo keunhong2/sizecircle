@@ -158,6 +158,17 @@
     
     [self setNavgationTitle:AppLocalizedString(@"会员卡明细") backItemTitle:AppLocalizedString(@"返回")];
     [self requestProductDetail];
+    
+    UIImage *bgImage=[UIImage imageNamed:@"btn_round"];
+    UIButton *inivateBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    [inivateBtn setBackgroundImage:bgImage forState:UIControlStateNormal];
+    [inivateBtn sizeToFit];
+    [inivateBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
+    [inivateBtn setTitle:AppLocalizedString(@"送礼") forState:UIControlStateNormal];
+    [inivateBtn addTarget:self action:@selector(sendGiftBtnDone) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:inivateBtn];
+    self.navigationItem.rightBarButtonItem=item;
+    [item release];
 }
 
 -(void)viewDidUnload{
@@ -261,23 +272,26 @@
     }
 }
 
--(void)startCountDownWithTime:(NSTimeInterval)secound{
+-(void)sendGiftBtnDone{
 
-    allCount=secound;
-    [self stopCountDown];
-    countDownTimer=[NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(countDwon) userInfo:nil repeats:YES];
+    // gift
+    
+    [self goBuyViewControllerIsSendGift:YES];
 }
 
--(void)countDwon{
+// go buy view controller
+
+-(void)goBuyViewControllerIsSendGift:(BOOL)isSend
+{
+    BuyViewController *buyViewController=[[BuyViewController alloc]init];
+    buyViewController.productDic=_infoDic;
     
-    MemberDetailHeaderView *headerInfoView=(MemberDetailHeaderView *)[self memberInfoView];
-    NSString *text=[Tool convertTimeBySecound:allCount];
-    headerInfoView.countDownTime=[NSString stringWithFormat:@"还剩下%@",text];
-    if (allCount<=0) {
-        headerInfoView.countDownTime=AppLocalizedString(@"已结束");
-        [self stopCountDown];
+    if (/*[[_infoDic objectForKey:@"Discount"] integerValue]==0||*/[[_infoDic objectForKey:@"MemberPrice"] floatValue]==0) {
+        buyViewController.canEditeBuyNumber=NO;
     }
-    allCount--;
+    buyViewController.isSendGift=isSend;
+    [self.navigationController pushViewController:buyViewController animated:YES];
+    [buyViewController release];
 }
 -(void)stopCountDown{
 
@@ -289,14 +303,7 @@
 
 -(void)buyBtn{
 
-    BuyViewController *buyViewController=[[BuyViewController alloc]init];
-    buyViewController.productDic=_infoDic;
-    
-    if (/*[[_infoDic objectForKey:@"Discount"] integerValue]==0||*/[[_infoDic objectForKey:@"MemberPrice"] floatValue]==0) {
-        buyViewController.canEditeBuyNumber=NO;
-    }
-    [self.navigationController pushViewController:buyViewController animated:YES];
-    [buyViewController release];
+    [self goBuyViewControllerIsSendGift:NO];
     return;
     
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:AppLocalizedString(@"填写购买数量") message:nil delegate:self cancelButtonTitle:AppLocalizedString(@"取消") otherButtonTitles:AppLocalizedString(@"购买"), nil];

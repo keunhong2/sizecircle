@@ -182,11 +182,11 @@
         return;
     }
     
-    if (![[DXQWebSocket sharedWebSocket]isOpen])
-    {
-        [Tool showAlertWithTitle:AppLocalizedString(@"提示") msg:AppLocalizedString(@"连接服务器异常，请稍后再试...")];
-        return;
-    }
+//    if (![[DXQWebSocket sharedWebSocket]isOpen])
+//    {
+//        [Tool showAlertWithTitle:AppLocalizedString(@"提示") msg:AppLocalizedString(@"连接服务器异常，请稍后再试...")];
+//        return;
+//    }
  
     [self resignControl:nil];
     
@@ -195,7 +195,7 @@
     
     [[AppDelegate sharedAppDelegate] signInWithAccount:account password:psw];
     
-    /*
+    
     NSMutableDictionary *parametersDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:nil, nil];
     [parametersDic setObject:_accuntTextField.text forKey:@"Account"];
     [parametersDic setObject:[Tool ConMD5:_pswTextField.text] forKey:@"Password"];
@@ -208,20 +208,26 @@
     [parametersDic setObject:[[GPS gpsManager]getLocation:GPSLocationLatitude] forKey:@"WeiDu"];
     [parametersDic setObject:[[GPS gpsManager]getLocation:GPSLocationLongitude] forKey:@"JingDu"];
     
-    [[ProgressHUD sharedProgressHUD]setText:@"正在登陆..."];
-    [[ProgressHUD sharedProgressHUD] showInView:[[UIApplication sharedApplication].windows lastObject]];
+//    [[ProgressHUD sharedProgressHUD]setText:@"正在登陆..."];
+//    [[ProgressHUD sharedProgressHUD] showInView:[[UIApplication sharedApplication].windows lastObject]];
 
     signInRequest = [[SignInRequest alloc] initRequestWithDic:parametersDic];
     signInRequest.delegate = self;
     [signInRequest startAsynchronous];
-     */
+     
 }
 
 
 //websocket登陆后的回调
 -(void)signInFinished:(NSNotification *)info
 {
+    if ([[SettingManager sharedSettingManager]isLogin]==YES) {
+        return;
+    }
     HYLog(@"%@",info);
+    [signInRequest cancel];
+    signInRequest.delegate=nil;
+    
    id result = info.object;
 
     if (result && [result isKindOfClass:[NSDictionary class]])

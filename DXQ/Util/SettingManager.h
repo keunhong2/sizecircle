@@ -16,6 +16,8 @@
 
 @property (nonatomic)BOOL isAutoLogin;//是否自动登陆;
 
+@property (nonatomic)BOOL isLogin;
+
 @property (nonatomic)BOOL outwayLocation;
 
 @property (nonatomic,retain)NSMutableDictionary *userInfoDic;
