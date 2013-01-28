@@ -236,7 +236,7 @@ static SettingManager *setting = nil;
         {
             isExist = YES;
             if (contact.allKeys.count>item.allKeys.count) {
-                [allContacts removeObject:item];
+//                [allContacts removeObject:item];
                 [allContacts replaceObjectAtIndex:[allContacts indexOfObject:item] withObject:contact];
             }
             break;

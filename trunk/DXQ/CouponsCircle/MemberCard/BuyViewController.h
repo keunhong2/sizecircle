@@ -21,6 +21,7 @@
 @property (nonatomic,retain)UITextField *phoneNumberTextField;
 
 @property (nonatomic)BOOL canEditeBuyNumber;
+@property (nonatomic)BOOL isSendGift;
 
 @end
 

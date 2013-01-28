@@ -12,7 +12,6 @@
 
 -(NSString *)actionName
 {
-    ASIHTTPRequest *a;
     return @"UserLoadNearShopList";
 }
 

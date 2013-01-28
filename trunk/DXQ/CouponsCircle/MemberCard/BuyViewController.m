@@ -9,6 +9,7 @@
 #import "BuyViewController.h"
 #import "VerifyOrderViewController.h"
 #import "OrderRequest.h"
+#import "SendGiftViewController.h"
 
 @interface BuyViewController ()<BusessRequestDelegate>{
 
@@ -258,7 +259,13 @@
         if ([[data objectForKey:@"IsPayed"] integerValue]==1) {
             [[ProgressHUD sharedProgressHUD]setText:AppLocalizedString(@"购买成功")];
             [[ProgressHUD sharedProgressHUD]done:YES];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            if (self.isSendGift) {
+                //go friend list
+                SendGiftViewController *gift=[[SendGiftViewController alloc]initWithProductDic:data];
+                [self.navigationController pushViewController:gift animated:YES];
+                [gift release];
+            }else
+                [self.navigationController popToRootViewControllerAnimated:YES];
             return;
         }
         [[ProgressHUD sharedProgressHUD]hide];
