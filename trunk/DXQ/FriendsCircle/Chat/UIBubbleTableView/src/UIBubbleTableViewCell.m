@@ -17,7 +17,6 @@
 @property (nonatomic, retain) UIView *customView;
 @property (nonatomic, retain) UIImageView *bubbleImage;
 @property (nonatomic, retain) UIImageView *avatarImage;
-
 - (void) setupInternalData;
 
 @end
@@ -78,7 +77,10 @@
         self.avatarImage.layer.masksToBounds = YES;
         self.avatarImage.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.2].CGColor;
         self.avatarImage.layer.borderWidth = 1.0;
-        
+        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self.tapTarget action:self.action];
+        self.avatarImage.userInteractionEnabled=YES;
+        [self.avatarImage addGestureRecognizer:tap];
+        [tap release];
         CGFloat avatarX = (type == BubbleTypeSomeoneElse) ? 2 : self.frame.size.width - 52;
         CGFloat avatarY = self.frame.size.height - 50/2;
         
