@@ -13,7 +13,10 @@
 #import "UIBubbleHeaderTableViewCell.h"
 #import "UIBubbleTypingTableViewCell.h"
 
-@interface UIBubbleTableView ()
+@interface UIBubbleTableView (){
+
+    UILabel *label;
+}
 
 @property (nonatomic, retain) NSMutableArray *bubbleSection;
 
@@ -32,6 +35,15 @@
 - (void)initializator
 {
     // UITableView properties
+    label=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, -40.f, self.frame.size.width, 40.f)];
+    label.backgroundColor=[UIColor clearColor];
+    label.textAlignment=UITextAlignmentCenter;
+    label.textColor=[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f];
+    label.shadowColor=[UIColor whiteColor];
+    label.shadowOffset=CGSizeMake(1.f, 1.f);
+    label.text=@"上拉加载更多聊天记录";
+    label.font=[UIFont boldSystemFontOfSize:14.f];
+    [self addSubview:label];
     
     self.backgroundColor = [UIColor clearColor];
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -223,20 +235,45 @@
     UIBubbleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     NSBubbleData *data = [[self.bubbleSection objectAtIndex:indexPath.section] objectAtIndex:indexPath.row - 1];
     
-    if (cell == nil) cell = [[UIBubbleTableViewCell alloc] init];
+    if (cell == nil)
+    {
+        cell = [[UIBubbleTableViewCell alloc] init];
+        cell.tapTarget=self;
+        cell.action=@selector(imageIsTap:);
+    }
     
     cell.data = data;
     cell.showAvatar = self.showAvatars;
-    
     return cell;
 }
 
+-(void)imageIsTap:(UITapGestureRecognizer *)tap
+{
+    UIImageView *imageView=(UIImageView *)[tap view];
+    UITableViewCell *cell=(UITableViewCell *)[imageView superview];
+    if ([cell isKindOfClass:[UITableViewCell class]]) {
+        NSIndexPath *indexPath=[self indexPathForCell:cell];
+        if (self.bubbleDataSource&&[self.bubbleDataSource respondsToSelector:@selector(bubbleTableView:headerDidTapForData:)]) {
+            [self.bubbleDataSource bubbleTableView:self headerDidTapForData: [[self.bubbleSection objectAtIndex:indexPath.section] objectAtIndex:indexPath.row - 1]];
+        }
+    }
+}
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (scrollView.contentOffset.y<=-70.f) {
+    if (scrollView.contentOffset.y<=-50.f) {
         if (_bubbleDataSource&&[_bubbleDataSource respondsToSelector:@selector(pullToRereshBubbleTable:)]) {
             [_bubbleDataSource pullToRereshBubbleTable:self];
         }
+    }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+
+    if (scrollView.contentOffset.y>-50) {
+        label.text=@"上拉加载更多聊天记录";
+    }else if(scrollView.contentOffset.y<-50)
+    {
+        label.text=@"释放加载更多聊天记录";
     }
 }
 @end

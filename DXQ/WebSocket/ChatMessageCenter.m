@@ -19,6 +19,7 @@
     NSMutableArray *sendAndNotReceviecArray;
     UserLoadUnReceivedChat *getUnReadMsgRequest;
     NSMutableArray *requestUserDetailIDs;
+    NSMutableArray *userDetailObserve;
 }
 
 @end
@@ -48,6 +49,7 @@ static ChatMessageCenter *msgCenter=nil;
         chatMsgNumObserArray=[NSMutableArray new];
         sendAndNotReceviecArray=[NSMutableArray new];
         requestUserDetailIDs=[NSMutableArray new];
+        userDetailObserve=[NSMutableArray new];
     }
     return self;
 }
@@ -59,6 +61,7 @@ static ChatMessageCenter *msgCenter=nil;
     [chatMsgNumObserArray release];
     [sendAndNotReceviecArray release];
     [requestUserDetailIDs release];
+    [userDetailObserve release];
     [super dealloc];
 }
 
@@ -73,9 +76,8 @@ static ChatMessageCenter *msgCenter=nil;
         NSString *tempAccountID=[msg objectForKey:@"AccountFrom"];
         NSDictionary *tempChatUserDic=[NSDictionary dictionaryWithObjectsAndKeys:
                                        tempAccountID,@"AccountId",tempAccountID,@"MemberName",@"",@"PhotoUrl",@"",@"Introduction", nil];
-        if (![[SettingManager sharedSettingManager]isContentAndHadDetailInfomationInLastest:tempChatUserDic]) {
-            [self requestUserDefailtInfoByID:tempAccountID];
-        }
+
+        [self requestUserDefailtInfoByID:tempAccountID];
         [[SettingManager sharedSettingManager]addLastestContact:tempChatUserDic];
         [msg chatHistory];
         [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
@@ -273,7 +275,7 @@ static ChatMessageCenter *msgCenter=nil;
     NSManagedObjectContext *managedObjectContext =[[DXQCoreDataManager sharedCoreDataManager]managedObjectContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatHistory" inManagedObjectContext:managedObjectContext];
     NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc]
-                                         initWithKey:@"dxq_OpTime" ascending:YES];
+                                         initWithKey:@"dxq_OpTime" ascending:NO];
     NSPredicate *predicate=[NSPredicate predicateWithFormat:@"(dxq_AccountFrom==%@ and dxq_AccountTo==%@) or (dxq_AccountFrom==%@ and dxq_AccountTo==%@)",userID,[[SettingManager sharedSettingManager]loggedInAccount],[[SettingManager sharedSettingManager]loggedInAccount],userID];
     NSArray *sortDescriptors = [[NSArray alloc]
                                 initWithObjects:sortDescriptor1, nil];
@@ -284,12 +286,23 @@ static ChatMessageCenter *msgCenter=nil;
     [fetchRequest setFetchOffset:page*number];
     NSArray *objecs = [managedObjectContext executeFetchRequest: fetchRequest error:nil];
     NSMutableArray *tempArray=[NSMutableArray array];
-    for (int i=0; i<objecs.count; i++) {
+    for (int i=objecs.count-1; i>=0; i--) {
         [tempArray addObject:[(ChatHistory *)[objecs objectAtIndex:i] chatDictionary]];
     }
     
     return tempArray;
 }
+
+-(NSString *)getLastChatMsgByChatName:(NSString *)chatName{
+
+    NSArray *array=[self getHistoryChatMsgFromUser:chatName number:1 page:0];
+    if (array.count>0) {
+        NSDictionary *chatHistory=[array objectAtIndex:0];
+        return [chatHistory objectForKey:@"Content"];
+    }else
+        return nil;
+}
+
 //for un read msg
 
 -(void)getUnReadMessage{
@@ -336,14 +349,49 @@ static ChatMessageCenter *msgCenter=nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:DXQChatMessageDidGetUnReadMessageNotification object:data];
     }else
     {
-        NSString *tempID=[request.paramDic objectForKey:@"AccountFrom"];
+        NSString *tempID=[request.paramDic objectForKey:@"AccountId"];
         [requestUserDetailIDs removeObject:tempID];
         [[SettingManager sharedSettingManager]addLastestContact:[data objectForKey:@"Info"]];
         [request release];
-
+        NSMutableArray *tempRemove=[NSMutableArray new];
+        for (ChatUserDetailObserve *tempObject in userDetailObserve) {
+            if ([tempObject.userID isEqualToString:tempID]) {
+                [tempObject.target performSelector:tempObject.action withObject:[data objectForKey:@"Info"]];
+                [tempRemove addObject:tempObject];
+            }
+        }
+        [userDetailObserve removeObjectsInArray:tempRemove];
+        [tempRemove release];
     }
 }
 
+//for request user detail
+-(BOOL)isRequestDetailByID:(NSString *)userID{
+
+    return [requestUserDetailIDs containsObject:userID];
+}
+
+-(void)addUserInfoDetailObserve:(id)observe action:(SEL)action userID:(NSString *)userID{
+
+    ChatUserDetailObserve *tempObserve=[[ChatUserDetailObserve alloc]init];
+    tempObserve.target=observe;
+    tempObserve.action=action;
+    tempObserve.userID=userID;
+    [userDetailObserve addObject:tempObserve];
+    [tempObserve release];
+}
+
+-(void)removeUserObserByTarget:(id)target userName:(NSString *)userId{
+
+    NSMutableArray *tempRemove=[NSMutableArray new];
+    for (ChatUserDetailObserve *tempObserve in userDetailObserve) {
+        if (tempObserve.target==target||[tempObserve.userID isEqualToString:userId]) {
+            [tempRemove addObject:tempObserve];
+        }
+    }
+    [userDetailObserve removeObjectsInArray:tempRemove];
+    [tempRemove release];
+}
 
 #pragma mark --Request
 
@@ -353,7 +401,7 @@ static ChatMessageCenter *msgCenter=nil;
         return;
     }
     
-    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId",tempID,@"AccountFrom", nil];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom",tempID,@"AccountId", nil];
     UserLoadPersonalPage *request=[[UserLoadPersonalPage alloc]initWithRequestWithDic:dic];
     request.delegate=self;
     [requestUserDetailIDs addObject:tempID];
@@ -470,6 +518,18 @@ static ChatMessageCenter *msgCenter=nil;
 
     [chatMsg release];
     target=nil;
+    [super dealloc];
+}
+
+@end
+
+@implementation ChatUserDetailObserve
+
+-(void)dealloc{
+
+    _target=nil;
+    _action=nil;
+    [_userID release];
     [super dealloc];
 }
 

@@ -17,6 +17,7 @@
 #import "SDImageCache.h"
 #import "DXQWebSocket.h"
 #import "ChatMessageCenter.h"
+#import "UserDetailInfoVC.h"
 
 #define CHAT_VC_HISTORY_NUMBER  10
 
@@ -60,7 +61,7 @@
 -(void)dealloc
 {
     [self removeNotifications];
-
+    [[ChatMessageCenter shareMessageCenter]removeUserObserByTarget:self userName:[_chatUserInfo objectForKey:@"AccountId"]];
     [_chatUserInfo release];_chatUserInfo = nil;
     
     [_hYEmojiView release];_hYEmojiView = nil;
@@ -104,11 +105,12 @@
         
         DXQAccount *account =  [[DXQCoreDataManager sharedCoreDataManager]getCurrentLoggedInAccount];
         meAvatar = [[SDImageCache sharedImageCache]imageFromKey:account.dxq_PhotoUrl];
-        if (account.dxq_PhotoUrl )
+    
+        if (account.dxq_PhotoUrl)
         {
             if (!meAvatar)
             {
-                [[SDWebImageManager sharedManager]downloadWithURL:[NSURL URLWithString:account.dxq_PhotoUrl] delegate:nil options:0 userInfo:nil success:^(UIImage *image,BOOL cached)
+                [[SDWebImageManager sharedManager]downloadWithURL:[NSURL URLWithString:[account.dxq_PhotoUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]] delegate:self options:0 userInfo:nil success:^(UIImage *image,BOOL cached)
                  {
                      meAvatar = image;
                      [_chatTableView reloadData];
@@ -122,7 +124,7 @@
         
         NSString *chatUserAvatarUrl = [_chatUserInfo objectForKey:@"PhotoUrl"];
         chatUserAvatar = [[SDImageCache sharedImageCache]imageFromKey:chatUserAvatarUrl];
-        if (chatUserAvatarUrl )
+        if (chatUserAvatarUrl.length>0)
         {
             if (!chatUserAvatar)
             {
@@ -136,6 +138,7 @@
         else
         {
             chatUserAvatar = [UIImage imageNamed:@"tx_gray.png"];
+            [self getChatUserHeaderImage];
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedMessage:) name:NOTIFICATIONCENTER_RECEIVED_MESSAGES object:nil];
@@ -143,6 +146,28 @@
     return self;
 }
 
+
+-(void)getChatUserHeaderImage{
+
+    if (!chatUserAvatar) {
+        ChatMessageCenter *msgCenter=[ChatMessageCenter shareMessageCenter];
+        NSString *userID=[_chatUserInfo objectForKey:@"AccountId"];
+        if ([msgCenter isRequestDetailByID:userID]) {
+            [msgCenter addUserInfoDetailObserve:self action:@selector(getUserData:) userID:userID];
+            [msgCenter requestUserDefailtInfoByID:userID];
+        }
+    }
+}
+
+-(void)getUserData:(NSDictionary *)dic{
+
+    NSString *imgURL=[dic objectForKey:@"PhotoUrl"];
+    [[SDWebImageManager sharedManager]downloadWithURL:[NSURL URLWithString:[imgURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]] delegate:self options:0 userInfo:nil success:^(UIImage *image,BOOL cached)
+     {
+         chatUserAvatar = image;
+         [_chatTableView reloadData];
+     } failure:nil];
+}
 
 -(void)loadView
 {
@@ -242,9 +267,6 @@
     for (int i=0; i<chatMsg.count; i++) {
         [self getChatMessage:[chatMsg objectAtIndex:i]];
     }
-    
-    NSLog(@"self view %@",self.view);
-    NSLog(@"window %@",[[[UIApplication sharedApplication]keyWindow]subviews]);
 }
 
 -(void)sendMessage:(id)sender
@@ -300,6 +322,7 @@
     long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
     NSBubbleData *heyBubble = [NSBubbleData dataWithText:[Tool decodeBase64:[receiveDict objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
     heyBubble.avatar = chatUserAvatar;
+    [self getChatUserHeaderImage];
     [_bubbleData addObject:heyBubble];
     [_chatTableView reloadData];
 }
@@ -339,11 +362,24 @@
     return [_bubbleData objectAtIndex:row];
 }
 
+-(void)bubbleTableView:(UIBubbleTableView *)tableView headerDidTapForData:(NSBubbleData *)data{
+
+    NSDictionary *dic;
+    if (data.type==BubbleTypeMine) {
+        DXQAccount *account = [[DXQCoreDataManager sharedCoreDataManager]getCurrentLoggedInAccount];
+        dic=[NSDictionary dictionaryWithObjectsAndKeys: account.dxq_MemberName,@"MemberName",account.dxq_AccountId,@"AccountId",account.dxq_Introduction,@"Introduction",account.dxq_PhotoUrl,@"PhotoUrl", nil];
+    }else
+        dic=_chatUserInfo;
+    UserDetailInfoVC *user=[[UserDetailInfoVC alloc]initwithUserInfo:dic];
+    [self.navigationController pushViewController:user animated:YES];
+    [user release];
+}
+
 -(void)pullToRereshBubbleTable:(UIBubbleTableView *)tableView{
 
     NSInteger page=_bubbleData.count/CHAT_VC_HISTORY_NUMBER;
     NSString *tempUserID=[_chatUserInfo objectForKey:@"AccountId"];
-    NSArray *tempArray=[[ChatMessageCenter shareMessageCenter]getHistoryChatMsgFromUser:tempUserID number:CHAT_VC_HISTORY_NUMBER*page page:0];
+    NSArray *tempArray=[[ChatMessageCenter shareMessageCenter]getHistoryChatMsgFromUser:tempUserID number:CHAT_VC_HISTORY_NUMBER*(page+1) page:0];
     NSMutableArray *tempData=[NSMutableArray array];
     for (int i=0; i<tempArray.count; i++) {
         NSDictionary *receiveDict=[tempArray objectAtIndex:i];

@@ -20,5 +20,7 @@
 
 - (NSInteger)rowsForBubbleTable:(UIBubbleTableView *)tableView;
 - (NSBubbleData *)bubbleTableView:(UIBubbleTableView *)tableView dataForRow:(NSInteger)row;
+-(void)bubbleTableView:(UIBubbleTableView *)tableView headerDidTapForData:(NSBubbleData *)data;
+
 -(void)pullToRereshBubbleTable:(UIBubbleTableView *)tableView;
 @end

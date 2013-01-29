@@ -70,7 +70,7 @@ static ChatUserManager *chatManager=nil;
 
 -(void)getUserDetailByUserID:(NSString *)userID{
 
-    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:userID,@"AccountId",[[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom", nil];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:userID,@"AccountFrom",[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId", nil];
     UserLoadPersonalPage *request=[[UserLoadPersonalPage alloc]initWithRequestWithDic:dic];
     request.delegate=self;
     [requestArray addObject:request];

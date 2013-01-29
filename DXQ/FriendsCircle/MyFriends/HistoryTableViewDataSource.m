@@ -81,9 +81,11 @@
     [cell.avatarImg addTarget:self action:@selector(viewUserDetailInfoAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.usernameLbl.text = [item objectForKey:@"MemberName"];
     NSString *statusString = [item objectForKey:@"Introduction"];
+   
+    statusString=[[ChatMessageCenter shareMessageCenter]getLastChatMsgByChatName:[item objectForKey:@"AccountId"]];
     if (!statusString || [statusString isEqual:[NSNull null]]  || [statusString length]<1 )
     {
-        statusString = AppLocalizedString(@"这家伙很懒...");
+        statusString = @"";
     }
     else
     {

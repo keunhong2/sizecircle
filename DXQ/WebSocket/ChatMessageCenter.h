@@ -35,6 +35,8 @@ extern NSString *const DXQChatMessageGetNewMessage;
 //获取未读消息 并且从未读中删除
 -(NSArray *)getMsgWithChatName:(NSString *)chatName;
 
+-(NSString *)getLastChatMsgByChatName:(NSString *)chatName;
+
 //获取消息但是不删除未读消息
 -(NSInteger)getMsgNumberWithChatName:(NSString *)chatName;
 
@@ -50,6 +52,14 @@ extern NSString *const DXQChatMessageGetNewMessage;
 
 -(void)removeObserverForChatMessageNumberChange:(id)observer;
 
+//for request user detail
+-(BOOL)isRequestDetailByID:(NSString *)userID;
+
+-(void)addUserInfoDetailObserve:(id)observe action:(SEL)action userID:(NSString *)userID;
+
+-(void)removeUserObserByTarget:(id)target userName:(NSString *)userId;
+
+-(void)requestUserDefailtInfoByID:(NSString *)tempID;
 
 //for send msg
 
@@ -101,5 +111,14 @@ extern NSString *const DXQChatMessageGetNewMessage;
 @interface NSObject (ChatMsgNumber)
 
 -(void)chatMsgCountChangeNumber:(NSInteger)number;
+
+@end
+
+
+@interface ChatUserDetailObserve : NSObject
+
+@property (nonatomic,assign)id target;
+@property (nonatomic)SEL action;
+@property (nonatomic,retain)NSString *userID;
 
 @end
