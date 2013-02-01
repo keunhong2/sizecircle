@@ -8,9 +8,15 @@
 
 #import "MyEventViewController.h"
 #import "UserProductViewController.h"
+#import "UserLoadFavoriteProductList.h"
+#import "UIScrollView+AH3DPullRefresh.h"
+#import "UserProductCell.h"
+#import "UIImageView+WebCache.h"
 
-@interface MyEventViewController ()
+@interface MyEventViewController ()<BusessRequestDelegate>{
 
+    UserLoadFavoriteProductList *productList;
+}
 @end
 
 @implementation MyEventViewController
@@ -56,4 +62,68 @@
     return dic;
 }
 
+-(void)requestProductListByPage:(NSInteger)page{
+
+    if ([self isSelectUntreatedType]) {
+        [super requestProductListByPage:page];
+    }else
+    {
+        [self cancelAllRequest];
+        [self requestFavitList];
+    }
+}
+
+-(void)cancelAllRequest{
+
+    [super cancelAllRequest];
+    [self cancelRequestFaviata];
+}
+-(void)cancelRequestFaviata{
+
+    if (productList) {
+        [productList cancel];
+        [productList release];
+        productList=nil;
+    }
+}
+
+-(void)requestFavitList{
+
+    [self cancelRequestFaviata];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId", nil];
+    productList=[[UserLoadFavoriteProductList alloc]initWithRequestWithDic:dic];
+    productList.delegate=self;
+    [productList startAsynchronous];
+}
+
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
+
+    if (request==productList) {
+
+        self.visibleArray=data;
+        [self.tableView refreshFinished];
+        self.tableView.tableFooterView=nil;
+    }else
+        [super busessRequest:request didFinishWithData:data];
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    UserProductCell *cell=(UserProductCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
+    if ([self isSelectUntreatedType]) {
+        return cell;
+    }else
+    {
+        NSDictionary *dic=[self.visibleArray objectAtIndex:indexPath.row];
+        NSString *url=[[dic objectForKey:@"ThumbnailUrl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [cell.productImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil success:^(UIImage *image,BOOL isCache){
+            [Tool setImageView:cell.productImageView toImage:image];
+        } failure:nil];
+        [cell.productNameLabel setText:[dic objectForKey:@"Address"]];
+        [cell.exdateLabel setText:[Tool convertTimestampToNSDate:[[dic objectForKey:@"AddDate"] integerValue]]];
+        return cell;
+    }
+}
 @end

@@ -255,8 +255,16 @@
     }
     NSDictionary *dic=[self.visibleArray objectAtIndex:indexPath.row];
     cell.eventNameLabel.text=[dic objectForKey:@"Title"];
-    NSString *startDate=[Tool convertTimestampToNSDate:[[dic objectForKey:@"StartDate"] integerValue] dateStyle:@"YYYY-MM-dd"];
-    NSString *endDate=[Tool convertTimestampToNSDate:[[dic objectForKey:@"EndDate"] integerValue]dateStyle:@"YYYY-MM-dd"];
+    NSString *_startDate=[dic objectForKey:@"StartDate"];
+    if ([_startDate isEqual:[NSNull null]]) {
+        _startDate=@"";
+    }
+    NSString *_endDate=[dic objectForKey:@"EndDate"];
+    if ([_endDate isEqual:[NSNull null]]) {
+        _endDate=@"";
+    }
+    NSString *startDate=[Tool convertTimestampToNSDate:[_startDate integerValue] dateStyle:@"YYYY-MM-dd"];
+    NSString *endDate=[Tool convertTimestampToNSDate:[_endDate integerValue]dateStyle:@"YYYY-MM-dd"];
     cell.eventDateLabel.text=[NSString stringWithFormat:@"%@-%@",startDate,endDate];
     cell.eventLocationLabel.text=[dic objectForKey:@"Address"];
     NSInteger classTag=[[dic objectForKey:@"Classify"] integerValue];

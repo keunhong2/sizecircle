@@ -61,6 +61,7 @@
 -(void)dealloc
 {
     [self removeNotifications];
+    [[ChatMessageCenter shareMessageCenter]removeChatMsgSendStateObserver:self];
     [[ChatMessageCenter shareMessageCenter]removeUserObserByTarget:self userName:[_chatUserInfo objectForKey:@"AccountId"]];
     [_chatUserInfo release];_chatUserInfo = nil;
     
@@ -281,15 +282,8 @@
             [[ProgressHUD sharedProgressHUD]done:NO];
             return;
         }
-        
-        NSBubbleData *meReply = [NSBubbleData dataWithText:txtString date:[NSDate dateWithTimeIntervalSinceNow:0] type:BubbleTypeMine];
-        meReply.avatar = meAvatar;
-        [_bubbleData addObject:meReply];
-        [_chatTableView reloadData];
+
         [self sendMessageContent:txtString];
-        isShowEmojiKeyBoard = NO;
-        [self showEmoji:NO];
-        [_chatToolBar.messageTextField resignFirstResponder];
     }
 }
 
@@ -299,6 +293,20 @@
     NSDictionary *pDict = [NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom",[_chatUserInfo objectForKey:@"AccountId"],@"AccountTo",[Tool encodeBase64:content],@"Content", nil];
     [[ChatMessageCenter shareMessageCenter]sendMsg:pDict target:self];
     _chatToolBar.messageTextField.text = @"";
+}
+
+-(void)chatMessage:(NSDictionary *)msgDic sendFailedWithError:(NSError *)error{
+    
+    [Tool showAlertWithTitle:@"消息发送失败" msg:[msgDic objectForKey:@"Content"]];
+}
+
+-(void)chatMessageDidSend:(NSDictionary *)msgDic{
+
+    NSBubbleData *meReply = [NSBubbleData dataWithText:[Tool decodeBase64:[msgDic objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:[[msgDic objectForKey:@"OpTime"] integerValue]] type:BubbleTypeMine];
+    meReply.avatar = meAvatar;
+    [_bubbleData addObject:meReply];
+    [_chatTableView reloadData];
+    [_chatTableView scrollRectToVisible:CGRectMake(0.f, _chatTableView.contentSize.height-_chatTableView.frame.size.height, _chatTableView.frame.size.width, _chatTableView.frame.size.height) animated:YES];
 }
 
 -(void)receivedMessage:(NSNotification *)info
@@ -325,6 +333,7 @@
     [self getChatUserHeaderImage];
     [_bubbleData addObject:heyBubble];
     [_chatTableView reloadData];
+    [_chatTableView scrollRectToVisible:CGRectMake(0.f, _chatTableView.contentSize.height-_chatTableView.frame.size.height, _chatTableView.frame.size.width, _chatTableView.frame.size.height) animated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField              // called when 'return' key pressed. return NO to ignore.
@@ -427,7 +436,7 @@
     _chatToolBar.frame=CGRectMake(0, offset_y,
                                _chatToolBar.frame.size.width,
                                _chatToolBar.frame.size.height);
-    _chatTableView.frame = CGRectMake(0,offset_y- _chatTableView.frame.size.height, _chatTableView.frame.size.width,_chatTableView.frame.size.height);
+    _chatTableView.frame = CGRectMake(0,0, _chatTableView.frame.size.width,offset_y);
 	[UIView commitAnimations];
 }
 
@@ -448,7 +457,7 @@
     _chatToolBar.frame=CGRectMake(0,offset_y,
                                   _chatToolBar.frame.size.width,
                                   _chatToolBar.frame.size.height);
-    _chatTableView.frame = CGRectMake(0,offset_y- _chatTableView.frame.size.height, _chatTableView.frame.size.width,_chatTableView.frame.size.height);
+    _chatTableView.frame = CGRectMake(0,0, _chatTableView.frame.size.width,self.view.frame.size.height-_chatToolBar.frame.size.height);
 	[UIView commitAnimations];
     [self showEmoji:NO];
 }

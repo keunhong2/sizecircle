@@ -25,6 +25,7 @@
 @interface NearByFriendsVC ()<NearByUserListRequestDelegate>
 {
     
+    BOOL isFirstGetLocatin;
     NearByUserListRequest *nearByUserListRequest;
     
     BOOL isNearByUserListRequesting;
@@ -151,6 +152,7 @@
         _mapView.delegate=self;
         _mapView.mapType = MKMapTypeStandard;
         _mapView.showsUserLocation=YES;
+        isFirstGetLocatin=YES;
     }
     
     return _mapView;
@@ -432,6 +434,19 @@
 
 
 #pragma mark -Map
+
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
+
+    if (isFirstGetLocatin) {
+        //        [mapView setCenterCoordinate:userLocation.coordinate animated:YES];
+        MKCoordinateRegion region;
+        region.center=userLocation.coordinate;
+        region.span.longitudeDelta=1;
+        region.span.latitudeDelta=1;
+        [mapView setRegion:region animated:YES];
+        isFirstGetLocatin=NO;
+    }
+}
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     

@@ -42,6 +42,8 @@ extern NSString *const DXQChatMessageGetNewMessage;
 
 -(NSInteger)getAllMsgNumber;
 
+-(void)removeChatMsgSendStateObserver:(id)target;
+
 -(void)addChatViewController:(UIViewController *)controller chatName:(NSString *)chatName;
 
 -(void)removeChatViewController:(UIViewController *)controller;
@@ -76,6 +78,10 @@ extern NSString *const DXQChatMessageGetNewMessage;
 
 -(NSArray *)getHistoryChatMsgFromUser:(NSString *)userID number:(NSInteger)number page:(NSInteger)page;
 
+-(BOOL)deleteHistoryChatMsgByDic:(NSDictionary *)dic;
+
+-(BOOL)deleteHistoryChatMsgArray:(NSArray *)array;
+
 @end
 
 @interface ChatObserveObject : NSObject
@@ -97,7 +103,7 @@ extern NSString *const DXQChatMessageGetNewMessage;
 
 @interface SendMessageEntity : NSObject
 
-@property (nonatomic,retain)ChatHistory *chatMsg;
+@property (nonatomic,retain)NSDictionary *chatMsg;
 @property (nonatomic,assign)id target;
 
 @end

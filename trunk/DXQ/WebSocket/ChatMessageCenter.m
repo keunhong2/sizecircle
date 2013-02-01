@@ -207,9 +207,9 @@ static ChatMessageCenter *msgCenter=nil;
 
 -(void)sendMsg:(NSDictionary *)msgDic target:(id)target{
 
-    
-    ChatHistory *chat=[msgDic chatHistory];
-    [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
+//    
+//    ChatHistory *chat=[msgDic chatHistory];
+//    [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
     
     if(![[DXQWebSocket sharedWebSocket]isOpen])
     {
@@ -221,8 +221,8 @@ static ChatMessageCenter *msgCenter=nil;
     }
     
     SendMessageEntity *send=[[SendMessageEntity alloc]init];
-    send.chatMsg=chat;
-    send.target=nil;
+    send.chatMsg=msgDic;
+    send.target=target;
     [sendAndNotReceviecArray addObject:send];
     NSString *pJson = [msgDic JSONRepresentation];
     NSString *mes = [NSString stringWithFormat:@"a=UserChatWithFriend&p=%@",pJson];
@@ -243,9 +243,12 @@ static ChatMessageCenter *msgCenter=nil;
 
 -(void)msgTimeOut:(SendMessageEntity *)entity{
     
+    if (![sendAndNotReceviecArray containsObject:entity]) {
+        return;
+    }
     if (entity.target&&[entity.target respondsToSelector:@selector(chatMessage:sendFailedWithError:)]) {
         NSError *error=[NSError errorWithDomain:@"Chat Message" code:101 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Send message time out", nil]];
-        [entity.target chatMessage:[entity.chatMsg chatDictionary] sendFailedWithError:error];
+        [entity.target chatMessage:entity.chatMsg sendFailedWithError:error];
     }
     [sendAndNotReceviecArray removeObject:entity];
 }
@@ -254,10 +257,10 @@ static ChatMessageCenter *msgCenter=nil;
 {
     for (int i=0; i<sendAndNotReceviecArray.count; i++) {
         SendMessageEntity *chat=[sendAndNotReceviecArray objectAtIndex:i];
-        if ([chat.chatMsg.dxq_Content isEqualToString:[dic objectForKey:@"Content"]]&&
-            [chat.chatMsg.dxq_AccountFrom isEqualToString:[dic objectForKey:@"AccountFrom"]]&&
-            [chat.chatMsg.dxq_AccountTo isEqualToString:[dic objectForKey:@"AccountTo"]]) {
-            chat.chatMsg.dxq_IsReceived=@"1";
+        if ([[chat.chatMsg objectForKey:@"Content"] isEqualToString:[dic objectForKey:@"Content"]]&&
+            [[chat.chatMsg objectForKey:@"AccountFrom"] isEqualToString:[dic objectForKey:@"AccountFrom"]]&&
+            [[chat.chatMsg objectForKey:@"AccountTo"] isEqualToString:[dic objectForKey:@"AccountTo"]]) {
+            [dic chatHistory];
             [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
             if (chat.target&&[chat.target respondsToSelector:@selector(chatMessageDidSend:)]) {
                 [chat.target chatMessageDidSend:dic];
@@ -266,6 +269,17 @@ static ChatMessageCenter *msgCenter=nil;
             return;
         }
     }
+}
+
+-(void)removeChatMsgSendStateObserver:(id)target{
+
+    NSMutableArray *tempRemmove=[NSMutableArray array];
+    for (SendMessageEntity *chat in sendAndNotReceviecArray) {
+        if (chat.target==target) {
+            [tempRemmove addObject:chat];
+        }
+    }
+    [sendAndNotReceviecArray removeObjectsInArray:tempRemmove];
 }
 
 -(NSArray *)getHistoryChatMsgFromUser:(NSString *)userID number:(NSInteger)number page:(NSInteger)page{
@@ -293,6 +307,33 @@ static ChatMessageCenter *msgCenter=nil;
     return tempArray;
 }
 
+-(BOOL)deleteHistoryChatMsgByDic:(NSDictionary *)dic{
+
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSManagedObjectContext *managedObjectContext =[[DXQCoreDataManager sharedCoreDataManager]managedObjectContext];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatHistory" inManagedObjectContext:managedObjectContext];
+    
+     //{"AccountFrom":"1@1.cn","AccountTo":"13800138000","OpTime":"1359638019","IsReceived":"1","Face":"","Picture":"","Content":"8J+YivCfmITwn5iE8J+Gl/CfjLnimIA=","JingDu":0.0,"WeiDu":0.0,"Id":590}
+    
+//    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc]
+//                                         initWithKey:@"dxq_OpTime" ascending:NO];
+//    NSMutableString *formatter=[NSMutableString stringWithFormat:@"dxq_AccountFrom==%@ and dxq_AccountTo==%@ and dxq_Content==%@ ",[dic objectForKey:@"AccountFrom"],
+//                                [dic objectForKey:@"AccountTo"],[dic objectForKey:@"Content"],[Tool convertTimestampToNSDate:[dic objectForKey:@""] dateStyle:<#(NSString *)#>]];
+//    if ([[dic allKeys]containsObject:@"OpTime"]) {
+//        <#statements#>
+//    }
+//    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"",userID,[[SettingManager sharedSettingManager]loggedInAccount],[[SettingManager sharedSettingManager]loggedInAccount],userID];
+//    NSArray *sortDescriptors = [[NSArray alloc]
+//                                initWithObjects:sortDescriptor1, nil];
+//    [fetchRequest setSortDescriptors:sortDescriptors];
+//    [fetchRequest setEntity:entity];
+//    [fetchRequest setPredicate:predicate];
+
+}
+
+-(BOOL)deleteHistoryChatMsgArray:(NSArray *)array{
+
+}
 -(NSString *)getLastChatMsgByChatName:(NSString *)chatName{
 
     NSArray *array=[self getHistoryChatMsgFromUser:chatName number:1 page:0];
