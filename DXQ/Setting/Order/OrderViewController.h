@@ -23,4 +23,6 @@
 
 -(NSDictionary *)requestArgsDicByPage:(NSInteger)page;//must over write in subclass
 
+-(void)cancelAllRequest;
+
 @end

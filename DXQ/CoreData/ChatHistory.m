@@ -83,6 +83,10 @@
         chat.dxq_AccountFrom=[self objectForKey:@"AccountFrom"];
     }else
         chat.dxq_AccountFrom=@"";
+   
+    if ([keys containsObject:@"Id"]) {
+        chat.dxq_Id=[self objectForKey:@"Id"];
+    }
     
     if ([keys containsObject:@"AccountTo"]) {
         chat.dxq_AccountTo=[self objectForKey:@"AccountTo"];
