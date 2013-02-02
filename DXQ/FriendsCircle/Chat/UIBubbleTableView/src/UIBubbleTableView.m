@@ -247,6 +247,20 @@
     return cell;
 }
 
+-(void)test:(UITableViewCell *)cell
+{
+    NSLog(@"cell subviews %@",cell.subviews);
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+    {
+        return NO;
+    }else
+        return YES;
+}
+
 -(void)imageIsTap:(UITapGestureRecognizer *)tap
 {
     UIImageView *imageView=(UIImageView *)[tap view];

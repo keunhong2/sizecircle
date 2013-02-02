@@ -18,10 +18,12 @@
 #import "DXQWebSocket.h"
 #import "ChatMessageCenter.h"
 #import "UserDetailInfoVC.h"
+#import "RelationMakeRequest.h"
+#import "UserReportUserRequest.h"
 
 #define CHAT_VC_HISTORY_NUMBER  10
 
-@interface ChatVC ()<UIBubbleTableViewDataSource,UITextFieldDelegate>
+@interface ChatVC ()<UIBubbleTableViewDataSource,UITextFieldDelegate,UIActionSheetDelegate,RelationMakeRequestDelegate,UserReportUserRequestDelegate>
 {
     NSMutableArray *bubbleData;
     
@@ -35,6 +37,9 @@
     
     UIImage *meAvatar;
     UIImage *chatUserAvatar;
+
+    RelationMakeRequest *takeBlackRequest;
+    UserReportUserRequest *reportRequest;
 }
 
 @property(nonatomic,retain)UIBubbleTableView *chatTableView;
@@ -176,8 +181,26 @@
     CustomUIView *view_ = [[CustomUIView alloc] initWithFrame:rect];
     self.view = view_;
     [view_ release];
-        
-    _chatTableView = [[UIBubbleTableView alloc] initWithFrame:CGRectMake(0,0, 320, 370) style:UITableViewStyleGrouped];
+    
+    NSArray *titleArray=[NSArray arrayWithObjects:@"删除记录",@"送 礼",@"查看资料",@"更 多", nil];
+    NSArray *action=[NSArray arrayWithObjects:@"editeChat:",@"sendGit",@"showChatUserDetailPage",@"moreAction", nil];
+    
+    float buttonWeidth=70;
+    float margin=10;
+    float lefhtMargin=(self.view.frame.size.width-titleArray.count*buttonWeidth-(titleArray.count-1)*margin)/2;
+    for (int i=0; i<titleArray.count; i++) {
+        UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *imge=[UIImage imageNamed:@"btn_1"];
+        [btn setBackgroundImage:imge forState:UIControlStateNormal];
+        [btn.titleLabel setFont:[UIFont systemFontOfSize:14.f]];
+        [btn setTitle:[titleArray objectAtIndex:i] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn addTarget:self action:NSSelectorFromString([action objectAtIndex:i]) forControlEvents:UIControlEventTouchUpInside];
+        btn.frame=CGRectMake(lefhtMargin+(buttonWeidth+margin)*i, 5.f, buttonWeidth, 30.f);
+        [self.view addSubview:btn];
+    }
+    
+    _chatTableView = [[UIBubbleTableView alloc] initWithFrame:CGRectMake(0,40, 320, 370-40) style:UITableViewStyleGrouped];
     [_chatTableView setBubbleDataSource:self];
     _chatTableView.snapInterval = 15;
     _chatTableView.showAvatars = YES;
@@ -227,7 +250,7 @@
                                   _hYEmojiView.frame.size.height);
     _chatToolBar.frame = CGRectMake(0,offset_y- _chatToolBar.frame.size.height, _chatToolBar.frame.size.width,_chatToolBar.frame.size.height);
 	[UIView commitAnimations];
-    _chatTableView.frame = CGRectMake(0,0, _chatTableView.frame.size.width,_chatTableView.frame.size.height);
+    _chatTableView.frame = CGRectMake(0,40, _chatTableView.frame.size.width,_chatTableView.frame.size.height);
 }
 
 //show emoji keyboard
@@ -304,6 +327,7 @@
 
     NSBubbleData *meReply = [NSBubbleData dataWithText:[Tool decodeBase64:[msgDic objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:[[msgDic objectForKey:@"OpTime"] integerValue]] type:BubbleTypeMine];
     meReply.avatar = meAvatar;
+    meReply.idNumber=[[msgDic objectForKey:@"Id"] integerValue];
     [_bubbleData addObject:meReply];
     [_chatTableView reloadData];
     [_chatTableView scrollRectToVisible:CGRectMake(0.f, _chatTableView.contentSize.height-_chatTableView.frame.size.height, _chatTableView.frame.size.width, _chatTableView.frame.size.height) animated:YES];
@@ -319,6 +343,7 @@
     {
         long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
         NSBubbleData *heyBubble = [NSBubbleData dataWithText:[Tool decodeBase64:[receiveDict objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
+        heyBubble.idNumber=[[receiveDict objectForKey:@"Id"] integerValue];
         heyBubble.avatar = chatUserAvatar;
         [_bubbleData addObject:heyBubble];
         [_chatTableView reloadData];
@@ -329,6 +354,7 @@
     
     long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
     NSBubbleData *heyBubble = [NSBubbleData dataWithText:[Tool decodeBase64:[receiveDict objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:BubbleTypeSomeoneElse];
+    heyBubble.idNumber=[[receiveDict objectForKey:@"Id"] integerValue];
     heyBubble.avatar = chatUserAvatar;
     [self getChatUserHeaderImage];
     [_bubbleData addObject:heyBubble];
@@ -384,6 +410,13 @@
     [user release];
 }
 
+-(void)showChatUserDetailPage
+{
+    UserDetailInfoVC *user=[[UserDetailInfoVC alloc]initwithUserInfo:_chatUserInfo];
+    [self.navigationController pushViewController:user animated:YES];
+    [user release];
+}
+
 -(void)pullToRereshBubbleTable:(UIBubbleTableView *)tableView{
 
     NSInteger page=_bubbleData.count/CHAT_VC_HISTORY_NUMBER;
@@ -399,6 +432,7 @@
             tempType=BubbleTypeMine;
         long int timeSp = [[receiveDict objectForKey:@"OpTime"] longLongValue];
         NSBubbleData *heyBubble = [NSBubbleData dataWithText:[Tool decodeBase64:[receiveDict objectForKey:@"Content"]] date:[NSDate dateWithTimeIntervalSince1970:timeSp] type:tempType];
+        heyBubble.idNumber=[[receiveDict objectForKey:@"Id"] integerValue];
         heyBubble.avatar = chatUserAvatar;
         [tempData addObject:heyBubble];
     }
@@ -436,7 +470,7 @@
     _chatToolBar.frame=CGRectMake(0, offset_y,
                                _chatToolBar.frame.size.width,
                                _chatToolBar.frame.size.height);
-    _chatTableView.frame = CGRectMake(0,0, _chatTableView.frame.size.width,offset_y);
+    _chatTableView.frame = CGRectMake(0,40, _chatTableView.frame.size.width,offset_y-40.f);
 	[UIView commitAnimations];
 }
 
@@ -457,7 +491,7 @@
     _chatToolBar.frame=CGRectMake(0,offset_y,
                                   _chatToolBar.frame.size.width,
                                   _chatToolBar.frame.size.height);
-    _chatTableView.frame = CGRectMake(0,0, _chatTableView.frame.size.width,self.view.frame.size.height-_chatToolBar.frame.size.height);
+    _chatTableView.frame = CGRectMake(0,40.f, _chatTableView.frame.size.width,self.view.frame.size.height-_chatToolBar.frame.size.height-40.f);
 	[UIView commitAnimations];
     [self showEmoji:NO];
 }
@@ -470,4 +504,102 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)moreAction
+{
+    UIActionSheet *sheet=[[UIActionSheet alloc]initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"加入黑名单",@"举报", nil];
+    [sheet showInView:self.view];
+    [sheet release];
+}
+
+-(void)sendGit
+{
+}
+
+-(void)editeChat:(UIButton *)btn
+{
+    BOOL isEdite=[self.chatTableView isEditing];
+    [self.chatTableView setEditing:!isEdite animated:YES];
+    if (isEdite) {
+        [btn setTitle:@"删除记录" forState:UIControlStateNormal];
+    }else
+        [btn setTitle:@"完 成" forState:UIControlStateNormal];
+}
+
+#pragma mark -
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            [self addUserToBlackList];
+            break;
+        case 1:
+        {
+            [self reportUser];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)addUserToBlackList
+{
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[SettingManager sharedSettingManager].loggedInAccount,@"AccountFrom",[_chatUserInfo objectForKey:@"AccountId"],@"AccountTo",@"-1",@"Relation", nil];
+    takeBlackRequest=[[RelationMakeRequest alloc]initRequestWithDic:dic];
+    [[ProgressHUD sharedProgressHUD]showInView:[[UIApplication sharedApplication]keyWindow]];
+    [[ProgressHUD sharedProgressHUD]setText:@"拉黑名单中..."];
+    takeBlackRequest.delegate=self;
+    [takeBlackRequest startAsynchronous];
+}
+
+
+-(void)reportUser
+{
+  NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[SettingManager sharedSettingManager].loggedInAccount,@"AccountFrom",[_chatUserInfo objectForKey:@"AccountId"],@"AccountTo", nil];
+    reportRequest=[[UserReportUserRequest alloc]initRequestWithDic:dic];
+    [[ProgressHUD sharedProgressHUD]setText:@"正在举报用户"];
+    [[ProgressHUD sharedProgressHUD]showInView:[[UIApplication sharedApplication]keyWindow]];
+    reportRequest.delegate=self;
+    [reportRequest startAsynchronous];
+}
+#pragma mark -relation delegate
+
+-(void)relationMakeRequestDidFinishedWithErrorMessage:(NSString *)errorMsg
+{
+    [[ProgressHUD sharedProgressHUD]setText:errorMsg];
+    [[ProgressHUD sharedProgressHUD]done:NO];
+    [takeBlackRequest release];
+    takeBlackRequest=nil;
+}
+
+-(void)relationMakeRequestDidFinishedWithParamters:(NSDictionary *)dic
+{
+    [[ProgressHUD sharedProgressHUD]setText:@"添加成功!"];
+    [[ProgressHUD sharedProgressHUD]done:YES];
+    [takeBlackRequest release];
+    takeBlackRequest=nil;
+    NSMutableArray *array=[[SettingManager sharedSettingManager]getLastestContact];
+    [array removeObject:_chatUserInfo];
+    [[SettingManager sharedSettingManager]saveLastestContact:array];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)userReportUserRequestDidFinishedWithErrorMessage:(NSString *)errorMsg
+{
+    [[ProgressHUD sharedProgressHUD]setText:errorMsg];
+    [[ProgressHUD sharedProgressHUD]done:NO];
+    [reportRequest release];
+    reportRequest=nil;
+}
+
+-(void)userReportUserRequestDidFinishedWithParamters:(NSDictionary *)dic
+{
+    [[ProgressHUD sharedProgressHUD]setText:@"举报成功!"];
+    [[ProgressHUD sharedProgressHUD]done:YES];
+    [reportRequest release];
+    reportRequest=nil;
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end
+

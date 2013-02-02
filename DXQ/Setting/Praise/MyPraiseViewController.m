@@ -15,6 +15,7 @@
 #import "PhotoDetailViewController.h"
 #import "MemberDetailViewController.h"
 #import "HotEventDetailViewController.h"
+#import "PhotoDetailVC.h"
 
 @interface MyPraiseViewController ()<BusessRequestDelegate>{
 
@@ -229,10 +230,16 @@
     NSDictionary *dic=[_visibleArray objectAtIndex:indexPath.row];
     NSString *objectKind=[dic objectForKey:@"ObjectKind"];
     if ([objectKind isEqualToString:@"MemberFile"]) {
-        PhotoDetailViewController *photo=[[PhotoDetailViewController alloc]initWithImageInfoDic:dic];
-        photo.imageIdKey=@"ObjectNo";
+        NSMutableDictionary *tempNewDic=[NSMutableDictionary dictionaryWithDictionary:dic];
+        [tempNewDic setObject:[dic objectForKey:@"ObjectNo"] forKey:@"Id"];
+        PhotoDetailVC *photo=[[PhotoDetailVC alloc]initWithUserInfo:tempNewDic];
         [self.navigationController pushViewController:photo animated:YES];
         [photo release];
+        
+//        PhotoDetailViewController *photo=[[PhotoDetailViewController alloc]initWithImageInfoDic:dic];
+//        photo.imageIdKey=@"ObjectNo";
+//        [self.navigationController pushViewController:photo animated:YES];
+//        [photo release];
     }else if([objectKind isEqualToString:@"Product"])
     {
         NSString *productType=[dic objectForKey:@"ProductKind"];
