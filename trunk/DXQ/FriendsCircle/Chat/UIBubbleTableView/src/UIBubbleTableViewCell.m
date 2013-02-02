@@ -97,7 +97,7 @@
     [self.customView removeFromSuperview];
     self.customView = self.data.view;
     self.customView.frame = CGRectMake(x + self.data.insets.left, y + self.data.insets.top, width, height);
-    [self.contentView addSubview:self.customView];
+    [self addSubview:self.customView];
 
     if (type == BubbleTypeSomeoneElse)
     {

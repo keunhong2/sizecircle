@@ -23,4 +23,7 @@
 -(void)bubbleTableView:(UIBubbleTableView *)tableView headerDidTapForData:(NSBubbleData *)data;
 
 -(void)pullToRereshBubbleTable:(UIBubbleTableView *)tableView;
+
+-(void)bubbleTableView:(UIBubbleTableView *)tableView deleteForRow:(NSInteger)row;
+
 @end

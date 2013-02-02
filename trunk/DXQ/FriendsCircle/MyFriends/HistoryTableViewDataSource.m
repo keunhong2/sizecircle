@@ -130,8 +130,6 @@
 }
 
 
-
-
 -(void)viewUserDetailInfoAction:(UIButton *)btn
 {
     FriendsListCell *cell = (FriendsListCell *)([[btn superview]superview]);
@@ -139,7 +137,6 @@
     NSDictionary *item = [_data objectAtIndex:indexPath.row];
     [(MyFriendsVC *)_viewControl viewUserDetailInfo:item];
 }
-
 
 
 @end

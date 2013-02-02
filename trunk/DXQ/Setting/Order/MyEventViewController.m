@@ -12,6 +12,7 @@
 #import "UIScrollView+AH3DPullRefresh.h"
 #import "UserProductCell.h"
 #import "UIImageView+WebCache.h"
+#import "HotEventDetailViewController.h"
 
 @interface MyEventViewController ()<BusessRequestDelegate>{
 
@@ -124,6 +125,21 @@
         [cell.productNameLabel setText:[dic objectForKey:@"Address"]];
         [cell.exdateLabel setText:[Tool convertTimestampToNSDate:[[dic objectForKey:@"AddDate"] integerValue]]];
         return cell;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self isSelectUntreatedType]) {
+        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    }else
+    {
+        HotEventDetailViewController *hot=[[HotEventDetailViewController alloc]init];
+        NSDictionary *dic=[self.visibleArray objectAtIndex:indexPath.row];
+        hot.simpleDic=dic;
+        [self.navigationController pushViewController:hot animated:YES];
+        [hot setNavgationTitle:@"活动详情" backItemTitle:@"我的活动"];
+        [hot release];
     }
 }
 @end
