@@ -67,6 +67,7 @@
     if (self.dxq_IsReceived) {
         [dic setObject:self.dxq_IsReceived forKey:@"IsReceived"];
     }
+    [dic setObject:self.dxq_Id forKey:@"Id"];
     return dic;
 }
 

@@ -78,7 +78,7 @@ extern NSString *const DXQChatMessageGetNewMessage;
 
 -(NSArray *)getHistoryChatMsgFromUser:(NSString *)userID number:(NSInteger)number page:(NSInteger)page;
 
--(BOOL)deleteHistoryChatMsgByDic:(NSDictionary *)dic;
+-(BOOL)deleteHistoryChatMsgByID:(NSInteger)chatMsgID;
 
 -(BOOL)deleteHistoryChatMsgArray:(NSArray *)array;
 

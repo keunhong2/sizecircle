@@ -261,6 +261,15 @@
         return YES;
 }
 
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (self.bubbleDataSource&&[self.bubbleDataSource respondsToSelector:@selector(bubbleTableView:deleteForData:)]) {
+        NSBubbleData *data = [[self.bubbleSection objectAtIndex:indexPath.section] objectAtIndex:indexPath.row - 1];
+        [self.bubbleDataSource bubbleTableView:self deleteForData:data];
+    }
+}
+
 -(void)imageIsTap:(UITapGestureRecognizer *)tap
 {
     UIImageView *imageView=(UIImageView *)[tap view];
