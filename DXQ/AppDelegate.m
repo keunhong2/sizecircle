@@ -19,6 +19,7 @@
 #import "PPRevealSideViewController.h"
 #import "DXQWebSocket.h"
 #import "GPS.h"
+#import "CheckLockService.h"
 
 @implementation AppDelegate
 
@@ -84,6 +85,11 @@
     //开始websocket链接
     [[DXQWebSocket sharedWebSocket]reconnetWebSocket];
 
+    CheckLockService *lock=[[CheckLockService alloc]init];
+    self.check=lock;
+    [lock release];
+    [self.check startCheck];
+    
     return YES;
 }
 
