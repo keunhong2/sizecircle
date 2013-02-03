@@ -24,6 +24,6 @@
 
 -(void)pullToRereshBubbleTable:(UIBubbleTableView *)tableView;
 
--(void)bubbleTableView:(UIBubbleTableView *)tableView deleteForRow:(NSInteger)row;
+-(void)bubbleTableView:(UIBubbleTableView *)tableView deleteForData:(NSBubbleData *)data;
 
 @end

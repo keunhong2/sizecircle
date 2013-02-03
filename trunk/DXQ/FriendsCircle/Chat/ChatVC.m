@@ -410,6 +410,14 @@
     [user release];
 }
 
+-(void)bubbleTableView:(UIBubbleTableView *)tableView deleteForData:(NSBubbleData *)data
+{
+    if ([[ChatMessageCenter shareMessageCenter]deleteHistoryChatMsgByID:data.idNumber]) {
+        [_bubbleData removeObject:data];
+        [tableView reloadData];
+    }
+}
+
 -(void)showChatUserDetailPage
 {
     UserDetailInfoVC *user=[[UserDetailInfoVC alloc]initwithUserInfo:_chatUserInfo];

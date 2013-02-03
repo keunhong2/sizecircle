@@ -307,33 +307,26 @@ static ChatMessageCenter *msgCenter=nil;
     return tempArray;
 }
 
--(BOOL)deleteHistoryChatMsgByDic:(NSDictionary *)dic{
+-(BOOL)deleteHistoryChatMsgByID:(NSInteger)chatMsgID{
 
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    NSManagedObjectContext *managedObjectContext =[[DXQCoreDataManager sharedCoreDataManager]managedObjectContext];
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatHistory" inManagedObjectContext:managedObjectContext];
-    
-     //{"AccountFrom":"1@1.cn","AccountTo":"13800138000","OpTime":"1359638019","IsReceived":"1","Face":"","Picture":"","Content":"8J+YivCfmITwn5iE8J+Gl/CfjLnimIA=","JingDu":0.0,"WeiDu":0.0,"Id":590}
-    
-//    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc]
-//                                         initWithKey:@"dxq_OpTime" ascending:NO];
-//    NSMutableString *formatter=[NSMutableString stringWithFormat:@"dxq_AccountFrom==%@ and dxq_AccountTo==%@ and dxq_Content==%@ ",[dic objectForKey:@"AccountFrom"],
-//                                [dic objectForKey:@"AccountTo"],[dic objectForKey:@"Content"],[Tool convertTimestampToNSDate:[dic objectForKey:@""] dateStyle:<#(NSString *)#>]];
-//    if ([[dic allKeys]containsObject:@"OpTime"]) {
-//        <#statements#>
-//    }
-//    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"",userID,[[SettingManager sharedSettingManager]loggedInAccount],[[SettingManager sharedSettingManager]loggedInAccount],userID];
-//    NSArray *sortDescriptors = [[NSArray alloc]
-//                                initWithObjects:sortDescriptor1, nil];
-//    [fetchRequest setSortDescriptors:sortDescriptors];
-//    [fetchRequest setEntity:entity];
-//    [fetchRequest setPredicate:predicate];
-
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSManagedObjectContext *managedObjectContext =[[DXQCoreDataManager sharedCoreDataManager]managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatHistory" inManagedObjectContext:managedObjectContext];
+    NSMutableString *formatter=[NSMutableString stringWithFormat:@"dxq_Id==%d",chatMsgID];
+    NSPredicate *predicate=[NSPredicate predicateWithFormat:formatter];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:predicate];
+    NSArray *objecs = [managedObjectContext executeFetchRequest: fetchRequest error:nil];
+    if (objecs.count==0) {
+        return NO;
+    }
+    for (ChatHistory *chat in objecs) {
+        [managedObjectContext deleteObject:chat];
+    }
+    [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
+    return YES;
 }
 
--(BOOL)deleteHistoryChatMsgArray:(NSArray *)array{
-
-}
 -(NSString *)getLastChatMsgByChatName:(NSString *)chatName{
 
     NSArray *array=[self getHistoryChatMsgFromUser:chatName number:1 page:0];
