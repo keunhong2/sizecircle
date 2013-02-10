@@ -179,6 +179,11 @@
     return self;
 }
 
+-(MemberDetailBusinessInfoView *)header
+{
+    return headerView;
+}
+
 -(MemberActionView *)actionView{
     
     return actionView;

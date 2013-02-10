@@ -137,7 +137,7 @@
     {
         [_imageView setImage:_originImage];
     }
-    [[ProgressHUD sharedProgressHUD]hide];
+    [[ProgressHUD sharedProgressHUD]done];
 }
 
 - (void)viewDidLoad

@@ -338,7 +338,7 @@
 
 -(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
     
-    [[ProgressHUD sharedProgressHUD]hide];
+    [[ProgressHUD sharedProgressHUD]done];
     if ([request isEqual:detailRequest]) {
         self.imgDetailDic=[data objectForKey:@"Info"];
         self.commantArray=[data objectForKey:@"Items"];

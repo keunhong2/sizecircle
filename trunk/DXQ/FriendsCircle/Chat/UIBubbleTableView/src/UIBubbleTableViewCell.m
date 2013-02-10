@@ -79,7 +79,7 @@
         self.avatarImage.layer.borderWidth = 1.0;
         UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self.tapTarget action:self.action];
         self.avatarImage.userInteractionEnabled=YES;
-        [self.avatarImage addGestureRecognizer:tap];
+//        [self.avatarImage addGestureRecognizer:tap];
         [tap release];
         CGFloat avatarX = (type == BubbleTypeSomeoneElse) ? 2 : self.frame.size.width - 52;
         CGFloat avatarY = self.frame.size.height - 50/2;
@@ -109,6 +109,31 @@
     }
 
     self.bubbleImage.frame = CGRectMake(x, y, width + self.data.insets.left + self.data.insets.right, height + self.data.insets.top + self.data.insets.bottom);
+    if (deleteBtn) {
+        [self bringSubviewToFront:deleteBtn];
+        deleteBtn.center=CGPointMake(30.f, self.frame.size.height/2);
+    }
 }
 
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    if (editing) {
+        deleteBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+        [deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+        [deleteBtn setFrame:CGRectMake(5.f, 5.f, 40.f, 40.f)];
+        deleteBtn.center=CGPointMake(30.f, self.frame.size.height/2);
+        [deleteBtn addTarget:self action:@selector(deleteBtnDone) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:deleteBtn];
+    }else
+    {
+        [deleteBtn removeFromSuperview];
+        deleteBtn=nil;
+    }
+}
+
+-(void)deleteBtnDone
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"DeleteCell" object:self];
+}
 @end

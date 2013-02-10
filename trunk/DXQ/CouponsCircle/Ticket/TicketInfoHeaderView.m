@@ -97,6 +97,11 @@
         //for test
         NSDictionary *dic=[imageArray objectAtIndex:i];
         UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width*i, 0.f, self.frame.size.width, self.frame.size.height)];
+        imageView.userInteractionEnabled=YES;
+        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTap:)];
+        [imageView addGestureRecognizer:tap];
+        [tap release];
+        
         imageView.contentMode=UIViewContentModeScaleAspectFit;
         imageView.tag=i+1;
         NSURL *imageURL=[NSURL URLWithString:[[dic objectForKey:@"ProductPhoto"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -113,7 +118,13 @@
     [_scrollView scrollRectToVisible:CGRectMake(0.f, 0.f, self.frame.size.width, self.frame.size.height) animated:YES];
 }
 
-
+-(void)imageTap:(UITapGestureRecognizer *)tap
+{
+    UIView *view=[tap view];
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(ticketImageView:imageIsTapForIndex:)]) {
+        [self.delegate ticketImageView:self imageIsTapForIndex:view.tag-1];
+    }
+}
 #pragma mark -UISrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{

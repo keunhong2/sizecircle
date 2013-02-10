@@ -42,5 +42,6 @@
 @property (nonatomic,retain)NSString *outDate;
 @property (nonatomic,retain)NSString *detail;
 @property (nonatomic,readonly)MemberActionView *actionView;
+@property (nonatomic,readonly)MemberDetailBusinessInfoView *header;
 
 @end

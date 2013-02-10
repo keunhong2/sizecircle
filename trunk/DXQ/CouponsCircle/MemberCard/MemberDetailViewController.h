@@ -30,4 +30,7 @@
 
 -(void)cancelAllRequest;
 
+-(void)imageTap;
+
+-(void)showFullImageByUrl:(NSString *)picurl;
 @end

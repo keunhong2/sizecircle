@@ -15,14 +15,21 @@
 #import "UserDetailInfoVC.h"
 #import "ChatVC.h"
 #import "ChatMessageCenter.h"
+#import "CustomSearchBar.h"
+#import "BlindTelPhoneView.h"
+#import "VerCodeInputView.h"
 
-@interface MyFriendsVC ()<FriendsCircleRequestDelegate>
+@interface MyFriendsVC ()<FriendsCircleRequestDelegate,UISearchBarDelegate,BlindTelPhoneDelegate,VerCodeInputViewDelegate>
 {
     
     BOOL isUserLoadFriendListRequesting;
     
     UserLoadFriendListRequest *userLoadFriendListRequest;
 
+    CustomSearchBar *friendSearchBar;
+    
+    BlindTelPhoneView *bindView;
+    VerCodeInputView *verCodeView;
 }
 
 @property (nonatomic,retain)UITableView *historyTableView;
@@ -32,6 +39,7 @@
 @property (nonatomic,retain)FriendsTableViewDataSource *friendsTableViewDataSource;
 @property (nonatomic,retain)AddressBookTableViewDataSource *addressBookTableViewDataSource;
 @property (nonatomic)NSUInteger showType;
+@property (nonatomic,retain)NSArray *friendList;
 @end
 
 @implementation MyFriendsVC
@@ -59,7 +67,10 @@
     
     [_addressBookTableViewDataSource release];
     _addressBookTableViewDataSource = nil;
-    
+    [friendSearchBar release];
+    [_friendList release];
+    [bindView release];
+    [verCodeView release];
     [super dealloc];
 }
 
@@ -101,11 +112,11 @@
     
     //custom segment
     NSDictionary *item1 = [NSDictionary dictionaryWithObjectsAndKeys:@"会话",@"title",@"pyq_l",@"img", nil];
-//    NSDictionary *item2 = [NSDictionary dictionaryWithObjectsAndKeys:@"好友",@"title",@"pyq_m",@"img", nil];
-//    NSDictionary *item3 = [NSDictionary dictionaryWithObjectsAndKeys:@"通讯录",@"title",@"pyq_r",@"img", nil];
-    NSDictionary *item2 = [NSDictionary dictionaryWithObjectsAndKeys:@"好友",@"title",@"pyq_r",@"img", nil];
+    NSDictionary *item2 = [NSDictionary dictionaryWithObjectsAndKeys:@"好友",@"title",@"pyq_m",@"img", nil];
+    NSDictionary *item3 = [NSDictionary dictionaryWithObjectsAndKeys:@"通讯录",@"title",@"pyq_r",@"img", nil];
+//    NSDictionary *item2 = [NSDictionary dictionaryWithObjectsAndKeys:@"好友",@"title",@"pyq_r",@"img", nil];
 
-    NSArray *items = [NSArray arrayWithObjects:item1,item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item1,item2,item3, nil];
     CustomSegmentedControl *segment = [[CustomSegmentedControl alloc]initWithFrame:CGRectZero items:items defaultSelectIndex:0];
     segment.delegate = self;
     self.navigationItem.titleView=segment;
@@ -202,11 +213,13 @@
     HYLog(@"%@",data);
     isUserLoadFriendListRequesting = NO;
 
+    friendSearchBar.text=@"";
     if ([userLoadFriendListRequest isEqual:request])
     {
         NSArray *friends = (NSArray *)data;
         if (friends && [friends isKindOfClass:[NSArray class]] && [friends count]>0)
         {
+            self.friendList=friends;
             [_friendsTableViewDataSource reloadData:friends tableView:_friendsTableView];
         }
         [_friendsTableView refreshFinished];
@@ -236,6 +249,10 @@
         [_friendsTableView setPullToRefreshHandler:^{
             [self startRefreshFriends];
         }];
+        
+        friendSearchBar=[[CustomSearchBar alloc]initWithFrame:CGRectMake(0.f, 0.f, self.view.frame.size.width, 44.f)];
+        friendSearchBar.delegate=self;
+        _friendsTableView.tableHeaderView=friendSearchBar;
         [_friendsTableView pullToRefresh];
     }
     return _friendsTableView;
@@ -246,6 +263,12 @@
     if (!_addressbookTableView)
     {
         _addressbookTableView= [self createNewTableViewWithDelegate:_addressBookTableViewDataSource];
+        DXQAccount *currentUser=[[DXQCoreDataManager sharedCoreDataManager]getCurrentLoggedInAccount];
+        if (currentUser.dxq_Telephone.length==0) {
+            bindView=[[BlindTelPhoneView alloc]initWithFrame:_addressbookTableView.bounds];
+            [_addressbookTableView addSubview:bindView];
+            bindView.delegate=self;
+        }
         [_addressbookTableView setPullToRefreshHandler:^{
             [self startRefreshAddressbook];
         }];
@@ -307,7 +330,7 @@
         [self.addressbookTableView removeFromSuperview];
         [self.view insertSubview:[self friendsTableView] atIndex:0];
     }
-    else if(type_ == 1)
+    else if(type_ == 2)
     {
         [self showRightButton:NO title:nil];
         [self.historyTableView removeFromSuperview];
@@ -344,5 +367,58 @@
     // [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark -
+#pragma mark -SearchBarDelegate
 
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSMutableArray *tempNewArray=[NSMutableArray array];
+    for (int i=0; i<_friendList.count; i++) {
+        NSDictionary *dic=[_friendList objectAtIndex:i];
+        if ([[dic objectForKey:@"MemberName"] rangeOfString:searchText].length==searchText.length) {
+            [tempNewArray addObject:dic];
+        }
+    }
+    [_friendsTableViewDataSource reloadData:tempNewArray tableView:_friendsTableView];
+}
+
+#pragma mark - 
+
+-(void)binldTelPhoneView:(BlindTelPhoneView *)view didFinishSendPhone:(NSString *)phone
+{
+    if (!verCodeView) {
+        verCodeView=[[VerCodeInputView alloc]initWithFrame:self.addressbookTableView.bounds];
+        verCodeView.delegate=self;
+    }
+    verCodeView.phone=phone;
+    [self.addressbookTableView addSubview:verCodeView];
+}
+
+-(void)cancelVerCodeInputView:(VerCodeInputView *)view
+{
+    [view removeFromSuperview];
+}
+
+-(void)finishVerCodeInputView:(VerCodeInputView *)view
+{
+    [verCodeView removeFromSuperview];
+    [bindView removeFromSuperview];
+    
+    //reload address data
+}
 @end

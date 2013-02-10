@@ -48,3 +48,9 @@
 + (UIImage *) scaleFromImage: (UIImage *) image toSize: (CGSize) size;
 
 @end
+
+
+@interface NSNull (Value)
+-(NSInteger)integerValue;
+-(int)intValue;
+@end

@@ -40,6 +40,8 @@
 
     RelationMakeRequest *takeBlackRequest;
     UserReportUserRequest *reportRequest;
+    
+    UIImageView *bgImgView;
 }
 
 @property(nonatomic,retain)UIBubbleTableView *chatTableView;
@@ -75,7 +77,7 @@
     [_bubbleData release];_bubbleData = nil;
     
     [_chatToolBar release];_chatToolBar = nil;
-    
+    [bgImgView release];bgImgView=nil;
     [_messageTextField release];_messageTextField = nil;
     
     [_chatTableView release];_chatTableView = nil;
@@ -92,7 +94,8 @@
     self.messageTextField = nil;
     
     self.chatTableView = nil;
- 
+    [bgImgView release];
+    bgImgView=nil;
     [super viewDidUnload];
 }
 
@@ -134,11 +137,15 @@
         {
             if (!chatUserAvatar)
             {
-                [[SDWebImageManager sharedManager]downloadWithURL:[NSURL URLWithString:chatUserAvatarUrl] delegate:nil options:0 userInfo:nil success:^(UIImage *image,BOOL cached)
+                [[SDWebImageManager sharedManager]downloadWithURL:[NSURL URLWithString:chatUserAvatarUrl] delegate:self options:0 userInfo:nil success:^(UIImage *image,BOOL cached)
                  {
                      chatUserAvatar = image;
                      [_chatTableView reloadData];
-                 } failure:nil];
+                     bgImgView.image=chatUserAvatar;
+                 } failure:^(NSError *error){
+                 
+                     NSLog(@"error %@",error);
+                 }];
             }
         }
         else
@@ -172,6 +179,7 @@
      {
          chatUserAvatar = image;
          [_chatTableView reloadData];
+         bgImgView.image=image;
      } failure:nil];
 }
 
@@ -182,8 +190,8 @@
     self.view = view_;
     [view_ release];
     
-    NSArray *titleArray=[NSArray arrayWithObjects:@"删除记录",@"送 礼",@"查看资料",@"更 多", nil];
-    NSArray *action=[NSArray arrayWithObjects:@"editeChat:",@"sendGit",@"showChatUserDetailPage",@"moreAction", nil];
+    NSArray *titleArray=[NSArray arrayWithObjects:@"删除记录",/*@"送 礼",*/@"查看资料",@"更 多", nil];
+    NSArray *action=[NSArray arrayWithObjects:@"editeChat:",/*@"sendGit",*/@"showChatUserDetailPage",@"moreAction", nil];
     
     float buttonWeidth=70;
     float margin=10;
@@ -207,6 +215,11 @@
     _chatTableView.typingBubble = NSBubbleTypingTypeNobody;
     [_chatTableView setBackgroundColor:[UIColor clearColor]];
 	[self.view addSubview:_chatTableView];
+    
+    bgImgView=[[UIImageView alloc]initWithImage:chatUserAvatar];
+    bgImgView.frame=CGRectMake(0.f, 40.f, self.view.frame.size.width, self.view.frame.size.height-40.f-44.f);
+    bgImgView.autoresizingMask=UIViewAutoresizingFlexibleHeight;
+    [self.view insertSubview:bgImgView atIndex:0];
     
     UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyBoard:)];
     [_chatTableView addGestureRecognizer:g];

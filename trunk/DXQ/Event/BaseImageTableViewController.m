@@ -12,7 +12,8 @@
 #import "UserDetailInfoVC.h"
 
 @interface BaseImageTableViewController ()
-
+{
+}
 @end
 
 @implementation BaseImageTableViewController

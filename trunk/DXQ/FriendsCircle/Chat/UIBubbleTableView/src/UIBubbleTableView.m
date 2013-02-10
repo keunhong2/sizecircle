@@ -52,6 +52,7 @@
     self.delegate = self;
     self.dataSource = self;
     
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(deleteCell:) name:@"DeleteCell" object:nil];
     // UIBubbleTableView default properties
     
     self.snapInterval = 0;
@@ -86,11 +87,18 @@
     return self;
 }
 
+-(void)deleteCell:(NSNotification *)not{
+
+    UITableViewCell *cell=[not object];
+    [self tableView:self commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:[self indexPathForCell:cell]];
+}
+
 #if !__has_feature(objc_arc)
 - (void)dealloc
 {
     [_bubbleSection release];
 	_bubbleSection = nil;
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"DeleteCell" object:nil];
 	_bubbleDataSource = nil;
     [super dealloc];
 }
@@ -161,7 +169,7 @@
     }
     
     [super reloadData];
-}
+    }
 
 #pragma mark - UITableViewDelegate implementation
 
@@ -202,6 +210,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     // Now typing
 	if (indexPath.section >= [self.bubbleSection count])
     {
@@ -212,7 +221,7 @@
 
         cell.type = self.typingBubble;
         cell.showAvatar = self.showAvatars;
-        
+
         return cell;
     }
 
@@ -226,7 +235,6 @@
         if (cell == nil) cell = [[UIBubbleHeaderTableViewCell alloc] init];
 
         cell.date = data.date;
-       
         return cell;
     }
     
@@ -244,12 +252,8 @@
     
     cell.data = data;
     cell.showAvatar = self.showAvatars;
+    
     return cell;
-}
-
--(void)test:(UITableViewCell *)cell
-{
-    NSLog(@"cell subviews %@",cell.subviews);
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

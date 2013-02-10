@@ -63,7 +63,20 @@
     [self.view addSubview:searchBar];
     searchBar.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     searchBar.placeholder=AppLocalizedString(@"搜索");
+    searchBar.showsCancelButton=YES;
     self.searchBar=searchBar;
+    UIButton *cancelBtn=nil;
+    for (UIButton *btn in self.searchBar.subviews) {
+        if ([btn isKindOfClass:[UIButton class]]) {
+            cancelBtn=btn;
+            break;
+        }
+    }
+    UIImage *screenImg=[UIImage imageNamed:@"btn_sx"];
+    [cancelBtn setTitle:nil forState:UIControlStateNormal];
+    [cancelBtn setBackgroundImage:screenImg forState:UIControlStateNormal];
+    [cancelBtn setBackgroundImage:nil forState:UIControlStateHighlighted];
+    cancelBtn.adjustsImageWhenHighlighted=YES;
     [searchBar release];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f, 44.f, self.view.frame.size.width, self.view.frame.size.height-44.f) style:UITableViewStylePlain];
@@ -96,10 +109,11 @@
     
     UIImage *bgImage=[UIImage imageNamed:@"btn_round"];
     UIButton *screenBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    [screenBtn setBackgroundImage:bgImage forState:UIControlStateNormal];
+    [screenBtn setBackgroundImage:[bgImage stretchableImageWithLeftCapWidth:bgImage.size.width/2 topCapHeight:bgImage.size.height/2] forState:UIControlStateNormal];
     [screenBtn sizeToFit];
     [screenBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
-    [screenBtn setTitle:AppLocalizedString(@"筛选") forState:UIControlStateNormal];
+    [screenBtn setTitle:AppLocalizedString(@"我的活动") forState:UIControlStateNormal];
+    screenBtn.frame=CGRectMake(0.f, 0.f, 70.f, 31.f);
     [screenBtn addTarget:self action:@selector(screenBtnDone) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:screenBtn];
     self.navigationItem.rightBarButtonItem=item;
@@ -139,6 +153,11 @@
 
 -(void)screenBtnDone
 {
+    UIViewController *controller=[[NSClassFromString(@"MyEventViewController") alloc]init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+    return;
+    
     ScreenViewController *screen=[[ScreenViewController alloc]initWithScreenType:ScreenTypeDefault];
     screen.screenDelegate=self;
     CustonNavigationController *navigation=[[CustonNavigationController alloc]initWithRootViewController:screen];
@@ -308,12 +327,10 @@
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     
-    [searchBar setShowsCancelButton:YES animated:YES];
 }
 
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
 
-    [searchBar setShowsCancelButton:NO animated:YES];
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{

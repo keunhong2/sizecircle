@@ -244,7 +244,7 @@
 {
     if (isSuccessed)
     {
-        [[ProgressHUD sharedProgressHUD]hide];
+        [[ProgressHUD sharedProgressHUD]done];
     }
     else
     {

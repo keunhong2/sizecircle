@@ -15,6 +15,7 @@
 #import "BuyViewController.h"
 #import "SinaWeiBoShare.h"
 #import "TecentWeiBoShare.h"
+#import "ZoomImageView.h"
 
 @interface MemberDetailViewController ()<MemberDetailViewDelegate,UIAlertViewDelegate,RelationMakeRequestDelegate,BusessRequestDelegate,UITextFieldDelegate,UIActionSheetDelegate>{
 
@@ -26,8 +27,6 @@
     //to shear
     SinaWeiBoShare *sinaShare;
     TecentWeiBoShare *tcShare;
-    
-    
 }
 
 -(void)startCountDownWithTime:(NSTimeInterval)secound;
@@ -128,6 +127,11 @@
     
     
     MemberDetailHeaderView *headerInfoView=[[MemberDetailHeaderView alloc]initWithFrame:CGRectMake(10.f, 5.f, self.view.frame.size.width-20.f, 155.f)];
+    [headerInfoView.header.businessImageView setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTap)];
+    [headerInfoView.header.businessImageView addGestureRecognizer:tap];
+    [tap release];
+    
     UIButton *btn=[[headerInfoView actionView]praiseBtn];
     [btn addTarget:self action:@selector(admireRequest) forControlEvents:UIControlEventTouchUpInside];
     [[headerInfoView.actionView follwerBtn]addTarget:self action:@selector(relationRequest) forControlEvents:UIControlEventTouchUpInside];
@@ -247,6 +251,7 @@
     }else
     {
          headerInfoView.countDownTime=[Tool convertTimestampToNSDate:[[_infoDic objectForKey:@"ExpiredDate"] integerValue]];
+
     }
 //    [self startCountDownWithTime:[expDate timeIntervalSinceNow]];
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
@@ -269,7 +274,13 @@
     tempDetail.secoundLineText=[NSString stringWithFormat:@"已有%@人购买",[_infoDic objectForKey:@"BuyerCount"]];
     if (!isFinish) {
         [buyBtn setTitle:[NSString stringWithFormat:@"点击购买 ￥:%@",nowPrice] forState:UIControlStateNormal];
+        buyBtn.enabled=YES;
     }
+}
+
+-(void)imageTap
+{
+    [self showFullImageByUrl:[_infoDic objectForKey:@"ProductPhoto"]];
 }
 
 -(void)sendGiftBtnDone{
@@ -360,6 +371,16 @@
     actionSheet.tag=2;
     [actionSheet showInView:self.view];
     [actionSheet release];
+}
+
+-(void)showFullImageByUrl:(NSString *)picurl
+{
+    if (picurl && [picurl length] > 0)
+    {
+        ZoomImageView *zoom = [[ZoomImageView alloc]initWithFrame:[UIScreen mainScreen].bounds withImage:nil delegate:self withUrl:[picurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] withOriginRect:CGRectMake(0.f, 0.f, 100.f, 100.f)];
+        [self.navigationController.view addSubview:zoom];
+        [zoom release];
+    }
 }
 
 #pragma mark -UITableViewDataSource
@@ -510,11 +531,14 @@
         [admireRequest release];
         admireRequest=nil;
     }
-    
+    NSString *idText=[_simpleInfoDic objectForKey:@"ProductCode"];
+    if (!idText) {
+        idText=[_simpleInfoDic objectForKey:@"ObjectNo"];
+    }
     [[ProgressHUD sharedProgressHUD]showInView:self.view];
     [[ProgressHUD sharedProgressHUD]setText:nil];
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
-                       @"Product",@"ObjectKind",[_simpleInfoDic objectForKey:@"ProductCode"],@"ObjectNo",[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId", nil];
+                       @"Product",@"ObjectKind",idText,@"ObjectNo",[[SettingManager sharedSettingManager]loggedInAccount],@"AccountId", nil];
     admireRequest=[[AdmireRequest alloc]initWithRequestWithDic:dic];
     admireRequest.delegate=self;
     [admireRequest startAsynchronous];
@@ -655,7 +679,7 @@
 -(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
     
     if ([request isEqual:detailRequest]) {
-        [[ProgressHUD sharedProgressHUD]hide];
+        [[ProgressHUD sharedProgressHUD]done];
         self.infoDic=data;
     }else if ([request isEqual:admireRequest]){
         [[ProgressHUD sharedProgressHUD]showInView:self.view];

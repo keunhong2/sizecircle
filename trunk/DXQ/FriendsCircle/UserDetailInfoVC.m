@@ -31,17 +31,18 @@
 #import "PhotoDetailVC.h"
 #import "UserActivityRequest.h"
 #import "LikeListVC.h"
+#import "UserMakeFriendRequest.h"
 
 #define TOP_IMAGE_HEIGHT  204.0f
 
-@interface UserDetailInfoVC ()<WaterFlowViewDelegate,WaterFlowViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UIScrollViewDelegate,UIActionSheetDelegate,UserInfoDetailRequestDelegate,SayHelloRequestDelegate,RelationMakeRequestDelegate,UserRemoveRelationDelegate,UniversalViewControlDelegate,UserReportUserRequestDelegate,UserLoadAlbumRequestDelegate,UserActivityRequestDelegate>
+@interface UserDetailInfoVC ()<WaterFlowViewDelegate,WaterFlowViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate, UIScrollViewDelegate,UIActionSheetDelegate,UserInfoDetailRequestDelegate,SayHelloRequestDelegate,RelationMakeRequestDelegate,UserRemoveRelationDelegate,UniversalViewControlDelegate,UserReportUserRequestDelegate,UserLoadAlbumRequestDelegate,UserActivityRequestDelegate,BusessRequestDelegate>
 {
     UserInfoDetailRequest *userInfoDetailRequest;//获取用户详细
     SayHelloRequest *sayHelloReqest;//打招呼
     RelationMakeRequest *relationMakeRequest;//建立关系
     UserRemoveRelation *userRemoveRelationRequest;//删除关系
     UserReportUserRequest *userReportUserRequest;//举报
-    
+    UserMakeFriendRequest *askForFriend;
     UserLoadAlbumRequest  *userLoadAlbumRequest;
     
     UserActivityRequest *userActivityRequest;
@@ -64,6 +65,10 @@
     BOOL isUploadPhoto;
     
     NSInteger currentPage;
+    
+    
+    UIBarButtonItem *editeItem;
+    UIBarButtonItem *photoItem;
 }
 
 @property(nonatomic,retain)AboutTableViewDataSource *aboutTableViewDataSource;
@@ -103,6 +108,7 @@
 
 -(void)dealloc
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"_image_is_upload" object:nil];
     [_noPhotoLabel release];_noPhotoLabel = nil;
     [_photoArray release];_photoArray = nil;
     [_waterFlow release];_waterFlow = nil;
@@ -118,6 +124,9 @@
     [_topUserImageView release];_topUserImageView = nil;
     [_fansView release];_fansView=nil;
     [_likeView release];_likeView=nil;
+    [askForFriend cancel];
+    [askForFriend release];
+    askForFriend=nil;
     [super dealloc];
 }
 
@@ -143,6 +152,7 @@
     
     if (self)
     {
+         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"_image_is_upload" object:nil];
         isInitLoading = YES;
         
         _userinfo = [[NSMutableDictionary alloc]initWithDictionary:item];
@@ -304,16 +314,28 @@
         self.navigationItem.leftBarButtonItem=leftItem;
         [leftItem release];
         
-       btn=[UIButton buttonWithType:UIButtonTypeCustom];
-       [btn setBackgroundImage:bgImage forState:UIControlStateNormal];
-       [btn sizeToFit];
-        [btn addTarget:self action:@selector(editAction:) forControlEvents:UIControlEventTouchUpInside];
-        [btn setTitle:AppLocalizedString(@"编辑") forState:UIControlStateNormal];
-        [btn.titleLabel setFont:MiddleBoldDefaultFont];
-        UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
-        self.navigationItem.rightBarButtonItem=rightItem;
-        [rightItem release];
-        
+        if (!editeItem) {
+            btn=[UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setBackgroundImage:bgImage forState:UIControlStateNormal];
+            [btn sizeToFit];
+            [btn addTarget:self action:@selector(editAction:) forControlEvents:UIControlEventTouchUpInside];
+            [btn setTitle:AppLocalizedString(@"编辑") forState:UIControlStateNormal];
+            [btn.titleLabel setFont:MiddleBoldDefaultFont];
+            editeItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+        }
+       
+        if (!photoItem) {
+            btn=[UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setBackgroundImage:bgImage forState:UIControlStateNormal];
+            [btn sizeToFit];
+            [btn addTarget:self action:@selector(photoItem:) forControlEvents:UIControlEventTouchUpInside];
+//            [btn setTitle:AppLocalizedString(@"拍照") forState:UIControlStateNormal];
+            [btn setImage:[UIImage imageNamed:@"icon_cam_btn"] forState:UIControlStateNormal];
+            [btn.titleLabel setFont:MiddleBoldDefaultFont];
+            photoItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+        }
+        self.navigationItem.rightBarButtonItem=editeItem;
+
         [_statusLbl setUserInteractionEnabled:YES];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(writeSignature:)];
         [_statusLbl addGestureRecognizer:tap];
@@ -451,6 +473,13 @@
     [vc release];
 }
 
+-(void)photoItem:(id)sender
+{
+    UIActionSheet *sheet=[[UIActionSheet alloc]initWithTitle:@"照片" delegate:self cancelButtonTitle:AppLocalizedString(@"取消") destructiveButtonTitle:nil otherButtonTitles:AppLocalizedString(@"相机"),AppLocalizedString(@"相册"), nil];
+    [sheet showInView:self.navigationController.view];
+    sheet.tag=100;
+    [sheet release];
+}
 
 -(void)editAction:(UIButton *)btn
 {    
@@ -560,7 +589,7 @@
 {
     if (isSuccessed)
     {
-        [[ProgressHUD sharedProgressHUD]hide];
+        [[ProgressHUD sharedProgressHUD]done];
     }
     else
     {
@@ -616,6 +645,14 @@
         default:
             break;
     }
+    if (isUserAccount) {
+        
+        if (_selectedBottomToolBarItemType==BottomToolBarItemTypePhotos) {
+            self.navigationItem.rightBarButtonItem=photoItem;
+        }else
+            self.navigationItem.rightBarButtonItem=editeItem;
+    }
+    
     HYLog(@"%d",_selectedBottomToolBarItemType);
 }
 
@@ -848,22 +885,50 @@
 }
 
 //加好友
+//-(void)addNewFriend
+//{
+//    if ([[_userinfo objectForKey:@"IsBlackList"] intValue] == 1)
+//    {
+//        return [Tool showAlertWithTitle:AppLocalizedString(@"该用户在黑名单,请先删除黑名单再添加Ta为好友") msg:nil];
+//    }
+//    if ([[_userinfo objectForKey:@"IsFriend"] intValue] == 0)
+//    {
+//        [self handleCreateUserRelationWithType:RelationTypeHiddenFriend];
+//    }
+//    else
+//    {
+//        [self handleRemoveUserRelationWithType:RelationTypeHiddenFriend];
+//    }
+//}
+
 -(void)addNewFriend
 {
     if ([[_userinfo objectForKey:@"IsBlackList"] intValue] == 1)
     {
         return [Tool showAlertWithTitle:AppLocalizedString(@"该用户在黑名单,请先删除黑名单再添加Ta为好友") msg:nil];
-    }
-    if ([[_userinfo objectForKey:@"IsFriend"] intValue] == 0)
+    }else
     {
-        [self handleCreateUserRelationWithType:RelationTypeHiddenFriend];
+        if ([[_userinfo objectForKey:@"IsFriend"] intValue] == 0)
+                {
+                    if (askForFriend) {
+                        [askForFriend cancel];
+                        [askForFriend release];
+                        askForFriend=nil;
+                    }
+                    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[[SettingManager sharedSettingManager]loggedInAccount],@"AccountFrom",[_userinfo objectForKey:@"AccountId"],@"AccountTo", nil];
+                    askForFriend=[[UserMakeFriendRequest alloc]initWithRequestWithDic:dic];
+                    [[ProgressHUD sharedProgressHUD]showInView:[[UIApplication sharedApplication]keyWindow]];
+                    [[ProgressHUD sharedProgressHUD]setText:@"发送添加好友请求中..."];
+                    [askForFriend setDelegate:self];
+                    [askForFriend startAsynchronous];
+                }
+                else
+                {
+                    [self handleRemoveUserRelationWithType:RelationTypeHiddenFriend];
+                }
     }
-    else
-    {
-        [self handleRemoveUserRelationWithType:RelationTypeHiddenFriend];
-    }
-}
 
+}
 //更多
 -(void)actionMore
 {
@@ -889,6 +954,16 @@
         else
         {
             [self performSelector:@selector(takePhoto) withObject:nil afterDelay:0.0];
+        }
+    }
+    else if (actionSheet.tag==100)
+    {
+        isUploadPhoto=YES;
+        if (buttonIndex==0) {
+            [self takePhoto];
+        }else if(buttonIndex==1)
+        {
+            [self openPhotoLibrary];
         }
     }
     else if(buttonIndex == 0 && actionSheet.tag ==3)
@@ -1096,7 +1171,7 @@
     HYLog(@"%@",activityList);
     _activityTableViewDataSource.data=activityList;
     [_activityTableView reloadData];
-    [[ProgressHUD sharedProgressHUD]hide];
+    [[ProgressHUD sharedProgressHUD]done];
     [[self activityTableView]refreshFinished];
 }
 
@@ -1106,6 +1181,17 @@
     [[ProgressHUD sharedProgressHUD]setText:errorMsg];
     [[ProgressHUD sharedProgressHUD]done:NO];
     [[self activityTableView]refreshFinished];
+}
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFailedWithErrorMsg:(NSString *)msg
+{
+    [self userActivityRequestDidFinishedWithErrorMessage:msg];
+}
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data
+{
+    [[ProgressHUD sharedProgressHUD]done:YES];
+    [[ProgressHUD sharedProgressHUD]setText:@"请求已发送,等待对方确认"];
 }
 
 -(void)refreshPhoto
@@ -1273,5 +1359,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)reloadData
+{
+    [self.waterFlow performSelector:@selector(pullToRefresh) withObject:nil afterDelay:1];
+}
 
 @end

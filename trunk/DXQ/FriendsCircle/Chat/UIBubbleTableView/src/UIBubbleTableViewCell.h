@@ -11,7 +11,10 @@
 #import <UIKit/UIKit.h>
 #import "NSBubbleData.h"
 
-@interface UIBubbleTableViewCell : UITableViewCell
+@interface UIBubbleTableViewCell : UITableViewCell{
+
+    UIButton *deleteBtn;
+}
 
 @property (nonatomic, strong) NSBubbleData *data;
 @property (nonatomic) BOOL showAvatar;

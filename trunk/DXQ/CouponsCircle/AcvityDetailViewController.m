@@ -222,7 +222,7 @@
     
     NSString *acID=[[SettingManager sharedSettingManager]loggedInAccount];
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:
-                       @"MemberFile",@"ObjectKind",
+                       @"MemberNews ",@"ObjectKind",
                        [_activityDic objectForKey:@"Id"],@"ObjectNo",
                        acID,@"AccountId", nil];
     admireRequest=[[AdmireRequest alloc]initWithRequestWithDic:dic];
