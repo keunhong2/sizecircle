@@ -98,7 +98,7 @@
     userChangeFaceRequest.delegate = nil,
     [userChangeFaceRequest release];
     userChangeFaceRequest=nil;
-    [[ProgressHUD sharedProgressHUD]hide];
+    [[ProgressHUD sharedProgressHUD]done];
     
     if (dic&&[dic isKindOfClass:[NSDictionary class]])
     {

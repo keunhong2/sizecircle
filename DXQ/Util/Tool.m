@@ -348,3 +348,17 @@
 
 
 @end
+
+@implementation NSNull (Value)
+
+-(NSInteger)integerValue
+{
+    return 0;
+}
+
+-(int)intValue
+{
+    return 0;
+}
+
+@end

@@ -268,7 +268,7 @@
                 [self.navigationController popToRootViewControllerAnimated:YES];
             return;
         }
-        [[ProgressHUD sharedProgressHUD]hide];
+        [[ProgressHUD sharedProgressHUD]done];
         
         BOOL isVirtual=YES;
         if ([[_productDic objectForKey:@"IsVirtual"] isEqualToString:@"0"]) {

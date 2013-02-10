@@ -82,6 +82,7 @@
         isFirstRequest=YES;
         isGetAllCoupons=NO;
         isFirstGetLocatin=YES;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
@@ -188,7 +189,7 @@
 
 -(void)cancelAllRequest{
 
-    [[ProgressHUD sharedProgressHUD]hide];
+//    [[ProgressHUD sharedProgressHUD]done]
     
     [nearBusForTableViewRequest cancel];
     [nearBusForTableViewRequest release];
@@ -295,6 +296,7 @@
         mapTitleLabel.backgroundColor=[UIColor clearColor];
         mapTitleLabel.textAlignment=UITextAlignmentCenter;
         mapTitleLabel.textColor=[UIColor whiteColor];
+        mapTitleLabel.text=@"滑动地图可以刷新商家列表";
         mapTitleLabel.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         [mapTitleLabel setText:AppLocalizedString(@"")];
         mapTitleLabel.font=[UIFont boldSystemFontOfSize:15.f];
@@ -513,6 +515,43 @@
     }
 }
 
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if (toInterfaceOrientation==UIInterfaceOrientationLandscapeLeft||toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
+        
+        UIView *tempView=self.navigationController.view.superview;
+        self.mapView.frame=tempView.bounds;
+        self.mapView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        [tempView addSubview:self.mapView];
+    }
+}
+
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if (fromInterfaceOrientation==UIInterfaceOrientationLandscapeLeft||fromInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
+        self.mapView.frame=self.view.bounds;
+        if (self.isListModel) {
+            [self.mapView removeFromSuperview];
+        }else
+            [self.view addSubview:self.mapView];
+    }
+}
+
+-(void)didRotate:(NSNotification *)not
+{
+    NSLog(@"note %@",not);
+}
 
 @end
 @implementation BussessScreenObject

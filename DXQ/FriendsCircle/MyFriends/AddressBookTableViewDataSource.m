@@ -52,7 +52,12 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //for test
-    return [_data count];
+    NSInteger count= [_data count];
+    if (count==0) {
+        tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    }else
+        tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
+    return count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

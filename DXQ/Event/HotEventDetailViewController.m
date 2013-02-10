@@ -321,7 +321,7 @@
 -(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
     
     if ([request isEqual:detailRequest]) {
-        [[ProgressHUD sharedProgressHUD]hide];
+        [[ProgressHUD sharedProgressHUD]done];
         self.detailDic=data;
         _shareBtn.enabled=YES;
         _interBtn.enabled=YES;

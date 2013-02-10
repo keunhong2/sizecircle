@@ -14,6 +14,12 @@
 @end
 
 
+@class TicketImagesView;
+@protocol TicketImageViewDelegate <NSObject>
+
+-(void)ticketImageView:(TicketImagesView *)ticketImageView imageIsTapForIndex:(NSInteger)index;
+
+@end
 
 @interface TicketImagesView : UIView<UIScrollViewDelegate>{
 
@@ -24,5 +30,6 @@
 
 @property (nonatomic,retain)NSArray *imageArray;
 
+@property (nonatomic,assign)id<TicketImageViewDelegate>delegate;
 
 @end

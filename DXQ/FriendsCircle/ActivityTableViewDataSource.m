@@ -10,6 +10,10 @@
 #import "CouponsTrendsCell.h"
 #import "UIImageView+WebCache.h"
 #import "AcvityDetailViewController.h"
+#import "TicketDetailViewController.h"
+#import "TuanDetailViewController.h"
+#import "HotEventDetailViewController.h"
+#import "MemberDetailViewController.h"
 
 @interface ActivityTableViewDataSource()
 @property (nonatomic,assign)UIViewController *viewControl;
@@ -93,10 +97,37 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AcvityDetailViewController *acvity=[[AcvityDetailViewController alloc]init];
-    [_viewControl.navigationController pushViewController:acvity animated:YES];
-    acvity.simpleDic=[self.data objectAtIndex:indexPath.row];
-    [acvity release];
+    NSDictionary *dic=[self.data objectAtIndex:indexPath.row];
+    NSString *objectKind=[dic objectForKey:@"ObjectKind"];
+    UIViewController *controller=nil;
+    if ([objectKind isEqualToString:@"Product"]) {
+        NSString *kindName=[dic objectForKey:@"ProductKind"];
+        NSString *className=nil;
+        if ([kindName isEqualToString:@"H"]) {
+            className=@"MemberDetailViewController";
+        }else if ([kindName isEqualToString:@"Y"])
+        {
+            className=@"TicketDetailViewController";
+        }else if ([kindName isEqualToString:@"T"])
+        {
+            className=@"TuanDetailViewController";
+        }else if ([kindName isEqualToString:@"A"])
+        {
+            className=@"HotEventDetailViewController";
+        }else
+            className=@"AcvityDetailViewController";
+        
+        TicketDetailViewController *ticket=[[NSClassFromString(className) alloc]init];
+        ticket.simpleInfoDic=dic;
+        controller=ticket;
+    }else
+    {
+        AcvityDetailViewController *acvity=[[AcvityDetailViewController alloc]init];
+        acvity.simpleDic=[self.data objectAtIndex:indexPath.row];
+        controller=acvity;
+    }
+    [_viewControl.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 @end

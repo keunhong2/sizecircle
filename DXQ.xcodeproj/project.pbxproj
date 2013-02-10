@@ -98,6 +98,10 @@
 		187446341626FE52009F6214 /* ForgorPswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1874462E1626FE52009F6214 /* ForgorPswViewController.m */; };
 		187446351626FE52009F6214 /* RegisterPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446311626FE52009F6214 /* RegisterPhotoViewController.m */; };
 		187446361626FE52009F6214 /* GenderSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187446321626FE52009F6214 /* GenderSelectView.m */; };
+		1875E6B116C6B38400D5DC6D /* BlindTelPhoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875E6B016C6B38400D5DC6D /* BlindTelPhoneView.m */; };
+		1875E6B416C6B64A00D5DC6D /* SendCodeToPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875E6B316C6B64A00D5DC6D /* SendCodeToPhone.m */; };
+		1875E6B716C6B81300D5DC6D /* VerCodeInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875E6B616C6B81300D5DC6D /* VerCodeInputView.m */; };
+		1875E6BA16C6BC7C00D5DC6D /* UserBindPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875E6B916C6BC7C00D5DC6D /* UserBindPhone.m */; };
 		187F6D30163FE6390064EBC2 /* ForgotPswRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F6D2E163FE6390064EBC2 /* ForgotPswRequest.m */; };
 		187FFC7716B575C000D9BC5A /* SendGiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FFC7616B575C000D9BC5A /* SendGiftViewController.m */; };
 		187FFC8216B6A28D00D9BC5A /* UserSendGift.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FFC8116B6A28D00D9BC5A /* UserSendGift.m */; };
@@ -110,6 +114,8 @@
 		18ACD22616344921004A426B /* TicketInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22516344921004A426B /* TicketInfoHeaderView.m */; };
 		18ACD22E163452F9004A426B /* TuanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD22D163452F9004A426B /* TuanDetailViewController.m */; };
 		18BFA24D169C714F009D35CB /* UserLoadUnReadNoticeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BFA24C169C714F009D35CB /* UserLoadUnReadNoticeList.m */; };
+		18D3ECA716C3F8810079E871 /* UserMakeFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D3ECA616C3F8800079E871 /* UserMakeFriendRequest.m */; };
+		18D3ECA916C416510079E871 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D3ECA816C416510079E871 /* delete.png */; };
 		18D70E8E169342F8008C5A3A /* UserMakeFriendReponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D70E8C169342F8008C5A3A /* UserMakeFriendReponse.m */; };
 		18DA0A1B1636D02900AB2650 /* BasePullTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA0A1A1636D02900AB2650 /* BasePullTableViewController.m */; };
 		18DA0A281636D30C00AB2650 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA0A271636D30C00AB2650 /* EGORefreshTableHeaderView.m */; };
@@ -1109,6 +1115,14 @@
 		187446311626FE52009F6214 /* RegisterPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterPhotoViewController.m; sourceTree = "<group>"; };
 		187446321626FE52009F6214 /* GenderSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenderSelectView.m; sourceTree = "<group>"; };
 		187446331626FE52009F6214 /* GenderSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenderSelectView.h; sourceTree = "<group>"; };
+		1875E6AF16C6B38400D5DC6D /* BlindTelPhoneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlindTelPhoneView.h; sourceTree = "<group>"; };
+		1875E6B016C6B38400D5DC6D /* BlindTelPhoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlindTelPhoneView.m; sourceTree = "<group>"; };
+		1875E6B216C6B64A00D5DC6D /* SendCodeToPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCodeToPhone.h; sourceTree = "<group>"; };
+		1875E6B316C6B64A00D5DC6D /* SendCodeToPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCodeToPhone.m; sourceTree = "<group>"; };
+		1875E6B516C6B81300D5DC6D /* VerCodeInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerCodeInputView.h; sourceTree = "<group>"; };
+		1875E6B616C6B81300D5DC6D /* VerCodeInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerCodeInputView.m; sourceTree = "<group>"; };
+		1875E6B816C6BC7C00D5DC6D /* UserBindPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserBindPhone.h; sourceTree = "<group>"; };
+		1875E6B916C6BC7C00D5DC6D /* UserBindPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserBindPhone.m; sourceTree = "<group>"; };
 		187F6D2E163FE6390064EBC2 /* ForgotPswRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPswRequest.m; sourceTree = "<group>"; };
 		187F6D2F163FE6390064EBC2 /* ForgotPswRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPswRequest.h; sourceTree = "<group>"; };
 		187FFC7516B575BF00D9BC5A /* SendGiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGiftViewController.h; sourceTree = "<group>"; };
@@ -1131,6 +1145,9 @@
 		18ACD22D163452F9004A426B /* TuanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuanDetailViewController.m; sourceTree = "<group>"; };
 		18BFA24B169C714F009D35CB /* UserLoadUnReadNoticeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadUnReadNoticeList.h; sourceTree = "<group>"; };
 		18BFA24C169C714F009D35CB /* UserLoadUnReadNoticeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadUnReadNoticeList.m; sourceTree = "<group>"; };
+		18D3ECA516C3F8800079E871 /* UserMakeFriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserMakeFriendRequest.h; sourceTree = "<group>"; };
+		18D3ECA616C3F8800079E871 /* UserMakeFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMakeFriendRequest.m; sourceTree = "<group>"; };
+		18D3ECA816C416510079E871 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		18D70E8C169342F8008C5A3A /* UserMakeFriendReponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMakeFriendReponse.m; sourceTree = "<group>"; };
 		18D70E8D169342F8008C5A3A /* UserMakeFriendReponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserMakeFriendReponse.h; sourceTree = "<group>"; };
 		18DA0A191636D02900AB2650 /* BasePullTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasePullTableViewController.h; sourceTree = "<group>"; };
@@ -2619,6 +2636,7 @@
 				F71C79AB166A79AC007F3EC9 /* default_header@2x.png */,
 				F71C79AC166A79AC007F3EC9 /* load_more_button.png */,
 				F71C79AD166A79AC007F3EC9 /* load_more_button@2x.png */,
+				18D3ECA816C416510079E871 /* delete.png */,
 				F71C79AE166A79AC007F3EC9 /* load_more_selected_button.png */,
 				F71C79AF166A79AC007F3EC9 /* load_more_selected_button@2x.png */,
 				F71C79B0166A79AC007F3EC9 /* nodata.png */,
@@ -3760,6 +3778,8 @@
 			children = (
 				F79ABB7C16452AE100060AB8 /* NearByUserListRequest.h */,
 				F79ABB7D16452AE100060AB8 /* NearByUserListRequest.m */,
+				18D3ECA516C3F8800079E871 /* UserMakeFriendRequest.h */,
+				18D3ECA616C3F8800079E871 /* UserMakeFriendRequest.m */,
 				F79ABB9416479E6000060AB8 /* UserInfoDetailRequest.h */,
 				F79ABB9516479E6000060AB8 /* UserInfoDetailRequest.m */,
 				1811F59B1647FEDC00336CF3 /* UserActivityRequest.h */,
@@ -3960,6 +3980,10 @@
 				18808AE61689EAB2001D4B71 /* GetPhoneCheckCodeRequest.m */,
 				18028C07168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.h */,
 				18028C08168B42B0000EA0AF /* GetPhoneCheckCodeForFindPsw.m */,
+				1875E6B216C6B64A00D5DC6D /* SendCodeToPhone.h */,
+				1875E6B316C6B64A00D5DC6D /* SendCodeToPhone.m */,
+				1875E6B816C6BC7C00D5DC6D /* UserBindPhone.h */,
+				1875E6B916C6BC7C00D5DC6D /* UserBindPhone.m */,
 			);
 			name = SignInAndSignUp;
 			sourceTree = "<group>";
@@ -4098,6 +4122,10 @@
 				185C58F5167DFB0900A6BFAF /* ChatUserManageViewController.m */,
 				1830FAC8168366BA0001593A /* ChatManageUserCell.h */,
 				1830FAC9168366BA0001593A /* ChatManageUserCell.m */,
+				1875E6AF16C6B38400D5DC6D /* BlindTelPhoneView.h */,
+				1875E6B016C6B38400D5DC6D /* BlindTelPhoneView.m */,
+				1875E6B516C6B81300D5DC6D /* VerCodeInputView.h */,
+				1875E6B616C6B81300D5DC6D /* VerCodeInputView.m */,
 				F7FEA62716369E810086409A /* UIBubbleTableView */,
 			);
 			path = Chat;
@@ -4862,6 +4890,7 @@
 				F784AC1E16B3965200D7A815 /* e52f@2x.png in Resources */,
 				F784AC1F16B3965200D7A815 /* emoji_touch.png in Resources */,
 				F784AC2016B3965200D7A815 /* emoji_touch@2x.png in Resources */,
+				18D3ECA916C416510079E871 /* delete.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5176,6 +5205,11 @@
 				187FFC8216B6A28D00D9BC5A /* UserSendGift.m in Sources */,
 				187FFC8616B6C48A00D9BC5A /* DXSegmenetControl.m in Sources */,
 				1889908B16BEC1A800A1BA1E /* CheckLockService.m in Sources */,
+				18D3ECA716C3F8810079E871 /* UserMakeFriendRequest.m in Sources */,
+				1875E6B116C6B38400D5DC6D /* BlindTelPhoneView.m in Sources */,
+				1875E6B416C6B64A00D5DC6D /* SendCodeToPhone.m in Sources */,
+				1875E6B716C6B81300D5DC6D /* VerCodeInputView.m in Sources */,
+				1875E6BA16C6BC7C00D5DC6D /* UserBindPhone.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5317,7 +5351,7 @@
 		F720C920160DD982007B954E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Huang Xiuyong (36WJ549L69)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Boom 22 Technologies Limited";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Boom 22 Technologies Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DXQ/DXQ-Prefix.pch";
@@ -5325,7 +5359,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1B53DD9F-ABC2-4290-908A-0CC146AEFCDC";
+				PROVISIONING_PROFILE = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5CAAC6C2-72B1-4E40-9195-2B93DE68470B";
 				WRAPPER_EXTENSION = app;
 			};

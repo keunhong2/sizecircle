@@ -9,7 +9,7 @@
 #import "TicketDetailViewController.h"
 #import "TicketInfoHeaderView.h"
 
-@interface TicketDetailViewController ()
+@interface TicketDetailViewController ()<TicketImageViewDelegate>
 
 @end
 
@@ -45,6 +45,7 @@
     self.memberInfoView=header;
     
     TicketImagesView *tempTicketImageView=[[TicketImagesView alloc]initWithFrame:CGRectMake(0.f, 0.f, self.view.frame.size.width, 130.f)];
+    tempTicketImageView.delegate=self;
     self.tableView.tableHeaderView=tempTicketImageView;
     self.ticketImagesView=tempTicketImageView;
     [tempTicketImageView release];
@@ -74,4 +75,8 @@
     }
 }
 
+-(void)ticketImageView:(TicketImagesView *)ticketImageView imageIsTapForIndex:(NSInteger)index
+{
+    [self imageTap];
+}
 @end

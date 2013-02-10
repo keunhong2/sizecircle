@@ -269,7 +269,7 @@
 #pragma mark -Request
 
 -(void)cancelAllRequest{
-    [[ProgressHUD sharedProgressHUD]hide];
+    [[ProgressHUD sharedProgressHUD]done];
     [self.tableView refreshFinished];
     
     if (detailRequest) {
@@ -677,7 +677,7 @@
 
 -(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data{
     
-    [[ProgressHUD sharedProgressHUD]hide];
+    [[ProgressHUD sharedProgressHUD]done];
     [self.tableView refreshFinished];
     loadMoreView.state=LoadMoreStateNormal;
     

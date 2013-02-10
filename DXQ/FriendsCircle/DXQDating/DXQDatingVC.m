@@ -18,6 +18,8 @@
 #import "UserRemoveRelation.h"
 #import "EditUserInfoVC.h"
 #import "DatingFilterVC.h"
+#import "ThumbImageCell.h"
+#import "UserDetailInfoVC.h"
 
 @interface DXQDatingVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,FriendsCircleRequestDelegate,RelationMakeRequestDelegate,UserRemoveRelationDelegate>
 {
@@ -40,6 +42,7 @@
     UserRemoveRelation  *userRemoveRelationRequest;
     
     NSInteger cIndexPath;
+    SegmentType selectType;
 }
 
 @property (nonatomic,retain)NSMutableArray *datingList;
@@ -82,6 +85,7 @@
         //            NSDictionary *item = [NSDictionary dictionaryWithObjectsAndKeys:@"http://www.51netu.com/uploads/100428/1767_093618_1.jpg",@"imageurl",@"凤姐",@"username",@"修勇我喜欢你...",@"status", nil];
         //            [datingList addObject:item];
         //        }
+        selectType=SegmentTypeList;
     }
     return self;
 }
@@ -146,6 +150,17 @@
     UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem=rightItem;
     [rightItem release];
+    
+    NSDictionary *item1 = [NSDictionary dictionaryWithObjectsAndKeys:@"列表话",@"title",@"pyq_l",@"img", nil];
+    NSDictionary *item2 = [NSDictionary dictionaryWithObjectsAndKeys:@"宫格",@"title",@"pyq_m",@"img", nil];
+    //    NSDictionary *item2 = [NSDictionary dictionaryWithObjectsAndKeys:@"好友",@"title",@"pyq_r",@"img", nil];
+    
+    NSArray *items = [NSArray arrayWithObjects:item1,item2, nil];
+    CustomSegmentedControl *segment = [[CustomSegmentedControl alloc]initWithFrame:CGRectZero items:items defaultSelectIndex:0];
+    segment.delegate = self;
+    self.navigationItem.titleView=segment;
+    [segment release];
+
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -237,6 +252,11 @@
 -(void)setCurrentSegmentType:(SegmentType)type_
 {
     HYLog(@"%d",type_);
+    if (selectType==type_) {
+        return;
+    }
+    selectType=type_;
+    [self.tableView reloadData];
 }
 
 #pragma mark
@@ -284,19 +304,47 @@
 #pragma mark -UITableViewDataSourceAndDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (selectType == SegmentTypeGrid) return 83.f;
     return 72.f;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //for test
+    if (selectType == SegmentTypeGrid)
+    {
+        return  ceil((float)[_datingList count]/4);
+        
+    }
     return [_datingList count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self ListCellForIndexPath:indexPath];
+    if (selectType==SegmentTypeList) {
+        
+        return [self ListCellForIndexPath:indexPath];
+    }else if (selectType==SegmentTypeGrid)
+    {
+        return [self GridCellForIndexPath:indexPath];
+    }
     return nil;
+}
+
+-(void)imageViewTapIndex:(NSIndexPath *)indexPath imageView:(UIImageView *)imageView
+{
+    if (!isCompleted)
+    {
+        [self editAction];
+        return;
+    }
+    
+    NSInteger idx = indexPath.row*4+imageView.tag-1;
+    if (idx>=[_datingList count])return;
+    NSDictionary *item = [_datingList objectAtIndex:idx];
+    UserDetailInfoVC *vc=[[UserDetailInfoVC alloc]initwithUserInfo:item];
+    [self.navigationController pushViewController:vc animated:YES];
+    [vc release];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -306,6 +354,13 @@
     if (!isCompleted)
     {
         [self editAction];
+        return;
+    }
+
+    if (selectType==SegmentTypeList) {
+        UserDetailInfoVC *vc=[[UserDetailInfoVC alloc]initwithUserInfo:[_datingList objectAtIndex:indexPath.row]];
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc release];
     }
 }
 
@@ -359,6 +414,29 @@
     return cell;
 }
 
+-(UITableViewCell *)GridCellForIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString *cellIdentifier = @"ThumbImageCell";
+    ThumbImageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell==nil)
+    {
+        cell=[[[ThumbImageCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        [cell addTapTarget:self action:@selector(imageViewTapIndex:imageView:)];
+    }
+    NSMutableArray *dataArray = [NSMutableArray arrayWithObjects:nil, nil];
+    for (int i = 0 ; i < 4; i++)
+    {
+        NSInteger idx = indexPath.row*4+i;
+        if (idx>=[_datingList count])break;
+        NSDictionary *item = [_datingList objectAtIndex:idx];
+        NSString *picurl = [NSString stringWithFormat:@"%@%@",[item objectForKey:@"PhotoUrl"],THUMB_IMAGE_SUFFIX];
+        [dataArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:picurl,@"PhotoUrl", nil]];
+    }
+    cell.imageSourceArray=dataArray;
+    return cell;
+}
+
 -(void)anLian:(UIButton *)btn
 {
     if (!isCompleted)
@@ -409,6 +487,7 @@
     }
     else
     {
+        isCompleted=YES;
         [self didCancelViewViewController];
     }
 }
