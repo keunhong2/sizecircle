@@ -39,4 +39,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(BOOL)shouldAutorotate
+{
+    return [self.visibleViewController shouldAutorotate];
+}
 @end

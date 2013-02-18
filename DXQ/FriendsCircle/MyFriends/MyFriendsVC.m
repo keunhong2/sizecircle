@@ -18,14 +18,20 @@
 #import "CustomSearchBar.h"
 #import "BlindTelPhoneView.h"
 #import "VerCodeInputView.h"
+#import <AddressBook/AddressBook.h>
+#import "UserUploadAddressBook.h"
+#import "Contact.h"
 
-@interface MyFriendsVC ()<FriendsCircleRequestDelegate,UISearchBarDelegate,BlindTelPhoneDelegate,VerCodeInputViewDelegate>
+@interface MyFriendsVC ()<FriendsCircleRequestDelegate,UISearchBarDelegate,BlindTelPhoneDelegate,VerCodeInputViewDelegate,BusessRequestDelegate>
 {
+    
+    NSMutableArray *allContact;
     
     BOOL isUserLoadFriendListRequesting;
     
     UserLoadFriendListRequest *userLoadFriendListRequest;
 
+    UserUploadAddressBook *uploadAddressBook;
     CustomSearchBar *friendSearchBar;
     
     BlindTelPhoneView *bindView;
@@ -54,6 +60,7 @@
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:DXQChatMessageGetNewMessage object:nil];
+    [allContact release];
     [_historyTableView release];_historyTableView = nil;
     
     [_friendsTableView release];_friendsTableView = nil;
@@ -268,7 +275,11 @@
             bindView=[[BlindTelPhoneView alloc]initWithFrame:_addressbookTableView.bounds];
             [_addressbookTableView addSubview:bindView];
             bindView.delegate=self;
+        }else
+        {
+            [self getPoepleListFromAddress];
         }
+        
         [_addressbookTableView setPullToRefreshHandler:^{
             [self startRefreshAddressbook];
         }];
@@ -416,9 +427,90 @@
 
 -(void)finishVerCodeInputView:(VerCodeInputView *)view
 {
+    DXQAccount *currentUser=[[DXQCoreDataManager sharedCoreDataManager]getCurrentLoggedInAccount];
+    currentUser.dxq_Telephone=verCodeView.phone;
+    [[DXQCoreDataManager sharedCoreDataManager]saveChangesToCoreData];
     [verCodeView removeFromSuperview];
     [bindView removeFromSuperview];
     
-    //reload address data
+}
+
+#pragma mark -request
+
+-(void)clearUploadRequest
+{
+    if (uploadAddressBook) {
+        [uploadAddressBook cancel];
+        [uploadAddressBook release];
+        uploadAddressBook=nil;
+    }
+}
+
+-(void)uploadAddressArray:(NSArray *)array
+{
+    [self clearUploadRequest];
+    NSString *logID=[[SettingManager sharedSettingManager]loggedInAccount];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:logID,@"AccountId",array,@"Phones", nil];
+    uploadAddressBook=[[UserUploadAddressBook alloc]initWithRequestWithDic:dic];
+    uploadAddressBook.delegate=self;
+    [[ProgressHUD sharedProgressHUD]showInView:[[UIApplication sharedApplication]keyWindow]];
+    [uploadAddressBook startAsynchronous];
+}
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFailedWithErrorMsg:(NSString *)msg{
+
+    if (request==uploadAddressBook) {
+        [self clearUploadRequest];
+        [[ProgressHUD sharedProgressHUD]setText:msg];
+        [[ProgressHUD sharedProgressHUD]done:NO];
+    }
+}
+
+-(void)busessRequest:(DXQBusessBaseRequest *)request didFinishWithData:(id)data
+{
+    if (request==uploadAddressBook) {
+        [[ProgressHUD sharedProgressHUD]done:YES];
+        [self clearUploadRequest];
+        NSMutableArray *isSignIn=[NSMutableArray new];
+        for (Contact *contact in allContact) {
+            if (![contact isContainPhone:data]) {
+                [isSignIn addObject:contact];
+            }
+        }
+        [self.addressBookTableViewDataSource reloadData:isSignIn tableView:self.addressbookTableView];
+        [isSignIn release];
+    }
+}
+#pragma mark -GetPoepleFromAddress
+
+-(void)getPoepleListFromAddress
+{
+    [allContact removeAllObjects];
+    
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    NSArray *poepleArray = (NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
+    if (poepleArray) {
+        NSMutableArray *tempPhone=[NSMutableArray new];
+        for (id people in poepleArray) {
+            Contact *contact=[[Contact alloc]init];
+            contact.firstName= (NSString *)ABRecordCopyValue(people, kABPersonFirstNameProperty);
+            contact.lastName= (NSString *)ABRecordCopyValue(people, kABPersonLastNameProperty);
+             ABMultiValueRef phones = (ABMultiValueRef) ABRecordCopyValue(people, kABPersonPhoneProperty);
+            for (int i=0; i<ABMultiValueGetCount(people); i++) {
+                NSString *phone = (NSString *)ABMultiValueCopyValueAtIndex(phones, i);
+                [tempPhone addObject:phone];
+                [contact.phoneArray addObject:phone];
+            }
+            [allContact addObject:contact];
+            [contact release];
+        }
+        if (tempPhone.count!=0) {
+            [self uploadAddressArray:tempPhone];
+        }
+        [tempPhone release];
+    }else
+    {
+        [Tool showAlertWithTitle:@"提示" msg:@"获取通讯录失败"];
+    }
 }
 @end

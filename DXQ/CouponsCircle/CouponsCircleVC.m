@@ -539,7 +539,7 @@
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    if (fromInterfaceOrientation==UIInterfaceOrientationLandscapeLeft||fromInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
+    if (self.interfaceOrientation==UIInterfaceOrientationPortraitUpsideDown||self.interfaceOrientation==UIInterfaceOrientationPortrait) {
         self.mapView.frame=self.view.bounds;
         if (self.isListModel) {
             [self.mapView removeFromSuperview];

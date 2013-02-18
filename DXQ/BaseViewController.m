@@ -109,6 +109,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(BOOL)shouldAutorotate{
+
+    return NO;
+}
+
 -(void)didReceiveMemoryWarning
 {
 }
