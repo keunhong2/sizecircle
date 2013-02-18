@@ -10,6 +10,7 @@
 #import "FriendsListCell.h"
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
+#import "Contact.h"
 
 @interface AddressBookTableViewDataSource()
 @property (nonatomic,assign)UIViewController *viewControl;
@@ -41,6 +42,15 @@
 //        }
     }
     return self;
+}
+
+
+
+-(void)reloadData:(NSArray *)arr tableView:(UITableView *)tableview{
+
+    [_data removeAllObjects];
+    [_data addObjectsFromArray:arr];
+    [tableview reloadData];
 }
 
 #pragma mark -UITableViewDataSourceAndDelegate
@@ -80,8 +90,11 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     NSDictionary *item = [_data objectAtIndex:indexPath.row];
-    [cell.avatarImg setImageWithURL:[NSURL URLWithString:[[item objectForKey:@"imageurl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
-    cell.usernameLbl.text = [item objectForKey:@"username"];
+//    [cell.avatarImg setImageWithURL:[NSURL URLWithString:[[item objectForKey:@"imageurl"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]placeholderImage:[UIImage imageNamed:@"tx_gray.png"]];
+    Contact *contact=[_data objectAtIndex:indexPath.row];
+    cell.avatarImg.imageView.image=[UIImage imageNamed:@"tx_gray.png"];
+    cell.avatarImg.enabled=NO;
+    cell.usernameLbl.text = contact.fullName;
     cell.ageImg.image = [UIImage imageNamed:@"pyq_girl.png"];
     cell.ageLbl.text = @"18";
     cell.distanceLbl.text = @"15.32km  |  当前在线";

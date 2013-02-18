@@ -1322,6 +1322,11 @@
     return [_rootViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 }
 
+-(BOOL)shouldAutorotate
+{
+    return [_rootViewController shouldAutorotate];
+}
+//38
 #pragma mark - Memory management things
 
 - (void) viewWillUnload

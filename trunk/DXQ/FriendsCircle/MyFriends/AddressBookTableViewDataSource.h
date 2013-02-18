@@ -12,4 +12,8 @@
 
 -(id)initWithViewControl:(UIViewController *)viewControl;
 
+
+
+-(void)reloadData:(NSArray *)arr tableView:(UITableView *)tableview;
+
 @end

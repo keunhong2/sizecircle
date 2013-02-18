@@ -85,6 +85,9 @@
 		184E4210162DA5F300D6C908 /* ThumbImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E420F162DA5F300D6C908 /* ThumbImageCell.m */; };
 		184F184116987B890062F185 /* MyAttentionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F184016987B890062F185 /* MyAttentionViewController.m */; };
 		184F1844169880620062F185 /* UserLoadFavoriteProductList.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F1843169880620062F185 /* UserLoadFavoriteProductList.m */; };
+		185ADFFE16D26D0500DBBE8E /* UserUploadAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 185ADFFD16D26D0500DBBE8E /* UserUploadAddressBook.m */; };
+		185AE00016D27B5000DBBE8E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185ADFFF16D27B5000DBBE8E /* AddressBook.framework */; };
+		185AE00316D2814F00DBBE8E /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 185AE00216D2814F00DBBE8E /* Contact.m */; };
 		185BEFF1163559E400DF3E70 /* BaseScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF0163559E400DF3E70 /* BaseScreenViewController.m */; };
 		185BEFF416355E3100DF3E70 /* ScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF316355E3000DF3E70 /* ScreenViewController.m */; };
 		185BEFF71635653500DF3E70 /* ScreenSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BEFF61635653500DF3E70 /* ScreenSelectCell.m */; };
@@ -1091,6 +1094,11 @@
 		184F184016987B890062F185 /* MyAttentionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAttentionViewController.m; sourceTree = "<group>"; };
 		184F1842169880620062F185 /* UserLoadFavoriteProductList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadFavoriteProductList.h; sourceTree = "<group>"; };
 		184F1843169880620062F185 /* UserLoadFavoriteProductList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadFavoriteProductList.m; sourceTree = "<group>"; };
+		185ADFFC16D26D0500DBBE8E /* UserUploadAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserUploadAddressBook.h; sourceTree = "<group>"; };
+		185ADFFD16D26D0500DBBE8E /* UserUploadAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserUploadAddressBook.m; sourceTree = "<group>"; };
+		185ADFFF16D27B5000DBBE8E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		185AE00116D2814F00DBBE8E /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		185AE00216D2814F00DBBE8E /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		185BEFEF163559E400DF3E70 /* BaseScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScreenViewController.h; sourceTree = "<group>"; };
 		185BEFF0163559E400DF3E70 /* BaseScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseScreenViewController.m; sourceTree = "<group>"; };
 		185BEFF216355E3000DF3E70 /* ScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenViewController.h; sourceTree = "<group>"; };
@@ -2211,6 +2219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				185AE00016D27B5000DBBE8E /* AddressBook.framework in Frameworks */,
 				18063BE01674874F00210719 /* MessageUI.framework in Frameworks */,
 				F79ABB8F164618A900060AB8 /* CoreLocation.framework in Frameworks */,
 				18E40116162F13FC00BDAC32 /* CoreText.framework in Frameworks */,
@@ -3040,6 +3049,7 @@
 		F720C904160DD982007B954E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				185ADFFF16D27B5000DBBE8E /* AddressBook.framework */,
 				18063BDF1674874F00210719 /* MessageUI.framework */,
 				F71E6307162D197D00B6C040 /* libicucore.dylib */,
 				F79ABB8E164618A900060AB8 /* CoreLocation.framework */,
@@ -3822,6 +3832,8 @@
 				18D70E8D169342F8008C5A3A /* UserMakeFriendReponse.h */,
 				187FFC8016B6A28D00D9BC5A /* UserSendGift.h */,
 				187FFC8116B6A28D00D9BC5A /* UserSendGift.m */,
+				185ADFFC16D26D0500DBBE8E /* UserUploadAddressBook.h */,
+				185ADFFD16D26D0500DBBE8E /* UserUploadAddressBook.m */,
 			);
 			path = FriendsCircleRequest;
 			sourceTree = "<group>";
@@ -4008,6 +4020,8 @@
 				F75E41CF162C6F650079852A /* Cell */,
 				F7F610A01628814E00D1CBD1 /* CouponsCircleVC.h */,
 				F7F610A11628814E00D1CBD1 /* CouponsCircleVC.m */,
+				185AE00116D2814F00DBBE8E /* Contact.h */,
+				185AE00216D2814F00DBBE8E /* Contact.m */,
 				182296B61629C6EE00F6CF42 /* CouponsTrendsViewController.h */,
 				182296B71629C6EE00F6CF42 /* CouponsTrendsViewController.m */,
 				18E40137162F147000BDAC32 /* PhotoDetailViewController.h */,
@@ -5210,6 +5224,8 @@
 				1875E6B416C6B64A00D5DC6D /* SendCodeToPhone.m in Sources */,
 				1875E6B716C6B81300D5DC6D /* VerCodeInputView.m in Sources */,
 				1875E6BA16C6BC7C00D5DC6D /* UserBindPhone.m in Sources */,
+				185ADFFE16D26D0500DBBE8E /* UserUploadAddressBook.m in Sources */,
+				185AE00316D2814F00DBBE8E /* Contact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
