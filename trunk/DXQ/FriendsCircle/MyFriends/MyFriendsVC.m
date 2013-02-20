@@ -33,7 +33,7 @@
 
     UserUploadAddressBook *uploadAddressBook;
     CustomSearchBar *friendSearchBar;
-    
+    BOOL firendIsRequest;
     BlindTelPhoneView *bindView;
     VerCodeInputView *verCodeView;
 }
@@ -106,6 +106,7 @@
         
         _showType = 0;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadChatMsgData) name:DXQChatMessageGetNewMessage object:nil];
+        allContact=[NSMutableArray new];
     }
     return self;
 }
@@ -201,7 +202,7 @@
 
 -(void)startRefreshAddressbook
 {
-    
+    [self getPoepleListFromAddress];
 }
 
 -(void)friendsCircleRequestRequest:(FriendsCircleRequest *)request didFailedWithErrorMsg:(NSString *)msg
@@ -260,7 +261,7 @@
         friendSearchBar=[[CustomSearchBar alloc]initWithFrame:CGRectMake(0.f, 0.f, self.view.frame.size.width, 44.f)];
         friendSearchBar.delegate=self;
         _friendsTableView.tableHeaderView=friendSearchBar;
-        [_friendsTableView pullToRefresh];
+//        [_friendsTableView pullToRefresh];
     }
     return _friendsTableView;
 }
@@ -279,10 +280,6 @@
         {
             [self getPoepleListFromAddress];
         }
-        
-        [_addressbookTableView setPullToRefreshHandler:^{
-            [self startRefreshAddressbook];
-        }];
     }
     return _addressbookTableView;
 }
@@ -340,6 +337,10 @@
         [self.historyTableView removeFromSuperview];
         [self.addressbookTableView removeFromSuperview];
         [self.view insertSubview:[self friendsTableView] atIndex:0];
+        if (!firendIsRequest) {
+            [[self friendsTableView]pullToRefresh];
+            firendIsRequest=YES;
+        }
     }
     else if(type_ == 2)
     {
@@ -443,6 +444,7 @@
         [uploadAddressBook cancel];
         [uploadAddressBook release];
         uploadAddressBook=nil;
+        [self.addressbookTableView refreshFinished];
     }
 }
 
@@ -454,6 +456,7 @@
     uploadAddressBook=[[UserUploadAddressBook alloc]initWithRequestWithDic:dic];
     uploadAddressBook.delegate=self;
     [[ProgressHUD sharedProgressHUD]showInView:[[UIApplication sharedApplication]keyWindow]];
+    [[ProgressHUD sharedProgressHUD]setText:@"上传通讯录中..."];
     [uploadAddressBook startAsynchronous];
 }
 
@@ -471,14 +474,7 @@
     if (request==uploadAddressBook) {
         [[ProgressHUD sharedProgressHUD]done:YES];
         [self clearUploadRequest];
-        NSMutableArray *isSignIn=[NSMutableArray new];
-        for (Contact *contact in allContact) {
-            if (![contact isContainPhone:data]) {
-                [isSignIn addObject:contact];
-            }
-        }
-        [self.addressBookTableViewDataSource reloadData:isSignIn tableView:self.addressbookTableView];
-        [isSignIn release];
+        self.addressBookTableViewDataSource.notRegArray=data;
     }
 }
 #pragma mark -GetPoepleFromAddress
@@ -491,12 +487,12 @@
     NSArray *poepleArray = (NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
     if (poepleArray) {
         NSMutableArray *tempPhone=[NSMutableArray new];
-        for (id people in poepleArray) {
+        for (NSObject *people in poepleArray) {
             Contact *contact=[[Contact alloc]init];
             contact.firstName= (NSString *)ABRecordCopyValue(people, kABPersonFirstNameProperty);
             contact.lastName= (NSString *)ABRecordCopyValue(people, kABPersonLastNameProperty);
              ABMultiValueRef phones = (ABMultiValueRef) ABRecordCopyValue(people, kABPersonPhoneProperty);
-            for (int i=0; i<ABMultiValueGetCount(people); i++) {
+            for (int i=0; i<ABMultiValueGetCount(phones); i++) {
                 NSString *phone = (NSString *)ABMultiValueCopyValueAtIndex(phones, i);
                 [tempPhone addObject:phone];
                 [contact.phoneArray addObject:phone];
@@ -507,6 +503,7 @@
         if (tempPhone.count!=0) {
             [self uploadAddressArray:tempPhone];
         }
+        [self.addressBookTableViewDataSource reloadData:allContact tableView:self.addressbookTableView];
         [tempPhone release];
     }else
     {

@@ -13,6 +13,7 @@
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic,retain)NSDictionary *orderInfoDic;
 @property (nonatomic,retain)NSDictionary *productInfoDic;
+@property (nonatomic,retain)NSDictionary *orderDic;
 @property (nonatomic)BOOL needAddress;//default YES
 
 @end

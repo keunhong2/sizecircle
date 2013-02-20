@@ -276,6 +276,7 @@
         }
         VerifyOrderViewController *verify=[[VerifyOrderViewController alloc]init];
         verify.orderInfoDic=[self buyInfoDic];
+        verify.orderDic=data;
         verify.needAddress=!isVirtual;
         verify.productInfoDic=_productDic;
         [self.navigationController pushViewController:verify animated:YES];

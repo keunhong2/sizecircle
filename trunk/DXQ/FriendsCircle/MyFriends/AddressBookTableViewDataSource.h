@@ -16,4 +16,6 @@
 
 -(void)reloadData:(NSArray *)arr tableView:(UITableView *)tableview;
 
+@property (nonatomic,retain)NSArray *notRegArray;
+
 @end

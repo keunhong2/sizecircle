@@ -7,6 +7,7 @@
 //
 
 #import "VerifyOrderViewController.h"
+#import "PayWebViewController.h"
 
 @interface VerifyOrderViewController (){
 
@@ -22,6 +23,7 @@
     [_tableView release];
     [_orderInfoDic release];
     [_productInfoDic release];
+    [_orderDic release];
     [super dealloc];
 }
 
@@ -85,7 +87,13 @@
 
 -(void)buyBtn{
 
-//    [[UIApplication sharedApplication]openURL:<#(NSURL *)#>]
+    NSString *name=[_productInfoDic objectForKey:@"ProductTitle"];
+    float price=[[_productInfoDic objectForKey:@"MemberPrice"]floatValue]*[[_orderInfoDic objectForKey:@"ProductCount"] integerValue];
+    NSString *num=[_orderDic objectForKey:@"OrderNo"];
+    PayWebViewController *web=[[PayWebViewController alloc]init];
+    [self.navigationController pushViewController:web animated:YES];
+    [web payProductName:name order:num money:price];
+    [web release];
 }
 #pragma mark -UITableViewDataSource And Delegate
 

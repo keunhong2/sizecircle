@@ -32,9 +32,17 @@
     return [_phoneArray containsObject:phone];
 }
 
+-(NSString *)phone
+{
+    if (_phoneArray.count>=1) {
+        return [_phoneArray objectAtIndex:0];
+    }else
+        return @"";
+}
+
 -(NSString *)fullName{
 
-    return [self.firstName stringByAppendingFormat:@" %@",self.lastName];
+    return [self.firstName stringByAppendingFormat:@" %@",(self.lastName)?self.lastName:@""];
 }
 
 -(BOOL)checkIsContainPhone:(NSArray *)array{
