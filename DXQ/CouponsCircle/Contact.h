@@ -14,7 +14,7 @@
 @property (nonatomic,retain)NSString *lastName;
 @property (nonatomic,readonly)NSString *fullName;
 @property (nonatomic,retain)NSMutableArray *phoneArray;
-
+@property (nonatomic,readonly)NSString *phone;
 -(BOOL)isContainPhone:(NSString *)phone;
 
 -(BOOL)checkIsContainPhone:(NSArray *)array;

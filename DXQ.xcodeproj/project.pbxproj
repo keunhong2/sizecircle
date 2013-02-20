@@ -76,6 +76,7 @@
 		182C9E781694A04A00448E8D /* btn_heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 182C9E761694A04A00448E8D /* btn_heart@2x.png */; };
 		182C9E7B1694A0D000448E8D /* btn_heart_useless.png in Resources */ = {isa = PBXBuildFile; fileRef = 182C9E791694A0D000448E8D /* btn_heart_useless.png */; };
 		182C9E7C1694A0D000448E8D /* btn_heart_useless@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 182C9E7A1694A0D000448E8D /* btn_heart_useless@2x.png */; };
+		1830602416D3D354002D6377 /* PayWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830602316D3D354002D6377 /* PayWebViewController.m */; };
 		1830FAC31680AD690001593A /* UserLoadUnReceivedChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */; };
 		1830FAC71680B2BB0001593A /* ChatUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC61680B2BB0001593A /* ChatUserManager.m */; };
 		1830FACA168366BA0001593A /* ChatManageUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830FAC9168366BA0001593A /* ChatManageUserCell.m */; };
@@ -1076,6 +1077,8 @@
 		182C9E761694A04A00448E8D /* btn_heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_heart@2x.png"; sourceTree = "<group>"; };
 		182C9E791694A0D000448E8D /* btn_heart_useless.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_heart_useless.png; sourceTree = "<group>"; };
 		182C9E7A1694A0D000448E8D /* btn_heart_useless@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_heart_useless@2x.png"; sourceTree = "<group>"; };
+		1830602216D3D354002D6377 /* PayWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayWebViewController.h; sourceTree = "<group>"; };
+		1830602316D3D354002D6377 /* PayWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayWebViewController.m; sourceTree = "<group>"; };
 		1830FAC11680AD690001593A /* UserLoadUnReceivedChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoadUnReceivedChat.h; sourceTree = "<group>"; };
 		1830FAC21680AD690001593A /* UserLoadUnReceivedChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoadUnReceivedChat.m; sourceTree = "<group>"; };
 		1830FAC51680B2BB0001593A /* ChatUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUserManager.h; sourceTree = "<group>"; };
@@ -2558,6 +2561,8 @@
 				18F2126B163438F6007226D2 /* TicketDetailViewController.m */,
 				18ACD22416344921004A426B /* TicketInfoHeaderView.h */,
 				18ACD22516344921004A426B /* TicketInfoHeaderView.m */,
+				1830602216D3D354002D6377 /* PayWebViewController.h */,
+				1830602316D3D354002D6377 /* PayWebViewController.m */,
 			);
 			path = Ticket;
 			sourceTree = "<group>";
@@ -5226,6 +5231,7 @@
 				1875E6BA16C6BC7C00D5DC6D /* UserBindPhone.m in Sources */,
 				185ADFFE16D26D0500DBBE8E /* UserUploadAddressBook.m in Sources */,
 				185AE00316D2814F00DBBE8E /* Contact.m in Sources */,
+				1830602416D3D354002D6377 /* PayWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
